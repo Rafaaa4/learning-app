@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'pages/WelcomeScreen.dart';
 import 'pages/LoginPage.dart';
 import 'pages/SignUpPage.dart';
-import 'pages/Home.dart';
+import 'pages/main_layout.dart';
 import 'features/playground/code_playground_page.dart';
 
 class AppRoutes {
@@ -15,7 +15,7 @@ class AppRoutes {
   static Map<String, WidgetBuilder> get routes => {
         login: (context) => const LoginPage(),
         signup: (context) => const SignUpPage(),
-        home: (context) => const HomePage(),
+        home: (context) => const MainLayout(),
         playground: (context) => const CodePlaygroundPage(),
       };
 }

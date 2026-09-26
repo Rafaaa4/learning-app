@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'core/theme/app_theme.dart';
 import 'services/storage_service.dart';
 import 'pages/WelcomeScreen.dart';
-import 'pages/Home.dart';
+import 'pages/main_layout.dart';
 import 'route.dart';
 
 void main() async {
@@ -24,7 +24,7 @@ class MainApp extends StatelessWidget {
       title: 'AI Course Studio',
       debugShowCheckedModeBanner: false,
       theme: AppTheme.darkTheme,
-      home: hasSeenOnboarding ? const HomePage() : const WelcomeScreen(),
+      home: hasSeenOnboarding ? const MainLayout() : const WelcomeScreen(),
       routes: AppRoutes.routes,
     );
   }
