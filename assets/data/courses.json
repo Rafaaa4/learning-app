@@ -1,0 +1,3777 @@
+{
+  "id": "html-css-js-complete",
+  "title": "HTML, CSS & JavaScript",
+  "description": "Master modern web development from zero. Build layouts, style pages, and write interactive JavaScript code.",
+  "level": "beginner",
+  "estimated_hours": 45,
+  "language": "English",
+  "tags": [
+    "Web",
+    "Frontend",
+    "HTML",
+    "CSS",
+    "JavaScript"
+  ],
+  "modules": [
+    {
+      "id": "html-foundations",
+      "title": "HTML Foundations & Structure",
+      "description": "Learn the essential tags and layout building blocks of web pages",
+      "order": 1,
+      "lessons": [
+        {
+          "id": "html-headings",
+          "title": "Introduction & Headings",
+          "order": 1,
+          "content": {
+            "explanation": "HTML (HyperText Markup Language) defines the structure of every webpage. Headings range from <h1> to <h6>, with <h1> being the most important heading on a page.",
+            "examples": [
+              {
+                "title": "Primary Heading",
+                "code": "<h1>Welcome to Web Development</h1>",
+                "explanation": "Defines the main title of your web page."
+              },
+              {
+                "title": "Secondary Heading",
+                "code": "<h2>Chapter 1: The Basics</h2>",
+                "explanation": "Defines a sub-heading or section title."
+              }
+            ],
+            "key_points": [
+              "HTML elements are defined using tags with opening <tag> and closing </tag>",
+              "<h1> is used for the main topic of the document",
+              "Keep only one <h1> per page for optimal structure and SEO"
+            ]
+          },
+          "challenge": {
+            "title": "Create your first <h1> heading",
+            "description": "Create an <h1> heading tag containing the text 'Hello World'.",
+            "starter_code": "<!-- Write your HTML code below -->\n",
+            "validation": {
+              "type": "html",
+              "rules": [
+                {
+                  "type": "element_exists",
+                  "element": "h1",
+                  "description": "Must have an <h1> element"
+                },
+                {
+                  "type": "text_contains",
+                  "value": "Hello World",
+                  "description": "Must contain text 'Hello World'"
+                }
+              ]
+            },
+            "solution": "<h1>Hello World</h1>",
+            "hints": [
+              "Start with <h1> and finish with </h1>",
+              "Put 'Hello World' between the tags"
+            ],
+            "points": 15
+          },
+          "quiz": [
+            {
+              "question": "What does HTML stand for?",
+              "options": [
+                "HyperText Markup Language",
+                "HighText Machine Language",
+                "Hyper Tool Multi Language",
+                "Home Terminal Markup Logic"
+              ],
+              "correct_answer": 0,
+              "explanation": "HTML stands for HyperText Markup Language, the standard format for web pages.",
+              "points": 5
+            },
+            {
+              "question": "Which heading tag represents the highest level heading in HTML?",
+              "options": [
+                "<h6>",
+                "<head>",
+                "<h1>",
+                "<header>"
+              ],
+              "correct_answer": 2,
+              "explanation": "<h1> represents the primary level-1 heading.",
+              "points": 5
+            }
+          ]
+        },
+        {
+          "id": "html-paragraphs",
+          "title": "Paragraphs & Text Content",
+          "order": 2,
+          "content": {
+            "explanation": "The <p> tag defines a paragraph of text. Browsers automatically add a margin before and after each paragraph element.",
+            "examples": [
+              {
+                "title": "Standard Paragraph",
+                "code": "<p>This is a paragraph explaining web technologies.</p>",
+                "explanation": "Creates a distinct block of text with default vertical spacing."
+              }
+            ],
+            "key_points": [
+              "Use <p> tags for blocks of text and sentences",
+              "White spaces and line breaks inside HTML are collapsed unless wrapped in appropriate tags"
+            ]
+          },
+          "challenge": {
+            "title": "Write a Paragraph Tag",
+            "description": "Create a <p> element with the text 'Learning code is fun'.",
+            "starter_code": "<!-- Add a paragraph below -->\n",
+            "validation": {
+              "type": "html",
+              "rules": [
+                {
+                  "type": "element_exists",
+                  "element": "p",
+                  "description": "Must include a <p> tag"
+                },
+                {
+                  "type": "text_contains",
+                  "value": "Learning code is fun",
+                  "description": "Must contain 'Learning code is fun'"
+                }
+              ]
+            },
+            "solution": "<p>Learning code is fun</p>",
+            "hints": [
+              "Write <p>Learning code is fun</p>"
+            ],
+            "points": 15
+          },
+          "quiz": [
+            {
+              "question": "Which HTML tag is used to create a standard paragraph?",
+              "options": [
+                "<text>",
+                "<para>",
+                "<p>",
+                "<pg>"
+              ],
+              "correct_answer": 2,
+              "explanation": "<p> is the standard HTML element for paragraphs.",
+              "points": 5
+            }
+          ]
+        },
+        {
+          "id": "html-links",
+          "title": "Links & Navigation",
+          "order": 3,
+          "content": {
+            "explanation": "Hyperlinks are created with the <a> (anchor) tag. The 'href' attribute specifies the destination URL of the link.",
+            "examples": [
+              {
+                "title": "Anchor Link Example",
+                "code": "<a href=\"https://google.com\">Visit Google</a>",
+                "explanation": "Creates a clickable link to Google."
+              }
+            ],
+            "key_points": [
+              "<a> stands for anchor",
+              "The href attribute is mandatory for functional links",
+              "Text between <a> and </a> is the clickable label"
+            ]
+          },
+          "challenge": {
+            "title": "Create a Clickable Link",
+            "description": "Create an <a> tag with an href attribute containing 'Visit'.",
+            "starter_code": "<!-- Create your link -->\n",
+            "validation": {
+              "type": "html",
+              "rules": [
+                {
+                  "type": "element_exists",
+                  "element": "a",
+                  "description": "Must have an <a> tag"
+                },
+                {
+                  "type": "attribute_exists",
+                  "attribute": "href",
+                  "description": "Must include href attribute"
+                },
+                {
+                  "type": "text_contains",
+                  "value": "Visit",
+                  "description": "Link label must contain 'Visit'"
+                }
+              ]
+            },
+            "solution": "<a href=\"https://example.com\">Visit</a>",
+            "hints": [
+              "Use <a href=\"#\">Visit</a>"
+            ],
+            "points": 20
+          },
+          "quiz": [
+            {
+              "question": "Which attribute holds the URL address in an HTML link?",
+              "options": [
+                "src",
+                "url",
+                "href",
+                "link"
+              ],
+              "correct_answer": 2,
+              "explanation": "The 'href' (hypertext reference) attribute specifies the target URL.",
+              "points": 5
+            }
+          ]
+        },
+        {
+          "id": "html-buttons",
+          "title": "Interactive Buttons",
+          "order": 4,
+          "content": {
+            "explanation": "The <button> element represents a clickable button used to submit forms, trigger dialogs, or initiate actions in modern web apps.",
+            "examples": [
+              {
+                "title": "Action Button",
+                "code": "<button>Sign Up Now</button>",
+                "explanation": "A clickable button with text."
+              }
+            ],
+            "key_points": [
+              "Buttons can be styled extensively with CSS",
+              "Can be connected to JavaScript event listeners"
+            ]
+          },
+          "challenge": {
+            "title": "Create a Get Started Button",
+            "description": "Create a <button> tag with the text 'Get Started'.",
+            "starter_code": "<!-- Add button below -->\n",
+            "validation": {
+              "type": "html",
+              "rules": [
+                {
+                  "type": "element_exists",
+                  "element": "button",
+                  "description": "Must have a <button> tag"
+                },
+                {
+                  "type": "text_contains",
+                  "value": "Get Started",
+                  "description": "Button text must be 'Get Started'"
+                }
+              ]
+            },
+            "solution": "<button>Get Started</button>",
+            "hints": [
+              "Write <button>Get Started</button>"
+            ],
+            "points": 15
+          },
+          "quiz": [
+            {
+              "question": "Which element is used for clickable actions in HTML5?",
+              "options": [
+                "<clickable>",
+                "<button>",
+                "<press>",
+                "<action>"
+              ],
+              "correct_answer": 1,
+              "explanation": "<button> is the standard element for user actions.",
+              "points": 5
+            }
+          ]
+        },
+        {
+          "id": "html-lists-images",
+          "title": "Lists & Images",
+          "order": 5,
+          "content": {
+            "explanation": "Lists organize related items using <ul> (unordered) or <ol> (ordered), with each item wrapped in <li>. Images are embedded with the self-closing <img> tag, which requires a 'src' attribute and an 'alt' attribute for accessibility.",
+            "examples": [
+              {
+                "title": "Unordered List",
+                "code": "<ul>\n  <li>HTML</li>\n  <li>CSS</li>\n  <li>JavaScript</li>\n</ul>",
+                "explanation": "Displays a bulleted list of three items."
+              },
+              {
+                "title": "Image Tag",
+                "code": "<img src=\"logo.png\" alt=\"Company Logo\">",
+                "explanation": "Embeds an image with a descriptive alt attribute."
+              }
+            ],
+            "key_points": [
+              "<ul> creates bullet points, <ol> creates numbered lists",
+              "Every list item goes inside an <li> tag",
+              "<img> is self-closing with no closing tag",
+              "The 'alt' attribute is required for accessibility and SEO"
+            ]
+          },
+          "challenge": {
+            "title": "Build a List of Skills",
+            "description": "Create an unordered list <ul> with at least one <li> item containing the word 'HTML'.",
+            "starter_code": "<!-- Build your list -->\n",
+            "validation": {
+              "type": "html",
+              "rules": [
+                {
+                  "type": "element_exists",
+                  "element": "ul",
+                  "description": "Must have a <ul> element"
+                },
+                {
+                  "type": "element_exists",
+                  "element": "li",
+                  "description": "Must have at least one <li> element"
+                },
+                {
+                  "type": "text_contains",
+                  "value": "HTML",
+                  "description": "Must contain the word 'HTML'"
+                }
+              ]
+            },
+            "solution": "<ul>\n  <li>HTML</li>\n</ul>",
+            "hints": [
+              "Wrap your list in <ul> and </ul>",
+              "Each item goes inside <li></li>"
+            ],
+            "points": 20
+          },
+          "quiz": [
+            {
+              "question": "Which attribute is required on an <img> tag for accessibility?",
+              "options": [
+                "title",
+                "alt",
+                "caption",
+                "description"
+              ],
+              "correct_answer": 1,
+              "explanation": "The 'alt' attribute describes the image for screen readers and SEO.",
+              "points": 5
+            },
+            {
+              "question": "Which tag creates a numbered list?",
+              "options": [
+                "<ul>",
+                "<list>",
+                "<ol>",
+                "<nl>"
+              ],
+              "correct_answer": 2,
+              "explanation": "<ol> stands for ordered list and produces numbered items.",
+              "points": 5
+            }
+          ]
+        },
+        {
+          "id": "html-semantic",
+          "title": "Semantic HTML5 Elements",
+          "order": 6,
+          "content": {
+            "explanation": "Semantic elements clearly describe their meaning to both the browser and the developer, instead of using generic <div> for everything. Tags like <header>, <nav>, <main>, <section>, <article>, and <footer> describe the role of each part of the page.",
+            "examples": [
+              {
+                "title": "Semantic Page Skeleton",
+                "code": "<header>Site Title</header>\n<nav>Menu</nav>\n<main>\n  <article>Blog Post</article>\n</main>\n<footer>Copyright 2026</footer>",
+                "explanation": "Structures a page using meaningful, self-describing tags instead of generic divs."
+              }
+            ],
+            "key_points": [
+              "Semantic tags improve accessibility and SEO",
+              "<main> should contain the primary content of the page, and appear once",
+              "<article> represents self-contained content, <section> groups related content"
+            ]
+          },
+          "challenge": {
+            "title": "Build a Semantic Layout",
+            "description": "Create a page skeleton using <header>, <main>, and <footer> tags.",
+            "starter_code": "<!-- Build your semantic layout -->\n",
+            "validation": {
+              "type": "html",
+              "rules": [
+                {
+                  "type": "element_exists",
+                  "element": "header",
+                  "description": "Must include a <header>"
+                },
+                {
+                  "type": "element_exists",
+                  "element": "main",
+                  "description": "Must include a <main>"
+                },
+                {
+                  "type": "element_exists",
+                  "element": "footer",
+                  "description": "Must include a <footer>"
+                }
+              ]
+            },
+            "solution": "<header>Site Title</header>\n<main>Content goes here</main>\n<footer>Copyright 2026</footer>",
+            "hints": [
+              "Use <header>, <main>, and <footer> as top-level sections"
+            ],
+            "points": 25
+          },
+          "quiz": [
+            {
+              "question": "Which semantic tag should contain the unique main content of a page?",
+              "options": [
+                "<section>",
+                "<main>",
+                "<div>",
+                "<content>"
+              ],
+              "correct_answer": 1,
+              "explanation": "<main> identifies the dominant, unique content of the document body.",
+              "points": 5
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "html-forms",
+      "title": "HTML Forms & Accessibility",
+      "description": "Collect user input with forms and build pages that everyone can use",
+      "order": 2,
+      "lessons": [
+        {
+          "id": "html-form-basics",
+          "title": "The <form> Element & Text Inputs",
+          "order": 1,
+          "content": {
+            "explanation": "The <form> element wraps controls that collect user input. The most common control is <input>, whose 'type' attribute determines what kind of data it accepts, such as 'text' for plain text.",
+            "examples": [
+              {
+                "title": "Simple Text Input",
+                "code": "<form>\n  <input type=\"text\" name=\"username\" placeholder=\"Enter name\">\n</form>",
+                "explanation": "Creates a form with a single text field."
+              }
+            ],
+            "key_points": [
+              "<form> groups related input controls together",
+              "input type=\"text\" accepts single-line free text",
+              "The 'placeholder' attribute shows hint text inside an empty field",
+              "The 'name' attribute identifies the field when the form is submitted"
+            ]
+          },
+          "challenge": {
+            "title": "Create a Text Input Form",
+            "description": "Create a <form> containing an <input> of type 'text'.",
+            "starter_code": "<!-- Build your form -->\n",
+            "validation": {
+              "type": "html",
+              "rules": [
+                {
+                  "type": "element_exists",
+                  "element": "form",
+                  "description": "Must have a <form> element"
+                },
+                {
+                  "type": "element_exists",
+                  "element": "input",
+                  "description": "Must have an <input> element"
+                },
+                {
+                  "type": "attribute_exists",
+                  "attribute": "type",
+                  "description": "Input must have a type attribute"
+                }
+              ]
+            },
+            "solution": "<form>\n  <input type=\"text\" name=\"username\">\n</form>",
+            "hints": [
+              "Wrap the input inside <form></form>",
+              "Set type=\"text\" on the input"
+            ],
+            "points": 15
+          },
+          "quiz": [
+            {
+              "question": "Which HTML element wraps input controls for collecting user data?",
+              "options": [
+                "<input>",
+                "<collect>",
+                "<form>",
+                "<data>"
+              ],
+              "correct_answer": 2,
+              "explanation": "<form> groups and submits related input controls.",
+              "points": 5
+            }
+          ]
+        },
+        {
+          "id": "html-labels",
+          "title": "Labels & Accessible Inputs",
+          "order": 2,
+          "content": {
+            "explanation": "The <label> element gives an input a descriptive, clickable name. Connecting a label to its input with a matching 'for' attribute and input 'id' makes forms usable for screen readers and lets users click the label to focus the field.",
+            "examples": [
+              {
+                "title": "Labeled Input",
+                "code": "<label for=\"email\">Email</label>\n<input type=\"email\" id=\"email\" name=\"email\">",
+                "explanation": "The label's 'for' attribute matches the input's 'id', linking them together."
+              }
+            ],
+            "key_points": [
+              "'for' on <label> must match the 'id' on the related <input>",
+              "Labels improve accessibility for screen reader users",
+              "Clicking a properly linked label focuses its input"
+            ]
+          },
+          "challenge": {
+            "title": "Link a Label to an Input",
+            "description": "Create a <label for=\"email\"> and an <input id=\"email\"> that are properly linked.",
+            "starter_code": "<!-- Add your label and input -->\n",
+            "validation": {
+              "type": "html",
+              "rules": [
+                {
+                  "type": "element_exists",
+                  "element": "label",
+                  "description": "Must have a <label>"
+                },
+                {
+                  "type": "attribute_exists",
+                  "attribute": "for",
+                  "description": "Label must have a for attribute"
+                },
+                {
+                  "type": "attribute_exists",
+                  "attribute": "id",
+                  "description": "Input must have an id attribute"
+                }
+              ]
+            },
+            "solution": "<label for=\"email\">Email</label>\n<input type=\"email\" id=\"email\">",
+            "hints": [
+              "Set for=\"email\" on the label",
+              "Set id=\"email\" on the matching input"
+            ],
+            "points": 20
+          },
+          "quiz": [
+            {
+              "question": "Which attribute links a <label> to its <input>?",
+              "options": [
+                "name",
+                "for/id pair",
+                "link",
+                "target"
+              ],
+              "correct_answer": 1,
+              "explanation": "A label's 'for' attribute must match the input's 'id' attribute.",
+              "points": 5
+            }
+          ]
+        },
+        {
+          "id": "html-input-types",
+          "title": "Specialized Input Types",
+          "order": 3,
+          "content": {
+            "explanation": "HTML5 offers many input types beyond plain text, including 'email', 'password', 'number', and 'checkbox'. Browsers automatically validate and style these differently — for example, 'email' checks for a valid email format.",
+            "examples": [
+              {
+                "title": "Password and Checkbox",
+                "code": "<input type=\"password\" name=\"pw\">\n<input type=\"checkbox\" name=\"subscribe\">",
+                "explanation": "A masked password field and a togglable checkbox."
+              }
+            ],
+            "key_points": [
+              "type=\"email\" validates basic email format automatically",
+              "type=\"password\" masks entered characters",
+              "type=\"checkbox\" allows toggling a boolean option",
+              "type=\"number\" restricts input to numeric values"
+            ]
+          },
+          "challenge": {
+            "title": "Create a Password Field",
+            "description": "Create an <input> of type 'password' with name 'pw'.",
+            "starter_code": "<!-- Add your password field -->\n",
+            "validation": {
+              "type": "html",
+              "rules": [
+                {
+                  "type": "element_exists",
+                  "element": "input",
+                  "description": "Must have an <input>"
+                },
+                {
+                  "type": "text_contains",
+                  "value": "password",
+                  "description": "Must use type=\"password\""
+                }
+              ]
+            },
+            "solution": "<input type=\"password\" name=\"pw\">",
+            "hints": [
+              "Set type=\"password\" on the input"
+            ],
+            "points": 15
+          },
+          "quiz": [
+            {
+              "question": "Which input type automatically masks the characters typed?",
+              "options": [
+                "text",
+                "hidden",
+                "password",
+                "email"
+              ],
+              "correct_answer": 2,
+              "explanation": "type=\"password\" hides typed characters behind dots or asterisks.",
+              "points": 5
+            }
+          ]
+        },
+        {
+          "id": "html-select-textarea",
+          "title": "Dropdowns & Text Areas",
+          "order": 4,
+          "content": {
+            "explanation": "The <select> element creates a dropdown list of <option> elements. The <textarea> element provides a resizable multi-line text box, unlike the single-line <input type=\"text\">.",
+            "examples": [
+              {
+                "title": "Dropdown Menu",
+                "code": "<select name=\"plan\">\n  <option value=\"free\">Free</option>\n  <option value=\"pro\">Pro</option>\n</select>",
+                "explanation": "Lets the user pick one plan from a list."
+              }
+            ],
+            "key_points": [
+              "<select> wraps one or more <option> elements",
+              "Each <option> has a 'value' sent when the form is submitted",
+              "<textarea> is used for longer, multi-line text like comments"
+            ]
+          },
+          "challenge": {
+            "title": "Build a Dropdown",
+            "description": "Create a <select> with at least two <option> elements.",
+            "starter_code": "<!-- Build your dropdown -->\n",
+            "validation": {
+              "type": "html",
+              "rules": [
+                {
+                  "type": "element_exists",
+                  "element": "select",
+                  "description": "Must have a <select>"
+                },
+                {
+                  "type": "element_exists",
+                  "element": "option",
+                  "description": "Must have at least one <option>"
+                }
+              ]
+            },
+            "solution": "<select name=\"plan\">\n  <option value=\"free\">Free</option>\n  <option value=\"pro\">Pro</option>\n</select>",
+            "hints": [
+              "Wrap two <option> tags inside <select></select>"
+            ],
+            "points": 20
+          },
+          "quiz": [
+            {
+              "question": "Which element creates a multi-line text input?",
+              "options": [
+                "<input>",
+                "<textarea>",
+                "<multitext>",
+                "<longtext>"
+              ],
+              "correct_answer": 1,
+              "explanation": "<textarea> provides a resizable, multi-line text box.",
+              "points": 5
+            }
+          ]
+        },
+        {
+          "id": "html-submit",
+          "title": "Submitting Forms",
+          "order": 5,
+          "content": {
+            "explanation": "A form is submitted with an <input type=\"submit\"> or a <button type=\"submit\">. By default, submitting a form reloads the page and sends its data to the URL in the form's 'action' attribute.",
+            "examples": [
+              {
+                "title": "Submit Button",
+                "code": "<form action=\"/signup\">\n  <input type=\"text\" name=\"user\">\n  <button type=\"submit\">Sign Up</button>\n</form>",
+                "explanation": "Submits the form data to '/signup' when the button is clicked."
+              }
+            ],
+            "key_points": [
+              "type=\"submit\" on a button triggers form submission",
+              "The 'action' attribute defines where form data is sent",
+              "The 'method' attribute (GET or POST) defines how data is sent"
+            ]
+          },
+          "challenge": {
+            "title": "Add a Submit Button",
+            "description": "Add a <button type=\"submit\"> inside a <form>.",
+            "starter_code": "<form>\n  <!-- Add your submit button -->\n</form>\n",
+            "validation": {
+              "type": "html",
+              "rules": [
+                {
+                  "type": "element_exists",
+                  "element": "form",
+                  "description": "Must have a <form>"
+                },
+                {
+                  "type": "element_exists",
+                  "element": "button",
+                  "description": "Must have a <button>"
+                },
+                {
+                  "type": "text_contains",
+                  "value": "submit",
+                  "description": "Button must have type=\"submit\""
+                }
+              ]
+            },
+            "solution": "<form>\n  <button type=\"submit\">Sign Up</button>\n</form>",
+            "hints": [
+              "Set type=\"submit\" on the button"
+            ],
+            "points": 15
+          },
+          "quiz": [
+            {
+              "question": "Which form attribute defines where the data is sent on submit?",
+              "options": [
+                "method",
+                "action",
+                "target",
+                "destination"
+              ],
+              "correct_answer": 1,
+              "explanation": "The 'action' attribute specifies the URL that receives the submitted form data.",
+              "points": 5
+            }
+          ]
+        },
+        {
+          "id": "html-accessibility",
+          "title": "ARIA & Accessible Design Basics",
+          "order": 6,
+          "content": {
+            "explanation": "Accessibility (a11y) means building pages usable by everyone, including people using screen readers or keyboards only. ARIA attributes like 'aria-label' provide extra context when visible text isn't enough, and semantic HTML should always be preferred over ARIA when possible.",
+            "examples": [
+              {
+                "title": "Accessible Icon Button",
+                "code": "<button aria-label=\"Close menu\">✕</button>",
+                "explanation": "Gives a screen reader a meaningful label for a button with only a symbol as its visible text."
+              }
+            ],
+            "key_points": [
+              "Prefer native semantic elements before reaching for ARIA",
+              "'aria-label' provides an accessible name when visible text is missing or unclear",
+              "All interactive elements should be reachable and usable via keyboard"
+            ]
+          },
+          "challenge": {
+            "title": "Add an Accessible Label",
+            "description": "Create a <button> with an aria-label attribute.",
+            "starter_code": "<!-- Add your accessible button -->\n",
+            "validation": {
+              "type": "html",
+              "rules": [
+                {
+                  "type": "element_exists",
+                  "element": "button",
+                  "description": "Must have a <button>"
+                },
+                {
+                  "type": "attribute_exists",
+                  "attribute": "aria-label",
+                  "description": "Must include an aria-label attribute"
+                }
+              ]
+            },
+            "solution": "<button aria-label=\"Close menu\">✕</button>",
+            "hints": [
+              "Add aria-label=\"...\" to your button"
+            ],
+            "points": 20
+          },
+          "quiz": [
+            {
+              "question": "What should be preferred over ARIA attributes whenever possible?",
+              "options": [
+                "Inline JavaScript",
+                "Semantic HTML elements",
+                "CSS classes",
+                "Comments"
+              ],
+              "correct_answer": 1,
+              "explanation": "Native semantic HTML elements already carry accessibility meaning and should be preferred over ARIA patches.",
+              "points": 5
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "css-styling",
+      "title": "CSS Fundamentals: Colors, Typography & Selectors",
+      "description": "Bring web pages to life with colors, fonts, and ways to target elements",
+      "order": 3,
+      "lessons": [
+        {
+          "id": "css-colors",
+          "title": "CSS Colors & Inline Styles",
+          "order": 1,
+          "content": {
+            "explanation": "CSS (Cascading Style Sheets) controls colors, layout, and presentation. You can change text color using the 'color' property and backgrounds using 'background-color'.",
+            "examples": [
+              {
+                "title": "Inline Color Style",
+                "code": "<h2 style=\"color: #6366f1;\">Indigo Heading</h2>",
+                "explanation": "Applies a custom hex color directly to an element."
+              }
+            ],
+            "key_points": [
+              "The style attribute allows adding CSS rules directly",
+              "'color' controls text color, 'background-color' sets the background",
+              "Hex codes like #6366f1 or names like 'red' can be used"
+            ]
+          },
+          "challenge": {
+            "title": "Style an Element with Color",
+            "description": "Create an <h2> tag with a style attribute specifying color.",
+            "starter_code": "<!-- Create a styled h2 -->\n",
+            "validation": {
+              "type": "html",
+              "rules": [
+                {
+                  "type": "element_exists",
+                  "element": "h2",
+                  "description": "Must have an <h2> tag"
+                },
+                {
+                  "type": "attribute_exists",
+                  "attribute": "style",
+                  "description": "Must include style attribute"
+                },
+                {
+                  "type": "text_contains",
+                  "value": "color",
+                  "description": "Style must include color property"
+                }
+              ]
+            },
+            "solution": "<h2 style=\"color: blue;\">Blue Title</h2>",
+            "hints": [
+              "Write <h2 style=\"color: blue;\">My Title</h2>"
+            ],
+            "points": 20
+          },
+          "quiz": [
+            {
+              "question": "Which CSS property is used to set the text color?",
+              "options": [
+                "font-color",
+                "color",
+                "text-color",
+                "text-style"
+              ],
+              "correct_answer": 1,
+              "explanation": "The 'color' property defines the foreground text color.",
+              "points": 5
+            }
+          ]
+        },
+        {
+          "id": "css-typography",
+          "title": "Fonts & Typography",
+          "order": 2,
+          "content": {
+            "explanation": "Typography properties control how text looks: 'font-size' sets its size, 'font-weight' sets boldness, and 'font-family' chooses the typeface. A 'font-family' should list a fallback stack in case the first font isn't available.",
+            "examples": [
+              {
+                "title": "Styled Text",
+                "code": "<p style=\"font-size: 18px; font-weight: bold; font-family: Arial, sans-serif;\">Bold text</p>",
+                "explanation": "Sets a larger, bold paragraph using Arial with a sans-serif fallback."
+              }
+            ],
+            "key_points": [
+              "font-size is commonly set in px or rem",
+              "font-weight: bold (or 700) makes text heavier",
+              "Always include a generic fallback like sans-serif or serif"
+            ]
+          },
+          "challenge": {
+            "title": "Style Text with Typography",
+            "description": "Create a <p> with a style attribute that includes 'font-size'.",
+            "starter_code": "<!-- Style your paragraph -->\n",
+            "validation": {
+              "type": "html",
+              "rules": [
+                {
+                  "type": "element_exists",
+                  "element": "p",
+                  "description": "Must have a <p> tag"
+                },
+                {
+                  "type": "text_contains",
+                  "value": "font-size",
+                  "description": "Style must include font-size"
+                }
+              ]
+            },
+            "solution": "<p style=\"font-size: 18px;\">Bold text</p>",
+            "hints": [
+              "Add style=\"font-size: 18px;\" to your <p>"
+            ],
+            "points": 15
+          },
+          "quiz": [
+            {
+              "question": "Which CSS property controls how thick or bold text appears?",
+              "options": [
+                "font-style",
+                "text-weight",
+                "font-weight",
+                "bold-text"
+              ],
+              "correct_answer": 2,
+              "explanation": "'font-weight' controls the thickness of the font, e.g. normal or bold.",
+              "points": 5
+            }
+          ]
+        },
+        {
+          "id": "css-classes",
+          "title": "Classes & the <style> Block",
+          "order": 3,
+          "content": {
+            "explanation": "Instead of inline styles, CSS is usually applied through reusable classes defined with a dot ('.') inside a <style> block or external stylesheet, keeping styling separate from content.",
+            "examples": [
+              {
+                "title": "Class Selector",
+                "code": "<style>\n.highlight { background-color: yellow; }\n</style>\n<p class=\"highlight\">Important text</p>",
+                "explanation": "Defines a reusable '.highlight' class and applies it to a paragraph."
+              }
+            ],
+            "key_points": [
+              "Classes are reusable across many elements: class=\"name\"",
+              "In CSS, classes are selected with a dot: .name { ... }",
+              "Separating style from HTML markup keeps code easier to maintain"
+            ]
+          },
+          "challenge": {
+            "title": "Apply a CSS Class",
+            "description": "Create a <style> block defining a class called 'highlight', and a <p> using class=\"highlight\".",
+            "starter_code": "<style>\n\n</style>\n<!-- Add your paragraph below -->\n",
+            "validation": {
+              "type": "html",
+              "rules": [
+                {
+                  "type": "element_exists",
+                  "element": "style",
+                  "description": "Must include a <style> block"
+                },
+                {
+                  "type": "text_contains",
+                  "value": "highlight",
+                  "description": "Must define and use a class named 'highlight'"
+                },
+                {
+                  "type": "attribute_exists",
+                  "attribute": "class",
+                  "description": "An element must use the class attribute"
+                }
+              ]
+            },
+            "solution": "<style>\n.highlight { background-color: yellow; }\n</style>\n<p class=\"highlight\">Important text</p>",
+            "hints": [
+              "Define .highlight { ... } inside <style>",
+              "Apply it with class=\"highlight\""
+            ],
+            "points": 25
+          },
+          "quiz": [
+            {
+              "question": "Which symbol is used to select a CSS class?",
+              "options": [
+                "#",
+                ".",
+                "*",
+                "@"
+              ],
+              "correct_answer": 1,
+              "explanation": "A dot (.) prefixes class selectors in CSS.",
+              "points": 5
+            }
+          ]
+        },
+        {
+          "id": "css-ids",
+          "title": "IDs & Selector Specificity",
+          "order": 4,
+          "content": {
+            "explanation": "An 'id' uniquely identifies a single element on a page and is selected in CSS with a hash ('#'). ID selectors are more 'specific' than class selectors, meaning their rules override conflicting class rules when both apply.",
+            "examples": [
+              {
+                "title": "ID Selector",
+                "code": "<style>\n#main-title { color: crimson; }\n</style>\n<h1 id=\"main-title\">Hello</h1>",
+                "explanation": "Targets the single element with id 'main-title' and colors it crimson."
+              }
+            ],
+            "key_points": [
+              "IDs must be unique per page: id=\"name\"",
+              "CSS selects IDs with a hash: #name { ... }",
+              "ID rules win over class rules of equal weight due to higher specificity"
+            ]
+          },
+          "challenge": {
+            "title": "Style an Element by ID",
+            "description": "Create a <style> block targeting #main-title, and an <h1 id=\"main-title\">.",
+            "starter_code": "<style>\n\n</style>\n<!-- Add your heading -->\n",
+            "validation": {
+              "type": "html",
+              "rules": [
+                {
+                  "type": "element_exists",
+                  "element": "style",
+                  "description": "Must include a <style> block"
+                },
+                {
+                  "type": "text_contains",
+                  "value": "main-title",
+                  "description": "Must define and use id 'main-title'"
+                },
+                {
+                  "type": "attribute_exists",
+                  "attribute": "id",
+                  "description": "An element must use the id attribute"
+                }
+              ]
+            },
+            "solution": "<style>\n#main-title { color: crimson; }\n</style>\n<h1 id=\"main-title\">Hello</h1>",
+            "hints": [
+              "Define #main-title { ... } inside <style>",
+              "Apply it with id=\"main-title\""
+            ],
+            "points": 25
+          },
+          "quiz": [
+            {
+              "question": "Between a class rule and an ID rule targeting the same element, which one wins?",
+              "options": [
+                "The class rule always wins",
+                "The ID rule, due to higher specificity",
+                "Whichever is written last, regardless of type",
+                "Neither applies"
+              ],
+              "correct_answer": 1,
+              "explanation": "ID selectors carry higher specificity than class selectors in CSS.",
+              "points": 5
+            }
+          ]
+        },
+        {
+          "id": "css-text-align",
+          "title": "Text Alignment & Decoration",
+          "order": 5,
+          "content": {
+            "explanation": "'text-align' controls the horizontal alignment of text inside its container (left, center, right, or justify). 'text-decoration' adds or removes effects like underlines, which is often used to remove the default underline from links.",
+            "examples": [
+              {
+                "title": "Centered Heading",
+                "code": "<h2 style=\"text-align: center;\">Centered Title</h2>",
+                "explanation": "Centers the heading text horizontally within its container."
+              }
+            ],
+            "key_points": [
+              "text-align: center centers text horizontally",
+              "text-decoration: none removes underlines, often used on links",
+              "text-align only affects inline/text content, not the box position itself"
+            ]
+          },
+          "challenge": {
+            "title": "Center a Heading",
+            "description": "Create an <h2> with style=\"text-align: center;\".",
+            "starter_code": "<!-- Center your heading -->\n",
+            "validation": {
+              "type": "html",
+              "rules": [
+                {
+                  "type": "element_exists",
+                  "element": "h2",
+                  "description": "Must have an <h2> tag"
+                },
+                {
+                  "type": "text_contains",
+                  "value": "text-align",
+                  "description": "Style must include text-align"
+                }
+              ]
+            },
+            "solution": "<h2 style=\"text-align: center;\">Centered Title</h2>",
+            "hints": [
+              "Add style=\"text-align: center;\" to your <h2>"
+            ],
+            "points": 15
+          },
+          "quiz": [
+            {
+              "question": "Which CSS property removes the underline from a link?",
+              "options": [
+                "text-align: none",
+                "text-style: none",
+                "text-decoration: none",
+                "underline: false"
+              ],
+              "correct_answer": 2,
+              "explanation": "'text-decoration: none' removes underlines and other decorations from text.",
+              "points": 5
+            }
+          ]
+        },
+        {
+          "id": "css-google-fonts",
+          "title": "Custom Web Fonts",
+          "order": 6,
+          "content": {
+            "explanation": "Beyond system fonts, custom web fonts (like Google Fonts) can be linked into a page with a <link> tag in the <head>, then applied with 'font-family' just like any other font.",
+            "examples": [
+              {
+                "title": "Linking a Web Font",
+                "code": "<link href=\"https://fonts.googleapis.com/css2?family=Roboto\" rel=\"stylesheet\">\n<p style=\"font-family: 'Roboto', sans-serif;\">Styled text</p>",
+                "explanation": "Loads the Roboto font and applies it to a paragraph."
+              }
+            ],
+            "key_points": [
+              "Custom fonts are typically loaded via a <link> tag in <head>",
+              "Always keep a generic fallback like sans-serif after a custom font name",
+              "Too many custom fonts can slow down page load time"
+            ]
+          },
+          "challenge": {
+            "title": "Apply a Custom Font Family",
+            "description": "Create a <p> with style=\"font-family: 'Roboto', sans-serif;\".",
+            "starter_code": "<!-- Apply your font -->\n",
+            "validation": {
+              "type": "html",
+              "rules": [
+                {
+                  "type": "element_exists",
+                  "element": "p",
+                  "description": "Must have a <p> tag"
+                },
+                {
+                  "type": "text_contains",
+                  "value": "font-family",
+                  "description": "Style must include font-family"
+                }
+              ]
+            },
+            "solution": "<p style=\"font-family: 'Roboto', sans-serif;\">Styled text</p>",
+            "hints": [
+              "Add style=\"font-family: 'Roboto', sans-serif;\""
+            ],
+            "points": 15
+          },
+          "quiz": [
+            {
+              "question": "Where is a Google Font typically linked into an HTML page?",
+              "options": [
+                "Inside the <body>",
+                "Inside the <head> with a <link> tag",
+                "Inside a <script> tag",
+                "It cannot be linked, only downloaded"
+              ],
+              "correct_answer": 1,
+              "explanation": "A <link> tag referencing the font stylesheet is placed in the <head> so it loads before content renders.",
+              "points": 5
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "css-box-model-module",
+      "title": "CSS Box Model & Spacing",
+      "description": "Understand how every element is a box, and control spacing between them",
+      "order": 4,
+      "lessons": [
+        {
+          "id": "css-box-model",
+          "title": "The Box Model: Padding, Margin & Border",
+          "order": 1,
+          "content": {
+            "explanation": "Every HTML element is a rectangular box made of four parts: content, padding, border, and margin. Padding is space inside the border, margin is space outside the border, and the border wraps the padding and content.",
+            "examples": [
+              {
+                "title": "Box Model Spacing",
+                "code": "<div style=\"padding: 20px; margin: 10px; border: 2px solid black;\">Box</div>",
+                "explanation": "Adds inner spacing, outer spacing, and a visible border to a div."
+              }
+            ],
+            "key_points": [
+              "padding = space inside the border, around the content",
+              "margin = space outside the border, between elements",
+              "border adds a visible line around the padding and content"
+            ]
+          },
+          "challenge": {
+            "title": "Style a Box with Padding",
+            "description": "Create a <div> with a style attribute that includes 'padding'.",
+            "starter_code": "<!-- Create your div -->\n",
+            "validation": {
+              "type": "html",
+              "rules": [
+                {
+                  "type": "element_exists",
+                  "element": "div",
+                  "description": "Must have a <div> element"
+                },
+                {
+                  "type": "attribute_exists",
+                  "attribute": "style",
+                  "description": "Must include a style attribute"
+                },
+                {
+                  "type": "text_contains",
+                  "value": "padding",
+                  "description": "Style must include padding"
+                }
+              ]
+            },
+            "solution": "<div style=\"padding: 20px;\">Box</div>",
+            "hints": [
+              "Write <div style=\"padding: 20px;\">Box</div>"
+            ],
+            "points": 20
+          },
+          "quiz": [
+            {
+              "question": "Which box model property adds space OUTSIDE an element's border?",
+              "options": [
+                "padding",
+                "margin",
+                "border",
+                "outline"
+              ],
+              "correct_answer": 1,
+              "explanation": "Margin creates space outside the border, separating elements from one another.",
+              "points": 5
+            }
+          ]
+        },
+        {
+          "id": "css-width-height",
+          "title": "Width, Height & Box Sizing",
+          "order": 2,
+          "content": {
+            "explanation": "'width' and 'height' set an element's content size. By default, padding and border add to that size, but 'box-sizing: border-box' makes padding and border count inside the declared width and height, which is easier to reason about.",
+            "examples": [
+              {
+                "title": "Border-Box Sizing",
+                "code": "<div style=\"width: 200px; padding: 20px; box-sizing: border-box;\">Box</div>",
+                "explanation": "The div stays exactly 200px wide total, because padding is included rather than added."
+              }
+            ],
+            "key_points": [
+              "Default box-sizing is 'content-box': padding/border add extra width",
+              "'border-box' includes padding and border inside the declared width/height",
+              "Many developers set box-sizing: border-box globally for predictability"
+            ]
+          },
+          "challenge": {
+            "title": "Set a Fixed Width Box",
+            "description": "Create a <div> with style including both 'width' and 'box-sizing: border-box'.",
+            "starter_code": "<!-- Create your div -->\n",
+            "validation": {
+              "type": "html",
+              "rules": [
+                {
+                  "type": "element_exists",
+                  "element": "div",
+                  "description": "Must have a <div> element"
+                },
+                {
+                  "type": "text_contains",
+                  "value": "box-sizing",
+                  "description": "Style must include box-sizing"
+                }
+              ]
+            },
+            "solution": "<div style=\"width: 200px; box-sizing: border-box;\">Box</div>",
+            "hints": [
+              "Add style=\"width: 200px; box-sizing: border-box;\""
+            ],
+            "points": 20
+          },
+          "quiz": [
+            {
+              "question": "What does 'box-sizing: border-box' change about width calculation?",
+              "options": [
+                "It ignores width entirely",
+                "Padding and border are included inside the declared width",
+                "It makes elements circular",
+                "It removes margin"
+              ],
+              "correct_answer": 1,
+              "explanation": "With border-box, padding and border no longer add extra size beyond the declared width/height.",
+              "points": 5
+            }
+          ]
+        },
+        {
+          "id": "css-display",
+          "title": "Display: Block vs Inline",
+          "order": 3,
+          "content": {
+            "explanation": "The 'display' property determines how an element behaves in the layout. Block elements (like <div>) take up the full width and start on a new line; inline elements (like <span>) flow within text and only take up as much width as needed.",
+            "examples": [
+              {
+                "title": "Inline vs Block",
+                "code": "<span style=\"display: inline;\">Inline</span>\n<div style=\"display: block;\">Block</div>",
+                "explanation": "The span stays inline with surrounding content; the div starts on its own line."
+              }
+            ],
+            "key_points": [
+              "Block elements stack vertically and fill available width by default",
+              "Inline elements sit side-by-side within a line of text",
+              "'display: inline-block' combines inline flow with block-like sizing"
+            ]
+          },
+          "challenge": {
+            "title": "Set Display to Block",
+            "description": "Create a <span> with style=\"display: block;\".",
+            "starter_code": "<!-- Change the display -->\n",
+            "validation": {
+              "type": "html",
+              "rules": [
+                {
+                  "type": "element_exists",
+                  "element": "span",
+                  "description": "Must have a <span> element"
+                },
+                {
+                  "type": "text_contains",
+                  "value": "display: block",
+                  "description": "Must set display to block"
+                }
+              ]
+            },
+            "solution": "<span style=\"display: block;\">Now on its own line</span>",
+            "hints": [
+              "Add style=\"display: block;\" to the span"
+            ],
+            "points": 15
+          },
+          "quiz": [
+            {
+              "question": "Which display value makes an element start on a new line and fill available width?",
+              "options": [
+                "inline",
+                "block",
+                "none",
+                "inline-block"
+              ],
+              "correct_answer": 1,
+              "explanation": "Block-level elements stack vertically and take up the full available width by default.",
+              "points": 5
+            }
+          ]
+        },
+        {
+          "id": "css-position",
+          "title": "Positioning: Relative & Absolute",
+          "order": 4,
+          "content": {
+            "explanation": "The 'position' property changes how an element is placed. 'relative' shifts it from its normal position without affecting other elements; 'absolute' removes it from normal flow and positions it relative to the nearest positioned ancestor.",
+            "examples": [
+              {
+                "title": "Absolute Badge",
+                "code": "<div style=\"position: relative;\">\n  <span style=\"position: absolute; top: 0; right: 0;\">New</span>\n</div>",
+                "explanation": "Positions a 'New' badge in the top-right corner of its relatively positioned parent."
+              }
+            ],
+            "key_points": [
+              "position: relative keeps the element in flow but allows offsetting it",
+              "position: absolute positions relative to the nearest positioned ancestor",
+              "top/right/bottom/left set the offset once position is not 'static'"
+            ]
+          },
+          "challenge": {
+            "title": "Create an Absolutely Positioned Badge",
+            "description": "Create a <div style=\"position: relative;\"> containing a <span style=\"position: absolute;\">.",
+            "starter_code": "<!-- Build your positioned badge -->\n",
+            "validation": {
+              "type": "html",
+              "rules": [
+                {
+                  "type": "text_contains",
+                  "value": "position: relative",
+                  "description": "Must include position: relative"
+                },
+                {
+                  "type": "text_contains",
+                  "value": "position: absolute",
+                  "description": "Must include position: absolute"
+                }
+              ]
+            },
+            "solution": "<div style=\"position: relative;\">\n  <span style=\"position: absolute; top: 0; right: 0;\">New</span>\n</div>",
+            "hints": [
+              "Outer div: position: relative;",
+              "Inner span: position: absolute;"
+            ],
+            "points": 25
+          },
+          "quiz": [
+            {
+              "question": "An absolutely positioned element is placed relative to what?",
+              "options": [
+                "The browser window only",
+                "Its nearest positioned ancestor",
+                "The <body> tag always",
+                "It cannot be positioned"
+              ],
+              "correct_answer": 1,
+              "explanation": "An absolutely positioned element positions itself relative to the nearest ancestor that has a non-static position.",
+              "points": 5
+            }
+          ]
+        },
+        {
+          "id": "css-overflow",
+          "title": "Overflow & Scrolling Content",
+          "order": 5,
+          "content": {
+            "explanation": "When content is bigger than its container, the 'overflow' property decides what happens: 'visible' (default, spills out), 'hidden' (clipped), or 'scroll'/'auto' (adds scrollbars).",
+            "examples": [
+              {
+                "title": "Scrollable Box",
+                "code": "<div style=\"height: 100px; overflow: auto;\">Long content that needs scrolling...</div>",
+                "explanation": "Adds a scrollbar automatically if the content exceeds the fixed height."
+              }
+            ],
+            "key_points": [
+              "overflow: hidden clips content that doesn't fit",
+              "overflow: auto shows a scrollbar only when needed",
+              "overflow: scroll always shows scrollbars, even if not needed"
+            ]
+          },
+          "challenge": {
+            "title": "Make a Scrollable Box",
+            "description": "Create a <div> with style including 'overflow: auto' and a fixed 'height'.",
+            "starter_code": "<!-- Build your scrollable box -->\n",
+            "validation": {
+              "type": "html",
+              "rules": [
+                {
+                  "type": "element_exists",
+                  "element": "div",
+                  "description": "Must have a <div>"
+                },
+                {
+                  "type": "text_contains",
+                  "value": "overflow",
+                  "description": "Style must include overflow"
+                }
+              ]
+            },
+            "solution": "<div style=\"height: 100px; overflow: auto;\">Long content...</div>",
+            "hints": [
+              "Add style=\"height: 100px; overflow: auto;\""
+            ],
+            "points": 20
+          },
+          "quiz": [
+            {
+              "question": "Which overflow value clips overflowing content without adding a scrollbar?",
+              "options": [
+                "visible",
+                "hidden",
+                "auto",
+                "scroll"
+              ],
+              "correct_answer": 1,
+              "explanation": "'hidden' clips any content that exceeds the element's box, with no scrollbar shown.",
+              "points": 5
+            }
+          ]
+        },
+        {
+          "id": "css-units",
+          "title": "CSS Units: px, %, em & rem",
+          "order": 6,
+          "content": {
+            "explanation": "CSS sizes can be absolute (like 'px', a fixed pixel value) or relative. '%' is relative to the parent's size, 'em' is relative to the current element's font size, and 'rem' is relative to the root (<html>) font size, making it predictable across a whole page.",
+            "examples": [
+              {
+                "title": "Relative Sizing",
+                "code": "<p style=\"font-size: 1.5rem; width: 80%;\">Responsive text</p>",
+                "explanation": "Sets font size relative to the root, and width relative to the parent container."
+              }
+            ],
+            "key_points": [
+              "px is a fixed, absolute unit",
+              "% sizes relative to the parent element",
+              "rem sizes relative to the root <html> font-size, consistent site-wide"
+            ]
+          },
+          "challenge": {
+            "title": "Use rem Units",
+            "description": "Create a <p> with style=\"font-size: 1.5rem;\".",
+            "starter_code": "<!-- Use rem units -->\n",
+            "validation": {
+              "type": "html",
+              "rules": [
+                {
+                  "type": "element_exists",
+                  "element": "p",
+                  "description": "Must have a <p> tag"
+                },
+                {
+                  "type": "text_contains",
+                  "value": "rem",
+                  "description": "Style must use rem units"
+                }
+              ]
+            },
+            "solution": "<p style=\"font-size: 1.5rem;\">Responsive text</p>",
+            "hints": [
+              "Add style=\"font-size: 1.5rem;\""
+            ],
+            "points": 15
+          },
+          "quiz": [
+            {
+              "question": "The 'rem' unit is relative to what?",
+              "options": [
+                "The parent element's size",
+                "The viewport width",
+                "The root <html> element's font size",
+                "The browser window height"
+              ],
+              "correct_answer": 2,
+              "explanation": "'rem' stands for root em, and is always relative to the <html> element's font size.",
+              "points": 5
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "css-layout",
+      "title": "Modern CSS Layout: Flexbox & Grid",
+      "description": "Arrange elements on the page using the two pillars of modern CSS layout",
+      "order": 5,
+      "lessons": [
+        {
+          "id": "css-flexbox",
+          "title": "Flexbox Basics",
+          "order": 1,
+          "content": {
+            "explanation": "Flexbox is a one-dimensional layout system for arranging items in a row or column. Setting 'display: flex' on a container turns its direct children into flex items that can be aligned and distributed with properties like 'justify-content'.",
+            "examples": [
+              {
+                "title": "Flex Container",
+                "code": "<div style=\"display: flex; justify-content: space-between;\">\n  <div>A</div>\n  <div>B</div>\n</div>",
+                "explanation": "Places two boxes in a row with space distributed between them."
+              }
+            ],
+            "key_points": [
+              "display: flex turns a container into a flex container",
+              "justify-content aligns items along the main axis (horizontal by default)",
+              "align-items aligns items along the cross axis (vertical by default)"
+            ]
+          },
+          "challenge": {
+            "title": "Create a Flex Container",
+            "description": "Create a <div> with style=\"display: flex;\" containing two nested <div> elements.",
+            "starter_code": "<!-- Build your flex container -->\n",
+            "validation": {
+              "type": "html",
+              "rules": [
+                {
+                  "type": "element_exists",
+                  "element": "div",
+                  "description": "Must contain <div> elements"
+                },
+                {
+                  "type": "text_contains",
+                  "value": "display: flex",
+                  "description": "Must use display: flex"
+                }
+              ]
+            },
+            "solution": "<div style=\"display: flex;\">\n  <div>A</div>\n  <div>B</div>\n</div>",
+            "hints": [
+              "Set style=\"display: flex;\" on the outer div"
+            ],
+            "points": 25
+          },
+          "quiz": [
+            {
+              "question": "Which CSS property turns a container into a flexbox?",
+              "options": [
+                "display: flex",
+                "layout: flex",
+                "position: flex",
+                "flex: true"
+              ],
+              "correct_answer": 0,
+              "explanation": "'display: flex' activates flexbox layout on the container.",
+              "points": 5
+            },
+            {
+              "question": "Which flexbox property distributes space along the main axis?",
+              "options": [
+                "align-items",
+                "flex-wrap",
+                "justify-content",
+                "gap"
+              ],
+              "correct_answer": 2,
+              "explanation": "'justify-content' controls alignment and spacing along the main axis.",
+              "points": 5
+            }
+          ]
+        },
+        {
+          "id": "css-flex-direction",
+          "title": "Flex Direction & Wrapping",
+          "order": 2,
+          "content": {
+            "explanation": "'flex-direction' controls whether flex items are laid out in a row (default) or a column. 'flex-wrap: wrap' allows items to move onto a new line instead of shrinking to fit a single row.",
+            "examples": [
+              {
+                "title": "Column Layout",
+                "code": "<div style=\"display: flex; flex-direction: column;\">\n  <div>Top</div>\n  <div>Bottom</div>\n</div>",
+                "explanation": "Stacks flex items vertically instead of horizontally."
+              }
+            ],
+            "key_points": [
+              "flex-direction: row (default) lays items left to right",
+              "flex-direction: column stacks items top to bottom",
+              "flex-wrap: wrap lets items flow onto multiple lines"
+            ]
+          },
+          "challenge": {
+            "title": "Stack Items in a Column",
+            "description": "Create a flex container with style including 'flex-direction: column'.",
+            "starter_code": "<!-- Build your column layout -->\n",
+            "validation": {
+              "type": "html",
+              "rules": [
+                {
+                  "type": "text_contains",
+                  "value": "display: flex",
+                  "description": "Must use display: flex"
+                },
+                {
+                  "type": "text_contains",
+                  "value": "flex-direction: column",
+                  "description": "Must use flex-direction: column"
+                }
+              ]
+            },
+            "solution": "<div style=\"display: flex; flex-direction: column;\">\n  <div>Top</div>\n  <div>Bottom</div>\n</div>",
+            "hints": [
+              "Add flex-direction: column; alongside display: flex;"
+            ],
+            "points": 20
+          },
+          "quiz": [
+            {
+              "question": "Which value of flex-direction stacks items vertically?",
+              "options": [
+                "row",
+                "row-reverse",
+                "column",
+                "wrap"
+              ],
+              "correct_answer": 2,
+              "explanation": "flex-direction: column arranges flex items top to bottom.",
+              "points": 5
+            }
+          ]
+        },
+        {
+          "id": "css-align-items",
+          "title": "Aligning Items on the Cross Axis",
+          "order": 3,
+          "content": {
+            "explanation": "'align-items' controls how flex items are aligned perpendicular to the main axis (vertically, in a row layout). Common values are 'flex-start', 'center', and 'flex-end', with 'center' being especially useful for vertical centering.",
+            "examples": [
+              {
+                "title": "Vertically Centered Items",
+                "code": "<div style=\"display: flex; align-items: center; height: 150px;\">\n  <div>Centered</div>\n</div>",
+                "explanation": "Vertically centers the child inside a 150px-tall flex container."
+              }
+            ],
+            "key_points": [
+              "align-items: center vertically centers items in a row layout",
+              "align-items works on the cross axis, perpendicular to flex-direction",
+              "Combining justify-content: center and align-items: center centers content both ways"
+            ]
+          },
+          "challenge": {
+            "title": "Vertically Center a Flex Item",
+            "description": "Create a flex container with style including 'align-items: center'.",
+            "starter_code": "<!-- Center the item -->\n",
+            "validation": {
+              "type": "html",
+              "rules": [
+                {
+                  "type": "text_contains",
+                  "value": "display: flex",
+                  "description": "Must use display: flex"
+                },
+                {
+                  "type": "text_contains",
+                  "value": "align-items: center",
+                  "description": "Must use align-items: center"
+                }
+              ]
+            },
+            "solution": "<div style=\"display: flex; align-items: center; height: 150px;\">\n  <div>Centered</div>\n</div>",
+            "hints": [
+              "Add align-items: center; to your flex container"
+            ],
+            "points": 20
+          },
+          "quiz": [
+            {
+              "question": "In a default row flexbox, what axis does 'align-items' control?",
+              "options": [
+                "The main (horizontal) axis",
+                "The cross (vertical) axis",
+                "Only the z-axis",
+                "It has no effect in a row layout"
+              ],
+              "correct_answer": 1,
+              "explanation": "align-items controls alignment along the cross axis, which is vertical when flex-direction is row.",
+              "points": 5
+            }
+          ]
+        },
+        {
+          "id": "css-grid",
+          "title": "CSS Grid Basics",
+          "order": 4,
+          "content": {
+            "explanation": "CSS Grid is a two-dimensional layout system that arranges elements into rows and columns simultaneously. Setting 'display: grid' with 'grid-template-columns' defines how many columns the layout has and how wide they are.",
+            "examples": [
+              {
+                "title": "Simple Grid",
+                "code": "<div style=\"display: grid; grid-template-columns: 1fr 1fr;\">\n  <div>Left</div>\n  <div>Right</div>\n</div>",
+                "explanation": "Creates a two-column grid with equal-width columns."
+              }
+            ],
+            "key_points": [
+              "display: grid activates grid layout",
+              "grid-template-columns defines column sizes, e.g. '1fr 1fr' for two equal columns",
+              "'fr' stands for fractional unit, a share of available space"
+            ]
+          },
+          "challenge": {
+            "title": "Build a Two-Column Grid",
+            "description": "Create a <div> using display: grid and grid-template-columns to make two columns.",
+            "starter_code": "<!-- Build your grid -->\n",
+            "validation": {
+              "type": "html",
+              "rules": [
+                {
+                  "type": "text_contains",
+                  "value": "display: grid",
+                  "description": "Must use display: grid"
+                },
+                {
+                  "type": "text_contains",
+                  "value": "grid-template-columns",
+                  "description": "Must define grid-template-columns"
+                }
+              ]
+            },
+            "solution": "<div style=\"display: grid; grid-template-columns: 1fr 1fr;\">\n  <div>Left</div>\n  <div>Right</div>\n</div>",
+            "hints": [
+              "Set style=\"display: grid; grid-template-columns: 1fr 1fr;\""
+            ],
+            "points": 25
+          },
+          "quiz": [
+            {
+              "question": "What does the 'fr' unit represent in CSS Grid?",
+              "options": [
+                "A fixed pixel size",
+                "A fraction of available space",
+                "Font-relative size",
+                "A percentage of the viewport"
+              ],
+              "correct_answer": 1,
+              "explanation": "'fr' is a fractional unit representing a share of the remaining space in the grid.",
+              "points": 5
+            }
+          ]
+        },
+        {
+          "id": "css-grid-gap",
+          "title": "Grid Gap & Rows",
+          "order": 5,
+          "content": {
+            "explanation": "'gap' adds consistent spacing between grid (or flex) items without needing margins on each one. 'grid-template-rows' works like grid-template-columns but defines the height of each row instead.",
+            "examples": [
+              {
+                "title": "Grid with Gap",
+                "code": "<div style=\"display: grid; grid-template-columns: 1fr 1fr; gap: 16px;\">\n  <div>A</div>\n  <div>B</div>\n</div>",
+                "explanation": "Adds 16px of spacing between every grid cell."
+              }
+            ],
+            "key_points": [
+              "gap adds space between grid/flex items in one property",
+              "grid-template-rows defines the height of each row",
+              "gap replaces the need for manual margins between grid items"
+            ]
+          },
+          "challenge": {
+            "title": "Add Spacing to a Grid",
+            "description": "Create a grid container with style including both 'display: grid' and 'gap'.",
+            "starter_code": "<!-- Add gap to your grid -->\n",
+            "validation": {
+              "type": "html",
+              "rules": [
+                {
+                  "type": "text_contains",
+                  "value": "display: grid",
+                  "description": "Must use display: grid"
+                },
+                {
+                  "type": "text_contains",
+                  "value": "gap",
+                  "description": "Must include gap"
+                }
+              ]
+            },
+            "solution": "<div style=\"display: grid; grid-template-columns: 1fr 1fr; gap: 16px;\">\n  <div>A</div>\n  <div>B</div>\n</div>",
+            "hints": [
+              "Add gap: 16px; to your grid container"
+            ],
+            "points": 20
+          },
+          "quiz": [
+            {
+              "question": "What does the 'gap' property control in a grid layout?",
+              "options": [
+                "The border thickness",
+                "Spacing between grid items",
+                "The number of columns",
+                "The font size of items"
+              ],
+              "correct_answer": 1,
+              "explanation": "'gap' sets consistent spacing between rows and columns of grid (or flex) items.",
+              "points": 5
+            }
+          ]
+        },
+        {
+          "id": "css-flex-vs-grid",
+          "title": "Choosing Flexbox vs Grid",
+          "order": 6,
+          "content": {
+            "explanation": "Flexbox and Grid solve different problems. Flexbox excels at one-dimensional layouts (a single row or column, like a navbar), while Grid excels at two-dimensional layouts (rows AND columns together, like a page template or photo gallery). They can also be combined.",
+            "examples": [
+              {
+                "title": "Navbar with Flexbox",
+                "code": "<nav style=\"display: flex; justify-content: space-between;\">\n  <span>Logo</span>\n  <span>Menu</span>\n</nav>",
+                "explanation": "A simple one-dimensional navbar is a classic flexbox use case."
+              }
+            ],
+            "key_points": [
+              "Use Flexbox for one-dimensional arrangements: a single row or column",
+              "Use Grid for two-dimensional arrangements: rows and columns together",
+              "A whole page layout often uses Grid for structure and Flexbox inside components"
+            ]
+          },
+          "challenge": {
+            "title": "Build a Flexbox Navbar",
+            "description": "Create a <nav> with style=\"display: flex; justify-content: space-between;\" containing two child elements.",
+            "starter_code": "<!-- Build your navbar -->\n",
+            "validation": {
+              "type": "html",
+              "rules": [
+                {
+                  "type": "element_exists",
+                  "element": "nav",
+                  "description": "Must have a <nav> element"
+                },
+                {
+                  "type": "text_contains",
+                  "value": "display: flex",
+                  "description": "Must use display: flex"
+                }
+              ]
+            },
+            "solution": "<nav style=\"display: flex; justify-content: space-between;\">\n  <span>Logo</span>\n  <span>Menu</span>\n</nav>",
+            "hints": [
+              "Use display: flex; justify-content: space-between; on the nav"
+            ],
+            "points": 20
+          },
+          "quiz": [
+            {
+              "question": "Which layout system is best suited for a simple one-dimensional navbar?",
+              "options": [
+                "CSS Grid",
+                "Flexbox",
+                "Floats",
+                "Tables"
+              ],
+              "correct_answer": 1,
+              "explanation": "Flexbox is ideal for one-dimensional layouts like a row of navbar items.",
+              "points": 5
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "css-responsive-animations",
+      "title": "Responsive Design & Animations",
+      "description": "Make pages adapt to any screen size and bring interfaces to life with motion",
+      "order": 6,
+      "lessons": [
+        {
+          "id": "css-media-queries",
+          "title": "Media Queries & Breakpoints",
+          "order": 1,
+          "content": {
+            "explanation": "Media queries apply CSS rules only when certain conditions are met, most commonly screen width. '@media (max-width: 600px) { ... }' applies its rules only on screens 600px wide or narrower, enabling responsive, mobile-friendly designs.",
+            "examples": [
+              {
+                "title": "Mobile Breakpoint",
+                "code": "<style>\n@media (max-width: 600px) {\n  .box { background-color: lightblue; }\n}\n</style>",
+                "explanation": "Changes the box's background color only when the viewport is 600px wide or less."
+              }
+            ],
+            "key_points": [
+              "@media (max-width: Npx) targets screens N pixels wide or smaller",
+              "Media queries are the foundation of responsive web design",
+              "Common breakpoints target phones, tablets, and desktops"
+            ]
+          },
+          "challenge": {
+            "title": "Write a Media Query",
+            "description": "Create a <style> block with an @media (max-width: 600px) rule.",
+            "starter_code": "<style>\n\n</style>\n",
+            "validation": {
+              "type": "html",
+              "rules": [
+                {
+                  "type": "element_exists",
+                  "element": "style",
+                  "description": "Must include a <style> block"
+                },
+                {
+                  "type": "text_contains",
+                  "value": "@media",
+                  "description": "Must use an @media query"
+                },
+                {
+                  "type": "text_contains",
+                  "value": "max-width",
+                  "description": "Must use max-width condition"
+                }
+              ]
+            },
+            "solution": "<style>\n@media (max-width: 600px) {\n  .box { background-color: lightblue; }\n}\n</style>",
+            "hints": [
+              "Write @media (max-width: 600px) { ... }"
+            ],
+            "points": 25
+          },
+          "quiz": [
+            {
+              "question": "What does '@media (max-width: 600px)' target?",
+              "options": [
+                "Screens wider than 600px only",
+                "Screens 600px wide or narrower",
+                "Exactly 600px screens only",
+                "Print layouts only"
+              ],
+              "correct_answer": 1,
+              "explanation": "max-width in a media query matches viewports at or below that width.",
+              "points": 5
+            }
+          ]
+        },
+        {
+          "id": "css-responsive-images",
+          "title": "Responsive Images",
+          "order": 2,
+          "content": {
+            "explanation": "Setting 'max-width: 100%' on an image prevents it from overflowing its container on small screens, while letting it display at full size on larger ones. This single rule is one of the most common responsive design techniques.",
+            "examples": [
+              {
+                "title": "Fluid Image",
+                "code": "<img src=\"photo.jpg\" alt=\"A photo\" style=\"max-width: 100%; height: auto;\">",
+                "explanation": "The image shrinks to fit its container but never stretches beyond its natural size."
+              }
+            ],
+            "key_points": [
+              "max-width: 100% prevents images from overflowing their container",
+              "height: auto keeps the image's aspect ratio when its width shrinks",
+              "This pattern is essential for mobile-friendly pages"
+            ]
+          },
+          "challenge": {
+            "title": "Make an Image Responsive",
+            "description": "Create an <img> tag with style including 'max-width: 100%'.",
+            "starter_code": "<!-- Make your image responsive -->\n",
+            "validation": {
+              "type": "html",
+              "rules": [
+                {
+                  "type": "element_exists",
+                  "element": "img",
+                  "description": "Must have an <img> tag"
+                },
+                {
+                  "type": "text_contains",
+                  "value": "max-width: 100%",
+                  "description": "Style must include max-width: 100%"
+                }
+              ]
+            },
+            "solution": "<img src=\"photo.jpg\" alt=\"A photo\" style=\"max-width: 100%; height: auto;\">",
+            "hints": [
+              "Add style=\"max-width: 100%; height: auto;\" to the img"
+            ],
+            "points": 15
+          },
+          "quiz": [
+            {
+              "question": "Which style prevents an image from overflowing its container on small screens?",
+              "options": [
+                "width: 100vw",
+                "max-width: 100%",
+                "height: 100%",
+                "overflow: hidden"
+              ],
+              "correct_answer": 1,
+              "explanation": "max-width: 100% caps the image size at its container's width, shrinking on smaller screens.",
+              "points": 5
+            }
+          ]
+        },
+        {
+          "id": "css-viewport-meta",
+          "title": "The Viewport Meta Tag",
+          "order": 3,
+          "content": {
+            "explanation": "Without a viewport meta tag, mobile browsers render pages at a wide desktop-like width and zoom out. Adding '<meta name=\"viewport\" content=\"width=device-width, initial-scale=1\">' in the <head> tells the browser to match the page width to the device's actual screen width.",
+            "examples": [
+              {
+                "title": "Viewport Meta Tag",
+                "code": "<head>\n  <meta name=\"viewport\" content=\"width=device-width, initial-scale=1\">\n</head>",
+                "explanation": "Ensures the page renders at the device's real width instead of a zoomed-out desktop layout."
+              }
+            ],
+            "key_points": [
+              "Without this tag, mobile browsers assume a ~980px wide desktop layout",
+              "width=device-width matches the CSS viewport to the device screen width",
+              "initial-scale=1 sets the initial zoom level to 100%"
+            ]
+          },
+          "challenge": {
+            "title": "Add a Viewport Meta Tag",
+            "description": "Create a <meta> tag with name=\"viewport\" and content including 'width=device-width'.",
+            "starter_code": "<!-- Add your viewport tag -->\n",
+            "validation": {
+              "type": "html",
+              "rules": [
+                {
+                  "type": "element_exists",
+                  "element": "meta",
+                  "description": "Must have a <meta> tag"
+                },
+                {
+                  "type": "text_contains",
+                  "value": "viewport",
+                  "description": "Must set name=\"viewport\""
+                },
+                {
+                  "type": "text_contains",
+                  "value": "device-width",
+                  "description": "Must include width=device-width"
+                }
+              ]
+            },
+            "solution": "<meta name=\"viewport\" content=\"width=device-width, initial-scale=1\">",
+            "hints": [
+              "Write <meta name=\"viewport\" content=\"width=device-width, initial-scale=1\">"
+            ],
+            "points": 15
+          },
+          "quiz": [
+            {
+              "question": "What is the purpose of the viewport meta tag?",
+              "options": [
+                "It adds a border to the page",
+                "It matches the page's width to the device's actual screen width",
+                "It changes the font of the page",
+                "It disables scrolling"
+              ],
+              "correct_answer": 1,
+              "explanation": "The viewport meta tag tells mobile browsers to render the page at the device's real width instead of a zoomed-out layout.",
+              "points": 5
+            }
+          ]
+        },
+        {
+          "id": "css-transitions",
+          "title": "CSS Transitions",
+          "order": 4,
+          "content": {
+            "explanation": "'transition' smoothly animates a CSS property change over time, instead of it happening instantly. It's commonly combined with ':hover' to create smooth effects when a user moves their mouse over an element.",
+            "examples": [
+              {
+                "title": "Hover Transition",
+                "code": "<style>\nbutton { background-color: royalblue; transition: background-color 0.3s; }\nbutton:hover { background-color: darkblue; }\n</style>",
+                "explanation": "The button's background smoothly fades to a darker blue over 0.3 seconds on hover."
+              }
+            ],
+            "key_points": [
+              "transition: property duration animates changes to that property",
+              "':hover' triggers styles when the mouse is over an element",
+              "Common transition durations range from 0.2s to 0.5s for a smooth feel"
+            ]
+          },
+          "challenge": {
+            "title": "Add a Hover Transition",
+            "description": "Create a <style> block with a button rule that includes 'transition' and a ':hover' rule.",
+            "starter_code": "<style>\n\n</style>\n<button>Hover me</button>\n",
+            "validation": {
+              "type": "html",
+              "rules": [
+                {
+                  "type": "text_contains",
+                  "value": "transition",
+                  "description": "Must include a transition property"
+                },
+                {
+                  "type": "text_contains",
+                  "value": ":hover",
+                  "description": "Must include a :hover rule"
+                }
+              ]
+            },
+            "solution": "<style>\nbutton { background-color: royalblue; transition: background-color 0.3s; }\nbutton:hover { background-color: darkblue; }\n</style>\n<button>Hover me</button>",
+            "hints": [
+              "Add transition: background-color 0.3s; to the button rule",
+              "Add a separate button:hover { ... } rule"
+            ],
+            "points": 25
+          },
+          "quiz": [
+            {
+              "question": "Which CSS property animates a smooth change between two style states?",
+              "options": [
+                "animation-name",
+                "transform",
+                "transition",
+                "keyframes"
+              ],
+              "correct_answer": 2,
+              "explanation": "'transition' smoothly animates a property's change from one value to another over a set duration.",
+              "points": 5
+            }
+          ]
+        },
+        {
+          "id": "css-transform",
+          "title": "Transform: Scale & Rotate",
+          "order": 5,
+          "content": {
+            "explanation": "'transform' changes an element's shape or position visually, without affecting the layout of surrounding elements. Common functions include 'scale()' to resize, 'rotate()' to spin, and 'translate()' to move.",
+            "examples": [
+              {
+                "title": "Scale on Hover",
+                "code": "<style>\n.card:hover { transform: scale(1.05); }\n</style>",
+                "explanation": "Enlarges the card slightly to 105% of its size when hovered."
+              }
+            ],
+            "key_points": [
+              "transform: scale(1.05) enlarges an element to 105% of its size",
+              "transform: rotate(45deg) rotates an element by 45 degrees",
+              "transform doesn't affect the space other elements take up, unlike changing width/height directly"
+            ]
+          },
+          "challenge": {
+            "title": "Scale an Element on Hover",
+            "description": "Create a <style> block with a '.card:hover' rule that uses 'transform: scale'.",
+            "starter_code": "<style>\n\n</style>\n<div class=\"card\">Card</div>\n",
+            "validation": {
+              "type": "html",
+              "rules": [
+                {
+                  "type": "text_contains",
+                  "value": "transform",
+                  "description": "Must include transform property"
+                },
+                {
+                  "type": "text_contains",
+                  "value": "scale",
+                  "description": "Must use scale()"
+                }
+              ]
+            },
+            "solution": "<style>\n.card:hover { transform: scale(1.05); }\n</style>\n<div class=\"card\">Card</div>",
+            "hints": [
+              "Write .card:hover { transform: scale(1.05); }"
+            ],
+            "points": 20
+          },
+          "quiz": [
+            {
+              "question": "Which transform function resizes an element?",
+              "options": [
+                "rotate()",
+                "translate()",
+                "scale()",
+                "skew()"
+              ],
+              "correct_answer": 2,
+              "explanation": "scale() resizes an element visually, e.g. scale(1.05) makes it 5% larger.",
+              "points": 5
+            }
+          ]
+        },
+        {
+          "id": "css-keyframes",
+          "title": "Keyframe Animations",
+          "order": 6,
+          "content": {
+            "explanation": "'@keyframes' defines a multi-step animation sequence by naming stages from 0% to 100%. An element then runs that animation using the 'animation' property, specifying the keyframe name and duration.",
+            "examples": [
+              {
+                "title": "Fade In Animation",
+                "code": "<style>\n@keyframes fadeIn {\n  from { opacity: 0; }\n  to { opacity: 1; }\n}\n.box { animation: fadeIn 1s; }\n</style>",
+                "explanation": "Fades an element from invisible to fully visible over 1 second."
+              }
+            ],
+            "key_points": [
+              "@keyframes name { ... } defines the animation's stages",
+              "'from'/'to' or percentages (0%, 50%, 100%) mark animation stages",
+              "The 'animation' property applies a keyframe animation with a duration"
+            ]
+          },
+          "challenge": {
+            "title": "Create a Fade-In Animation",
+            "description": "Create a <style> block with an @keyframes fadeIn rule and apply it with the 'animation' property.",
+            "starter_code": "<style>\n\n</style>\n<div class=\"box\">Fading in</div>\n",
+            "validation": {
+              "type": "html",
+              "rules": [
+                {
+                  "type": "text_contains",
+                  "value": "@keyframes",
+                  "description": "Must define @keyframes"
+                },
+                {
+                  "type": "text_contains",
+                  "value": "animation",
+                  "description": "Must use the animation property"
+                }
+              ]
+            },
+            "solution": "<style>\n@keyframes fadeIn {\n  from { opacity: 0; }\n  to { opacity: 1; }\n}\n.box { animation: fadeIn 1s; }\n</style>\n<div class=\"box\">Fading in</div>",
+            "hints": [
+              "Define @keyframes fadeIn { from {...} to {...} }",
+              "Apply it with animation: fadeIn 1s; on the .box class"
+            ],
+            "points": 25
+          },
+          "quiz": [
+            {
+              "question": "Which rule defines the stages of a custom CSS animation?",
+              "options": [
+                "@media",
+                "@keyframes",
+                "@font-face",
+                "@import"
+              ],
+              "correct_answer": 1,
+              "explanation": "@keyframes defines the sequence of styles an animation moves through over time.",
+              "points": 5
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "js-interactivity",
+      "title": "JavaScript Fundamentals",
+      "description": "Add dynamic behavior, variables, and logic to web applications",
+      "order": 7,
+      "lessons": [
+        {
+          "id": "js-console",
+          "title": "Console Output & Logging",
+          "order": 1,
+          "content": {
+            "explanation": "JavaScript is the programming language of the web. The console.log() method writes messages and debug data to the browser console.",
+            "examples": [
+              {
+                "title": "Console Log",
+                "code": "console.log(\"Hello from JavaScript!\");",
+                "explanation": "Prints text directly to the console."
+              }
+            ],
+            "key_points": [
+              "console.log is the most widely used debugging tool",
+              "Statements typically end with a semicolon (;)",
+              "Strings are wrapped in quotes: 'single', \"double\", or `backticks`"
+            ]
+          },
+          "challenge": {
+            "title": "Print to the Console",
+            "description": "Write a JavaScript statement that calls console.log with 'Ready to Code'.",
+            "starter_code": "// Write your JavaScript code below\n",
+            "validation": {
+              "type": "javascript",
+              "rules": [
+                {
+                  "type": "text_contains",
+                  "value": "console.log",
+                  "description": "Must call console.log"
+                },
+                {
+                  "type": "text_contains",
+                  "value": "Ready to Code",
+                  "description": "Must contain 'Ready to Code'"
+                }
+              ]
+            },
+            "solution": "console.log('Ready to Code');",
+            "hints": [
+              "Type console.log('Ready to Code');"
+            ],
+            "points": 20
+          },
+          "quiz": [
+            {
+              "question": "Which method is used in JavaScript to print output to the console?",
+              "options": [
+                "print()",
+                "console.log()",
+                "echo()",
+                "System.out.println()"
+              ],
+              "correct_answer": 1,
+              "explanation": "console.log() writes output to the browser/node console.",
+              "points": 5
+            }
+          ]
+        },
+        {
+          "id": "js-variables",
+          "title": "Variables: let, const & var",
+          "order": 2,
+          "content": {
+            "explanation": "Variables store data for later use. Modern JavaScript uses 'let' for values that can change and 'const' for values that stay constant. The older 'var' keyword is mostly avoided in new code due to scoping issues.",
+            "examples": [
+              {
+                "title": "Declaring Variables",
+                "code": "let score = 10;\nconst name = \"Alex\";\nscore = 20;",
+                "explanation": "Declares a changeable 'score' and a constant 'name'; only 'let' variables can be reassigned."
+              }
+            ],
+            "key_points": [
+              "'let' declares a variable that can be reassigned",
+              "'const' declares a variable that cannot be reassigned",
+              "Variable names are case-sensitive and typically use camelCase"
+            ]
+          },
+          "challenge": {
+            "title": "Declare and Log a Variable",
+            "description": "Declare a 'let' variable named score set to 10, then log it with console.log.",
+            "starter_code": "// Declare your variable and log it\n",
+            "validation": {
+              "type": "javascript",
+              "rules": [
+                {
+                  "type": "text_contains",
+                  "value": "let score",
+                  "description": "Must declare a variable named score using let"
+                },
+                {
+                  "type": "text_contains",
+                  "value": "console.log",
+                  "description": "Must log the value"
+                }
+              ]
+            },
+            "solution": "let score = 10;\nconsole.log(score);",
+            "hints": [
+              "Start with let score = 10;",
+              "Then write console.log(score);"
+            ],
+            "points": 20
+          },
+          "quiz": [
+            {
+              "question": "Which keyword should be used for a variable that will never be reassigned?",
+              "options": [
+                "var",
+                "let",
+                "const",
+                "static"
+              ],
+              "correct_answer": 2,
+              "explanation": "'const' creates a constant binding that cannot be reassigned.",
+              "points": 5
+            }
+          ]
+        },
+        {
+          "id": "js-data-types",
+          "title": "Data Types & typeof",
+          "order": 3,
+          "content": {
+            "explanation": "JavaScript has several basic data types: 'string' for text, 'number' for both integers and decimals, 'boolean' for true/false, and 'undefined' for a variable that has no assigned value yet. The 'typeof' operator returns a value's type as text.",
+            "examples": [
+              {
+                "title": "Checking Types",
+                "code": "console.log(typeof 42);       // \"number\"\nconsole.log(typeof \"hi\");     // \"string\"\nconsole.log(typeof true);     // \"boolean\"",
+                "explanation": "typeof reveals the data type of any value."
+              }
+            ],
+            "key_points": [
+              "JavaScript does not require declaring types explicitly",
+              "'typeof value' returns the type as a string, e.g. \"number\"",
+              "Unlike some languages, JS has one 'number' type for both integers and decimals"
+            ]
+          },
+          "challenge": {
+            "title": "Check a Value's Type",
+            "description": "Write JavaScript that logs the result of typeof 42 using console.log.",
+            "starter_code": "// Log the type of 42\n",
+            "validation": {
+              "type": "javascript",
+              "rules": [
+                {
+                  "type": "text_contains",
+                  "value": "typeof",
+                  "description": "Must use the typeof operator"
+                },
+                {
+                  "type": "text_contains",
+                  "value": "console.log",
+                  "description": "Must log the result"
+                }
+              ]
+            },
+            "solution": "console.log(typeof 42);",
+            "hints": [
+              "Write console.log(typeof 42);"
+            ],
+            "points": 15
+          },
+          "quiz": [
+            {
+              "question": "What does 'typeof \"hello\"' return?",
+              "options": [
+                "\"text\"",
+                "\"string\"",
+                "\"char\"",
+                "\"word\""
+              ],
+              "correct_answer": 1,
+              "explanation": "Text values in JavaScript have the type \"string\".",
+              "points": 5
+            }
+          ]
+        },
+        {
+          "id": "js-conditionals",
+          "title": "Conditionals: if, else & Comparisons",
+          "order": 4,
+          "content": {
+            "explanation": "Conditional statements let a program make decisions. An 'if' statement runs a code block only when its condition is true, and 'else' provides a fallback. Comparison operators like '>', '<', and '===' produce true/false values used in these conditions.",
+            "examples": [
+              {
+                "title": "Simple If/Else",
+                "code": "let age = 20;\nif (age >= 18) {\n  console.log(\"Adult\");\n} else {\n  console.log(\"Minor\");\n}",
+                "explanation": "Logs 'Adult' because age (20) is greater than or equal to 18."
+              }
+            ],
+            "key_points": [
+              "if (condition) { ... } runs code only when the condition is true",
+              "else { ... } runs when the if condition is false",
+              "=== checks strict equality (value AND type)"
+            ]
+          },
+          "challenge": {
+            "title": "Write an If/Else Statement",
+            "description": "Write an if/else statement that logs 'Adult' if a variable age is 18 or greater, otherwise logs 'Minor'.",
+            "starter_code": "let age = 20;\n// Write your if/else statement below\n",
+            "validation": {
+              "type": "javascript",
+              "rules": [
+                {
+                  "type": "text_contains",
+                  "value": "if",
+                  "description": "Must include an if statement"
+                },
+                {
+                  "type": "text_contains",
+                  "value": "else",
+                  "description": "Must include an else branch"
+                },
+                {
+                  "type": "text_contains",
+                  "value": "Adult",
+                  "description": "Must reference 'Adult'"
+                }
+              ]
+            },
+            "solution": "let age = 20;\nif (age >= 18) {\n  console.log(\"Adult\");\n} else {\n  console.log(\"Minor\");\n}",
+            "hints": [
+              "Use if (age >= 18) { ... } else { ... }"
+            ],
+            "points": 25
+          },
+          "quiz": [
+            {
+              "question": "Which operator checks strict equality in JavaScript?",
+              "options": [
+                "=",
+                "==",
+                "===",
+                "=>"
+              ],
+              "correct_answer": 2,
+              "explanation": "'===' compares both value and type without type coercion.",
+              "points": 5
+            }
+          ]
+        },
+        {
+          "id": "js-operators",
+          "title": "Logical Operators: && and ||",
+          "order": 5,
+          "content": {
+            "explanation": "Logical operators combine multiple conditions. '&&' (AND) is true only when both sides are true, while '||' (OR) is true when at least one side is true. These are commonly used inside 'if' statements to check multiple conditions at once.",
+            "examples": [
+              {
+                "title": "Combining Conditions",
+                "code": "let age = 25;\nlet hasTicket = true;\nif (age >= 18 && hasTicket) {\n  console.log(\"Entry allowed\");\n}",
+                "explanation": "Only allows entry when both conditions (age and ticket) are true."
+              }
+            ],
+            "key_points": [
+              "&& requires both conditions to be true",
+              "|| requires at least one condition to be true",
+              "! negates a boolean, turning true into false and vice versa"
+            ]
+          },
+          "challenge": {
+            "title": "Combine Two Conditions",
+            "description": "Write an if statement that uses '&&' to check two boolean conditions.",
+            "starter_code": "let age = 25;\nlet hasTicket = true;\n// Write your if statement below\n",
+            "validation": {
+              "type": "javascript",
+              "rules": [
+                {
+                  "type": "text_contains",
+                  "value": "&&",
+                  "description": "Must use the && operator"
+                },
+                {
+                  "type": "text_contains",
+                  "value": "if",
+                  "description": "Must include an if statement"
+                }
+              ]
+            },
+            "solution": "let age = 25;\nlet hasTicket = true;\nif (age >= 18 && hasTicket) {\n  console.log(\"Entry allowed\");\n}",
+            "hints": [
+              "Use if (age >= 18 && hasTicket) { ... }"
+            ],
+            "points": 20
+          },
+          "quiz": [
+            {
+              "question": "When is 'a && b' true?",
+              "options": [
+                "When either a or b is true",
+                "Only when both a and b are true",
+                "Always true",
+                "Only when both are false"
+              ],
+              "correct_answer": 1,
+              "explanation": "The logical AND (&&) operator only evaluates to true when both operands are true.",
+              "points": 5
+            }
+          ]
+        },
+        {
+          "id": "js-template-literals",
+          "title": "Template Literals",
+          "order": 6,
+          "content": {
+            "explanation": "Template literals, written with backticks (`), let you embed variables directly inside strings using ${...} syntax, instead of manually joining strings with the '+' operator. They also support multi-line strings naturally.",
+            "examples": [
+              {
+                "title": "String Interpolation",
+                "code": "let name = \"Alex\";\nconsole.log(`Hello, ${name}!`);",
+                "explanation": "Embeds the 'name' variable directly inside the string."
+              }
+            ],
+            "key_points": [
+              "Template literals use backticks (`) instead of quotes",
+              "${expression} embeds a variable or expression inside the string",
+              "Template literals can span multiple lines without special characters"
+            ]
+          },
+          "challenge": {
+            "title": "Use a Template Literal",
+            "description": "Write JavaScript that uses a template literal with ${} to log a greeting including a name variable.",
+            "starter_code": "let name = \"Alex\";\n// Log a greeting using a template literal\n",
+            "validation": {
+              "type": "javascript",
+              "rules": [
+                {
+                  "type": "text_contains",
+                  "value": "${name}",
+                  "description": "Must use ${name} inside a template literal"
+                },
+                {
+                  "type": "text_contains",
+                  "value": "console.log",
+                  "description": "Must log the result"
+                }
+              ]
+            },
+            "solution": "let name = \"Alex\";\nconsole.log(`Hello, ${name}!`);",
+            "hints": [
+              "Use backticks: `Hello, ${name}!`"
+            ],
+            "points": 20
+          },
+          "quiz": [
+            {
+              "question": "Which character is used to create a template literal in JavaScript?",
+              "options": [
+                "Single quote (')",
+                "Double quote (\")",
+                "Backtick (`)",
+                "Hash (#)"
+              ],
+              "correct_answer": 2,
+              "explanation": "Template literals are delimited by backticks and support ${} interpolation.",
+              "points": 5
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "js-functions-data",
+      "title": "JavaScript Functions, Arrays & Objects",
+      "description": "Organize logic into reusable functions and work with collections of data",
+      "order": 8,
+      "lessons": [
+        {
+          "id": "js-functions",
+          "title": "Defining Functions",
+          "order": 1,
+          "content": {
+            "explanation": "Functions group reusable blocks of code under a name, defined with the 'function' keyword. Once defined, a function can be called multiple times with different inputs, and can return a value using 'return'.",
+            "examples": [
+              {
+                "title": "Function with Return",
+                "code": "function add(a, b) {\n  return a + b;\n}\nconsole.log(add(3, 4));",
+                "explanation": "Defines a function that returns the sum of two parameters, then logs the result."
+              }
+            ],
+            "key_points": [
+              "'function name(params) { ... }' defines a function",
+              "'return' sends a value back to wherever the function was called",
+              "A function without 'return' implicitly returns undefined"
+            ]
+          },
+          "challenge": {
+            "title": "Write a Function that Returns a Sum",
+            "description": "Define a function called add that takes two parameters and returns their sum, then log the result of add(3, 4).",
+            "starter_code": "// Define your function below\n",
+            "validation": {
+              "type": "javascript",
+              "rules": [
+                {
+                  "type": "text_contains",
+                  "value": "function add",
+                  "description": "Must define a function named add"
+                },
+                {
+                  "type": "text_contains",
+                  "value": "return",
+                  "description": "Must use return"
+                }
+              ]
+            },
+            "solution": "function add(a, b) {\n  return a + b;\n}\nconsole.log(add(3, 4));",
+            "hints": [
+              "Use return a + b; inside the function",
+              "Call console.log(add(3, 4)); to see the result"
+            ],
+            "points": 25
+          },
+          "quiz": [
+            {
+              "question": "What does a JavaScript function return if it has no explicit 'return' statement?",
+              "options": [
+                "0",
+                "An empty string",
+                "undefined",
+                "An error"
+              ],
+              "correct_answer": 2,
+              "explanation": "Without an explicit return, a JavaScript function returns undefined by default.",
+              "points": 5
+            }
+          ]
+        },
+        {
+          "id": "js-arrow-functions",
+          "title": "Arrow Functions",
+          "order": 2,
+          "content": {
+            "explanation": "Arrow functions are a shorter syntax for writing functions, using '=>' instead of the 'function' keyword. They're especially common for short, one-off functions passed as arguments to other functions.",
+            "examples": [
+              {
+                "title": "Arrow Function Syntax",
+                "code": "const add = (a, b) => a + b;\nconsole.log(add(3, 4));",
+                "explanation": "A single-expression arrow function implicitly returns the result, no 'return' keyword needed."
+              }
+            ],
+            "key_points": [
+              "Arrow functions use (params) => expression syntax",
+              "A single expression is implicitly returned without needing 'return'",
+              "Arrow functions are often stored in a const variable"
+            ]
+          },
+          "challenge": {
+            "title": "Write an Arrow Function",
+            "description": "Define an arrow function called add that takes two parameters and returns their sum using => syntax.",
+            "starter_code": "// Define your arrow function below\n",
+            "validation": {
+              "type": "javascript",
+              "rules": [
+                {
+                  "type": "text_contains",
+                  "value": "=>",
+                  "description": "Must use arrow function syntax"
+                },
+                {
+                  "type": "text_contains",
+                  "value": "add",
+                  "description": "Must name the function add"
+                }
+              ]
+            },
+            "solution": "const add = (a, b) => a + b;\nconsole.log(add(3, 4));",
+            "hints": [
+              "Write const add = (a, b) => a + b;"
+            ],
+            "points": 20
+          },
+          "quiz": [
+            {
+              "question": "Which symbol defines an arrow function?",
+              "options": [
+                "->",
+                "=>",
+                "::",
+                "~>"
+              ],
+              "correct_answer": 1,
+              "explanation": "Arrow functions use the '=>' syntax, e.g. (a, b) => a + b.",
+              "points": 5
+            }
+          ]
+        },
+        {
+          "id": "js-arrays",
+          "title": "Working with Arrays",
+          "order": 3,
+          "content": {
+            "explanation": "An array stores an ordered collection of items in square brackets, separated by commas. Items are accessed by their position (index), starting at 0, and the '.push()' method adds a new item to the end.",
+            "examples": [
+              {
+                "title": "Creating and Accessing an Array",
+                "code": "const fruits = [\"apple\", \"banana\", \"cherry\"];\nconsole.log(fruits[0]);\nfruits.push(\"mango\");",
+                "explanation": "Creates an array, logs the first item, and adds a new item to the end."
+              }
+            ],
+            "key_points": [
+              "Arrays are defined with square brackets: [item1, item2]",
+              "Indexing starts at 0, so fruits[0] is the first item",
+              "The .push() method adds an item to the end of an array"
+            ]
+          },
+          "challenge": {
+            "title": "Create and Modify an Array",
+            "description": "Create an array called fruits with 'apple' and 'banana', then use .push() to add 'mango'.",
+            "starter_code": "// Create your array below\n",
+            "validation": {
+              "type": "javascript",
+              "rules": [
+                {
+                  "type": "text_contains",
+                  "value": "fruits",
+                  "description": "Must define an array named fruits"
+                },
+                {
+                  "type": "text_contains",
+                  "value": "push",
+                  "description": "Must use .push()"
+                }
+              ]
+            },
+            "solution": "const fruits = [\"apple\", \"banana\"];\nfruits.push(\"mango\");",
+            "hints": [
+              "Define const fruits = [\"apple\", \"banana\"];",
+              "Then call fruits.push(\"mango\");"
+            ],
+            "points": 20
+          },
+          "quiz": [
+            {
+              "question": "What index does the first item in a JavaScript array have?",
+              "options": [
+                "1",
+                "0",
+                "-1",
+                "It depends on the array"
+              ],
+              "correct_answer": 1,
+              "explanation": "JavaScript arrays are zero-indexed, so the first item is at index 0.",
+              "points": 5
+            }
+          ]
+        },
+        {
+          "id": "js-array-methods",
+          "title": "Looping Arrays with forEach & map",
+          "order": 4,
+          "content": {
+            "explanation": "'.forEach()' runs a function once for every item in an array, useful for side effects like logging. '.map()' also runs a function for every item, but builds and returns a brand new array of the results.",
+            "examples": [
+              {
+                "title": "Using map",
+                "code": "const nums = [1, 2, 3];\nconst doubled = nums.map(n => n * 2);\nconsole.log(doubled); // [2, 4, 6]",
+                "explanation": "Creates a new array where every number has been doubled."
+              }
+            ],
+            "key_points": [
+              "forEach runs a function on each item but returns undefined",
+              "map returns a brand new array built from the return values",
+              "Both take a callback function as their argument"
+            ]
+          },
+          "challenge": {
+            "title": "Double Every Number with map",
+            "description": "Use .map() on an array called nums to create a new array where every number is doubled.",
+            "starter_code": "const nums = [1, 2, 3];\n// Use map to double every number\n",
+            "validation": {
+              "type": "javascript",
+              "rules": [
+                {
+                  "type": "text_contains",
+                  "value": ".map(",
+                  "description": "Must use .map()"
+                },
+                {
+                  "type": "text_contains",
+                  "value": "nums",
+                  "description": "Must reference the nums array"
+                }
+              ]
+            },
+            "solution": "const nums = [1, 2, 3];\nconst doubled = nums.map(n => n * 2);\nconsole.log(doubled);",
+            "hints": [
+              "Write nums.map(n => n * 2)"
+            ],
+            "points": 25
+          },
+          "quiz": [
+            {
+              "question": "What does the .map() array method return?",
+              "options": [
+                "Nothing (undefined)",
+                "A single number",
+                "A brand new array of transformed items",
+                "A boolean"
+              ],
+              "correct_answer": 2,
+              "explanation": ".map() builds and returns a new array containing the results of calling the function on every item.",
+              "points": 5
+            }
+          ]
+        },
+        {
+          "id": "js-objects",
+          "title": "Working with Objects",
+          "order": 5,
+          "content": {
+            "explanation": "An object stores data as key-value pairs in curly braces. Values are accessed by their key rather than a numeric position, making objects ideal for structured, labeled data like a user's profile.",
+            "examples": [
+              {
+                "title": "Creating and Accessing an Object",
+                "code": "const user = { name: \"Alex\", age: 25 };\nconsole.log(user.name);",
+                "explanation": "Creates an object with two keys and logs the value for 'name'."
+              }
+            ],
+            "key_points": [
+              "Objects use curly braces: { key: value }",
+              "Values are accessed with dot notation: obj.key, or brackets: obj['key']",
+              "Keys are usually strings and should be unique within the object"
+            ]
+          },
+          "challenge": {
+            "title": "Create and Access an Object",
+            "description": "Create an object called user with a key 'name' set to 'Alex', then log user.name.",
+            "starter_code": "// Create your object below\n",
+            "validation": {
+              "type": "javascript",
+              "rules": [
+                {
+                  "type": "text_contains",
+                  "value": "user",
+                  "description": "Must define an object named user"
+                },
+                {
+                  "type": "text_contains",
+                  "value": "name",
+                  "description": "Must include the key 'name'"
+                }
+              ]
+            },
+            "solution": "const user = { name: \"Alex\" };\nconsole.log(user.name);",
+            "hints": [
+              "Define const user = { name: \"Alex\" };",
+              "Access it with user.name"
+            ],
+            "points": 20
+          },
+          "quiz": [
+            {
+              "question": "How is a value typically retrieved from a JavaScript object?",
+              "options": [
+                "By its index position",
+                "Using dot notation with its key",
+                "Objects cannot be searched",
+                "By its data type"
+              ],
+              "correct_answer": 1,
+              "explanation": "Object values are retrieved using dot notation (obj.key) or bracket notation (obj['key']).",
+              "points": 5
+            }
+          ]
+        },
+        {
+          "id": "js-array-of-objects",
+          "title": "Arrays of Objects",
+          "order": 6,
+          "content": {
+            "explanation": "Real-world data is often modeled as an array of objects — for example, a list of users, each with their own name and age. Combining arrays and objects lets you represent structured collections, which can then be looped over with forEach or map.",
+            "examples": [
+              {
+                "title": "Looping an Array of Objects",
+                "code": "const users = [\n  { name: \"Alex\", age: 25 },\n  { name: \"Sam\", age: 30 }\n];\nusers.forEach(u => console.log(u.name));",
+                "explanation": "Logs the name of every user in the array."
+              }
+            ],
+            "key_points": [
+              "An array of objects models a list of structured records",
+              "Access each object's properties with dot notation inside the loop",
+              "This pattern is extremely common in real applications (e.g. API data)"
+            ]
+          },
+          "challenge": {
+            "title": "Loop an Array of Objects",
+            "description": "Create an array of objects called users, each with a 'name' property, and use forEach to log each name.",
+            "starter_code": "// Create your array of objects and loop it\n",
+            "validation": {
+              "type": "javascript",
+              "rules": [
+                {
+                  "type": "text_contains",
+                  "value": "users",
+                  "description": "Must define an array named users"
+                },
+                {
+                  "type": "text_contains",
+                  "value": "forEach",
+                  "description": "Must use forEach to loop"
+                }
+              ]
+            },
+            "solution": "const users = [\n  { name: \"Alex\", age: 25 },\n  { name: \"Sam\", age: 30 }\n];\nusers.forEach(u => console.log(u.name));",
+            "hints": [
+              "Define an array of { name: ... } objects",
+              "Loop with users.forEach(u => console.log(u.name));"
+            ],
+            "points": 25
+          },
+          "quiz": [
+            {
+              "question": "What real-world data pattern does 'an array of objects' typically represent?",
+              "options": [
+                "A single value",
+                "A list of structured records, like users or products",
+                "A function definition",
+                "A CSS stylesheet"
+              ],
+              "correct_answer": 1,
+              "explanation": "Arrays of objects are the standard way to represent lists of structured records such as users, products, or API results.",
+              "points": 5
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "js-dom",
+      "title": "DOM Manipulation & Events",
+      "description": "Select page elements, change them dynamically, and respond to user interactions",
+      "order": 9,
+      "lessons": [
+        {
+          "id": "js-dom-select",
+          "title": "Selecting Elements with the DOM",
+          "order": 1,
+          "content": {
+            "explanation": "The DOM (Document Object Model) represents the HTML page as objects JavaScript can manipulate. 'document.querySelector()' finds the first element matching a CSS selector, allowing scripts to read or change page content.",
+            "examples": [
+              {
+                "title": "Selecting an Element",
+                "code": "const heading = document.querySelector(\"h1\");\nconsole.log(heading.textContent);",
+                "explanation": "Selects the first <h1> on the page and logs its text."
+              }
+            ],
+            "key_points": [
+              "document.querySelector('selector') returns the first matching element",
+              "'.textContent' reads or sets an element's text",
+              "CSS selectors like '#id', '.class', or 'tag' can all be used"
+            ]
+          },
+          "challenge": {
+            "title": "Select and Log an Element",
+            "description": "Write JavaScript that uses document.querySelector to select an element with id 'title' and logs its textContent.",
+            "starter_code": "// Select the element and log its text\n",
+            "validation": {
+              "type": "javascript",
+              "rules": [
+                {
+                  "type": "text_contains",
+                  "value": "document.querySelector",
+                  "description": "Must use document.querySelector"
+                },
+                {
+                  "type": "text_contains",
+                  "value": "textContent",
+                  "description": "Must access textContent"
+                }
+              ]
+            },
+            "solution": "const title = document.querySelector('#title');\nconsole.log(title.textContent);",
+            "hints": [
+              "Use document.querySelector('#title')",
+              "Read the text with .textContent"
+            ],
+            "points": 25
+          },
+          "quiz": [
+            {
+              "question": "Which method selects the first matching element in the DOM?",
+              "options": [
+                "document.getAll()",
+                "document.querySelector()",
+                "document.find()",
+                "document.select()"
+              ],
+              "correct_answer": 1,
+              "explanation": "document.querySelector() returns the first element matching a CSS selector.",
+              "points": 5
+            }
+          ]
+        },
+        {
+          "id": "js-dom-select-all",
+          "title": "Selecting Multiple Elements",
+          "order": 2,
+          "content": {
+            "explanation": "'document.querySelectorAll()' returns every element matching a CSS selector, as a NodeList. Unlike querySelector, which returns only the first match, this lets you loop through and act on all matching elements at once.",
+            "examples": [
+              {
+                "title": "Selecting All Matches",
+                "code": "const items = document.querySelectorAll(\".item\");\nitems.forEach(el => console.log(el.textContent));",
+                "explanation": "Selects every element with class 'item' and logs each one's text."
+              }
+            ],
+            "key_points": [
+              "querySelectorAll returns a NodeList of ALL matching elements",
+              "NodeLists support .forEach() just like arrays",
+              "Use querySelector for one element, querySelectorAll for many"
+            ]
+          },
+          "challenge": {
+            "title": "Select and Loop Multiple Elements",
+            "description": "Write JavaScript that uses document.querySelectorAll to select elements with class 'item' and logs each with forEach.",
+            "starter_code": "// Select all items and loop them\n",
+            "validation": {
+              "type": "javascript",
+              "rules": [
+                {
+                  "type": "text_contains",
+                  "value": "querySelectorAll",
+                  "description": "Must use document.querySelectorAll"
+                },
+                {
+                  "type": "text_contains",
+                  "value": "forEach",
+                  "description": "Must loop with forEach"
+                }
+              ]
+            },
+            "solution": "const items = document.querySelectorAll('.item');\nitems.forEach(el => console.log(el.textContent));",
+            "hints": [
+              "Use document.querySelectorAll('.item')",
+              "Loop the result with .forEach()"
+            ],
+            "points": 25
+          },
+          "quiz": [
+            {
+              "question": "What does document.querySelectorAll() return?",
+              "options": [
+                "Only the first matching element",
+                "A single boolean",
+                "A NodeList of all matching elements",
+                "A string of HTML"
+              ],
+              "correct_answer": 2,
+              "explanation": "querySelectorAll returns a NodeList containing every element that matches the selector.",
+              "points": 5
+            }
+          ]
+        },
+        {
+          "id": "js-dom-modify",
+          "title": "Changing Content & Styles",
+          "order": 3,
+          "content": {
+            "explanation": "Once an element is selected, JavaScript can change what it displays by setting '.textContent', or change its appearance by setting properties on '.style', such as '.style.color'.",
+            "examples": [
+              {
+                "title": "Updating Text and Style",
+                "code": "const box = document.querySelector(\".box\");\nbox.textContent = \"Updated!\";\nbox.style.color = \"red\";",
+                "explanation": "Changes the box's text and makes it red."
+              }
+            ],
+            "key_points": [
+              "element.textContent = '...' replaces an element's text",
+              "element.style.property = 'value' changes a single CSS property directly",
+              "Style property names in JS use camelCase, e.g. backgroundColor"
+            ]
+          },
+          "challenge": {
+            "title": "Change Text and Color",
+            "description": "Select an element with class 'box' and set both its textContent and style.color.",
+            "starter_code": "// Select and modify the box\n",
+            "validation": {
+              "type": "javascript",
+              "rules": [
+                {
+                  "type": "text_contains",
+                  "value": "textContent",
+                  "description": "Must set textContent"
+                },
+                {
+                  "type": "text_contains",
+                  "value": "style.color",
+                  "description": "Must set style.color"
+                }
+              ]
+            },
+            "solution": "const box = document.querySelector('.box');\nbox.textContent = 'Updated!';\nbox.style.color = 'red';",
+            "hints": [
+              "Set box.textContent = '...'",
+              "Set box.style.color = '...'"
+            ],
+            "points": 25
+          },
+          "quiz": [
+            {
+              "question": "How do you change an element's text color from JavaScript?",
+              "options": [
+                "element.color = '...'",
+                "element.style.color = '...'",
+                "element.textColor = '...'",
+                "element.css('color', '...')"
+              ],
+              "correct_answer": 1,
+              "explanation": "The .style.color property sets an element's text color directly from JavaScript.",
+              "points": 5
+            }
+          ]
+        },
+        {
+          "id": "js-events",
+          "title": "Handling Click Events",
+          "order": 4,
+          "content": {
+            "explanation": "Event listeners let JavaScript respond to user actions like clicks. 'addEventListener' attaches a function that runs whenever the specified event, such as 'click', occurs on an element.",
+            "examples": [
+              {
+                "title": "Click Listener",
+                "code": "const btn = document.querySelector(\"button\");\nbtn.addEventListener(\"click\", function() {\n  console.log(\"Button clicked!\");\n});",
+                "explanation": "Logs a message every time the button is clicked."
+              }
+            ],
+            "key_points": [
+              "addEventListener(event, callback) attaches an event handler",
+              "'click' is the most common event for buttons and links",
+              "The callback function runs each time the event fires"
+            ]
+          },
+          "challenge": {
+            "title": "Add a Click Listener",
+            "description": "Write JavaScript that selects a button and adds a 'click' event listener that logs 'Clicked!'.",
+            "starter_code": "// Add your event listener below\n",
+            "validation": {
+              "type": "javascript",
+              "rules": [
+                {
+                  "type": "text_contains",
+                  "value": "addEventListener",
+                  "description": "Must use addEventListener"
+                },
+                {
+                  "type": "text_contains",
+                  "value": "click",
+                  "description": "Must listen for the 'click' event"
+                },
+                {
+                  "type": "text_contains",
+                  "value": "Clicked!",
+                  "description": "Must log 'Clicked!'"
+                }
+              ]
+            },
+            "solution": "const btn = document.querySelector('button');\nbtn.addEventListener('click', function() {\n  console.log('Clicked!');\n});",
+            "hints": [
+              "Use btn.addEventListener('click', function() { ... })"
+            ],
+            "points": 25
+          },
+          "quiz": [
+            {
+              "question": "Which method attaches an event handler to an element?",
+              "options": [
+                "onEvent()",
+                "addEventListener()",
+                "listen()",
+                "handleEvent()"
+              ],
+              "correct_answer": 1,
+              "explanation": "addEventListener() registers a function to run when a specified event occurs.",
+              "points": 5
+            }
+          ]
+        },
+        {
+          "id": "js-dom-create",
+          "title": "Creating New Elements",
+          "order": 5,
+          "content": {
+            "explanation": "New elements can be created entirely in JavaScript with 'document.createElement()', then added to the page with 'appendChild()'. This lets scripts build page content dynamically instead of only editing what already exists.",
+            "examples": [
+              {
+                "title": "Creating a New Element",
+                "code": "const p = document.createElement(\"p\");\np.textContent = \"I'm new here!\";\ndocument.body.appendChild(p);",
+                "explanation": "Creates a new paragraph and adds it to the end of the page body."
+              }
+            ],
+            "key_points": [
+              "document.createElement('tag') creates a new, unattached element",
+              "Setting .textContent gives the new element its content",
+              ".appendChild() attaches the new element to a parent in the page"
+            ]
+          },
+          "challenge": {
+            "title": "Create and Append an Element",
+            "description": "Create a new <p> element with document.createElement, set its textContent, and append it to document.body.",
+            "starter_code": "// Create and append your element\n",
+            "validation": {
+              "type": "javascript",
+              "rules": [
+                {
+                  "type": "text_contains",
+                  "value": "createElement",
+                  "description": "Must use document.createElement"
+                },
+                {
+                  "type": "text_contains",
+                  "value": "appendChild",
+                  "description": "Must use appendChild"
+                }
+              ]
+            },
+            "solution": "const p = document.createElement('p');\np.textContent = \"I'm new here!\";\ndocument.body.appendChild(p);",
+            "hints": [
+              "Create with document.createElement('p')",
+              "Attach with document.body.appendChild(p)"
+            ],
+            "points": 25
+          },
+          "quiz": [
+            {
+              "question": "Which method attaches a newly created element to the page?",
+              "options": [
+                "insertElement()",
+                "appendChild()",
+                "addToPage()",
+                "renderElement()"
+              ],
+              "correct_answer": 1,
+              "explanation": "appendChild() adds a node as the last child of a parent element already in the page.",
+              "points": 5
+            }
+          ]
+        },
+        {
+          "id": "js-form-events",
+          "title": "Listening to Form Input Events",
+          "order": 6,
+          "content": {
+            "explanation": "The 'input' event fires every time a user types into a text field, letting a script react live as the value changes — useful for things like live character counters or search-as-you-type. 'event.target.value' reads the current text.",
+            "examples": [
+              {
+                "title": "Live Input Tracking",
+                "code": "const box = document.querySelector(\"input\");\nbox.addEventListener(\"input\", function(event) {\n  console.log(event.target.value);\n});",
+                "explanation": "Logs the input's current text every time the user types a character."
+              }
+            ],
+            "key_points": [
+              "The 'input' event fires on every keystroke in a text field",
+              "event.target refers to the element the event happened on",
+              "event.target.value reads the current text of an input field"
+            ]
+          },
+          "challenge": {
+            "title": "React to Typing in an Input",
+            "description": "Add an 'input' event listener to an input element that logs event.target.value.",
+            "starter_code": "const box = document.querySelector('input');\n// Add your input event listener below\n",
+            "validation": {
+              "type": "javascript",
+              "rules": [
+                {
+                  "type": "text_contains",
+                  "value": "addEventListener",
+                  "description": "Must use addEventListener"
+                },
+                {
+                  "type": "text_contains",
+                  "value": "input",
+                  "description": "Must listen for the 'input' event"
+                },
+                {
+                  "type": "text_contains",
+                  "value": "event.target.value",
+                  "description": "Must read event.target.value"
+                }
+              ]
+            },
+            "solution": "const box = document.querySelector('input');\nbox.addEventListener('input', function(event) {\n  console.log(event.target.value);\n});",
+            "hints": [
+              "Use box.addEventListener('input', function(event) { ... })",
+              "Read the value with event.target.value"
+            ],
+            "points": 25
+          },
+          "quiz": [
+            {
+              "question": "Which event fires every time a user types a character into a text field?",
+              "options": [
+                "click",
+                "input",
+                "submit",
+                "change"
+              ],
+              "correct_answer": 1,
+              "explanation": "The 'input' event fires immediately after every character is typed or removed.",
+              "points": 5
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "js-async-deploy",
+      "title": "Async JavaScript, APIs & Deployment",
+      "description": "Fetch real data from the web and put your finished project online",
+      "order": 10,
+      "lessons": [
+        {
+          "id": "js-json",
+          "title": "Working with JSON",
+          "order": 1,
+          "content": {
+            "explanation": "JSON (JavaScript Object Notation) is a text format for representing structured data, closely resembling JS objects and arrays. 'JSON.parse()' converts a JSON string into a real JavaScript object; 'JSON.stringify()' does the reverse.",
+            "examples": [
+              {
+                "title": "Parsing JSON",
+                "code": "const jsonText = '{\"name\": \"Alex\"}';\nconst obj = JSON.parse(jsonText);\nconsole.log(obj.name);",
+                "explanation": "Converts a JSON string into a usable JavaScript object."
+              }
+            ],
+            "key_points": [
+              "JSON.parse(text) converts a JSON string into a JS object/array",
+              "JSON.stringify(obj) converts a JS object/array into a JSON string",
+              "Most web APIs send and receive data in JSON format"
+            ]
+          },
+          "challenge": {
+            "title": "Parse a JSON String",
+            "description": "Use JSON.parse() to convert a JSON string into an object, then log a property from it.",
+            "starter_code": "const jsonText = '{\"name\": \"Alex\"}';\n// Parse it and log the name\n",
+            "validation": {
+              "type": "javascript",
+              "rules": [
+                {
+                  "type": "text_contains",
+                  "value": "JSON.parse",
+                  "description": "Must use JSON.parse"
+                },
+                {
+                  "type": "text_contains",
+                  "value": "console.log",
+                  "description": "Must log a value"
+                }
+              ]
+            },
+            "solution": "const jsonText = '{\"name\": \"Alex\"}';\nconst obj = JSON.parse(jsonText);\nconsole.log(obj.name);",
+            "hints": [
+              "Use JSON.parse(jsonText)",
+              "Then log obj.name"
+            ],
+            "points": 20
+          },
+          "quiz": [
+            {
+              "question": "Which method converts a JSON string into a JavaScript object?",
+              "options": [
+                "JSON.stringify()",
+                "JSON.parse()",
+                "JSON.toObject()",
+                "Object.fromJSON()"
+              ],
+              "correct_answer": 1,
+              "explanation": "JSON.parse() reads a JSON-formatted string and returns a real JavaScript value.",
+              "points": 5
+            }
+          ]
+        },
+        {
+          "id": "js-promises",
+          "title": "Promises & Async Basics",
+          "order": 2,
+          "content": {
+            "explanation": "A Promise represents a value that may not be ready yet, such as the result of a network request. Instead of blocking the program, code can attach a '.then()' callback that runs once the Promise resolves successfully.",
+            "examples": [
+              {
+                "title": "Using .then()",
+                "code": "fetch(\"https://api.example.com/data\")\n  .then(response => response.json())\n  .then(data => console.log(data));",
+                "explanation": "Fetches data, converts the response to JSON, then logs the result once it's ready."
+              }
+            ],
+            "key_points": [
+              "A Promise represents a value that will be available in the future",
+              "'.then(callback)' runs once the Promise resolves successfully",
+              "'fetch()' returns a Promise that resolves to a Response object"
+            ]
+          },
+          "challenge": {
+            "title": "Chain a .then() Call",
+            "description": "Write a fetch() call that chains a .then() to log the response.",
+            "starter_code": "// Fetch data and log the response\n",
+            "validation": {
+              "type": "javascript",
+              "rules": [
+                {
+                  "type": "text_contains",
+                  "value": "fetch(",
+                  "description": "Must call fetch()"
+                },
+                {
+                  "type": "text_contains",
+                  "value": ".then(",
+                  "description": "Must chain a .then() call"
+                }
+              ]
+            },
+            "solution": "fetch('https://api.example.com/data')\n  .then(response => console.log(response));",
+            "hints": [
+              "Call fetch('...') then chain .then(response => ...)"
+            ],
+            "points": 25
+          },
+          "quiz": [
+            {
+              "question": "What does fetch() return?",
+              "options": [
+                "The data immediately",
+                "A Promise",
+                "A string",
+                "Nothing"
+              ],
+              "correct_answer": 1,
+              "explanation": "fetch() returns a Promise that eventually resolves to a Response object.",
+              "points": 5
+            }
+          ]
+        },
+        {
+          "id": "js-async-await",
+          "title": "async / await Syntax",
+          "order": 3,
+          "content": {
+            "explanation": "'async' and 'await' provide a cleaner way to work with Promises, making asynchronous code read like ordinary step-by-step code. Marking a function 'async' allows using 'await' inside it to pause until a Promise resolves.",
+            "examples": [
+              {
+                "title": "Async Function",
+                "code": "async function loadData() {\n  const response = await fetch(\"https://api.example.com/data\");\n  const data = await response.json();\n  console.log(data);\n}",
+                "explanation": "Reads top-to-bottom like synchronous code, even though each 'await' step is asynchronous."
+              }
+            ],
+            "key_points": [
+              "'async' before a function allows using 'await' inside it",
+              "'await' pauses execution until the Promise resolves, without blocking the browser",
+              "async/await is often considered more readable than chains of .then()"
+            ]
+          },
+          "challenge": {
+            "title": "Write an Async Function",
+            "description": "Define an async function called loadData that awaits a fetch() call.",
+            "starter_code": "// Define your async function\n",
+            "validation": {
+              "type": "javascript",
+              "rules": [
+                {
+                  "type": "text_contains",
+                  "value": "async function",
+                  "description": "Must define an async function"
+                },
+                {
+                  "type": "text_contains",
+                  "value": "await",
+                  "description": "Must use await"
+                }
+              ]
+            },
+            "solution": "async function loadData() {\n  const response = await fetch('https://api.example.com/data');\n  const data = await response.json();\n  console.log(data);\n}",
+            "hints": [
+              "Start with async function loadData() { ... }",
+              "Use await before fetch(...) and response.json()"
+            ],
+            "points": 30
+          },
+          "quiz": [
+            {
+              "question": "What keyword must precede a function definition to allow 'await' inside it?",
+              "options": [
+                "promise",
+                "async",
+                "wait",
+                "defer"
+              ],
+              "correct_answer": 1,
+              "explanation": "Only functions declared with 'async' can use the 'await' keyword inside them.",
+              "points": 5
+            }
+          ]
+        },
+        {
+          "id": "js-fetch-api",
+          "title": "Fetching Data from an API",
+          "order": 4,
+          "content": {
+            "explanation": "'fetch()' is the standard browser function for making HTTP requests to APIs. Combined with async/await, it lets a page load real, live data from a server and display it dynamically.",
+            "examples": [
+              {
+                "title": "Fetching and Displaying Data",
+                "code": "async function loadUser() {\n  const response = await fetch(\"https://api.example.com/user/1\");\n  const user = await response.json();\n  document.querySelector(\"#name\").textContent = user.name;\n}",
+                "explanation": "Fetches a user's data and displays their name on the page."
+              }
+            ],
+            "key_points": [
+              "fetch(url) sends an HTTP GET request by default",
+              "response.json() parses the response body as JSON",
+              "Fetched data can then update the DOM to display live content"
+            ]
+          },
+          "challenge": {
+            "title": "Fetch and Display Data",
+            "description": "Write an async function that fetches from a URL, parses the JSON, and sets an element's textContent from the result.",
+            "starter_code": "// Fetch and display data\n",
+            "validation": {
+              "type": "javascript",
+              "rules": [
+                {
+                  "type": "text_contains",
+                  "value": "fetch(",
+                  "description": "Must call fetch()"
+                },
+                {
+                  "type": "text_contains",
+                  "value": "textContent",
+                  "description": "Must update textContent with the result"
+                }
+              ]
+            },
+            "solution": "async function loadUser() {\n  const response = await fetch('https://api.example.com/user/1');\n  const user = await response.json();\n  document.querySelector('#name').textContent = user.name;\n}",
+            "hints": [
+              "Await the fetch() and response.json()",
+              "Set document.querySelector('#name').textContent = user.name;"
+            ],
+            "points": 30
+          },
+          "quiz": [
+            {
+              "question": "Which method parses a fetch Response body as JSON?",
+              "options": [
+                "response.text()",
+                "response.json()",
+                "response.parse()",
+                "response.data()"
+              ],
+              "correct_answer": 1,
+              "explanation": "response.json() reads the response body and parses it as JSON, returning a Promise.",
+              "points": 5
+            }
+          ]
+        },
+        {
+          "id": "js-error-handling",
+          "title": "Handling Errors with try/catch",
+          "order": 5,
+          "content": {
+            "explanation": "Network requests can fail, so it's important to handle errors gracefully. Wrapping 'await' calls in a 'try/catch' block lets a script catch failures (like a lost connection) and respond instead of crashing.",
+            "examples": [
+              {
+                "title": "Try/Catch with Fetch",
+                "code": "async function loadData() {\n  try {\n    const response = await fetch(\"https://api.example.com/data\");\n    const data = await response.json();\n    console.log(data);\n  } catch (error) {\n    console.log(\"Something went wrong:\", error);\n  }\n}",
+                "explanation": "Catches and logs any error that occurs during the fetch, instead of letting the app crash."
+              }
+            ],
+            "key_points": [
+              "'try { ... }' contains code that might fail",
+              "'catch (error) { ... }' runs if anything inside try throws an error",
+              "try/catch is the standard way to handle failures in async/await code"
+            ]
+          },
+          "challenge": {
+            "title": "Wrap a Fetch in try/catch",
+            "description": "Write an async function that wraps an awaited fetch() call in a try/catch block.",
+            "starter_code": "// Write your try/catch fetch below\n",
+            "validation": {
+              "type": "javascript",
+              "rules": [
+                {
+                  "type": "text_contains",
+                  "value": "try",
+                  "description": "Must include a try block"
+                },
+                {
+                  "type": "text_contains",
+                  "value": "catch",
+                  "description": "Must include a catch block"
+                }
+              ]
+            },
+            "solution": "async function loadData() {\n  try {\n    const response = await fetch('https://api.example.com/data');\n    const data = await response.json();\n    console.log(data);\n  } catch (error) {\n    console.log('Something went wrong:', error);\n  }\n}",
+            "hints": [
+              "Wrap the await calls inside try { ... }",
+              "Add catch (error) { ... } to handle failures"
+            ],
+            "points": 30
+          },
+          "quiz": [
+            {
+              "question": "What is the purpose of a 'catch' block?",
+              "options": [
+                "It runs before the try block",
+                "It runs code that might fail",
+                "It handles errors thrown inside the try block",
+                "It replaces the need for functions"
+              ],
+              "correct_answer": 2,
+              "explanation": "The catch block runs only when an error is thrown somewhere inside the preceding try block.",
+              "points": 5
+            }
+          ]
+        },
+        {
+          "id": "js-deployment",
+          "title": "Publishing Your Site Online",
+          "order": 6,
+          "content": {
+            "explanation": "Once a site is built, it needs hosting to be visible to the world. Static hosting services (like GitHub Pages, Netlify, or Vercel) serve HTML, CSS, and JavaScript files directly to visitors, usually for free for simple projects.",
+            "examples": [
+              {
+                "title": "Minimal Project Structure",
+                "code": "my-site/\n  index.html\n  style.css\n  script.js",
+                "explanation": "A typical minimal folder structure ready to be uploaded to a static host."
+              }
+            ],
+            "key_points": [
+              "'index.html' is the default file a host serves at your site's root URL",
+              "Static hosts serve pre-built files with no server-side code required",
+              "Most static hosts offer free hosting for personal and small projects"
+            ]
+          },
+          "challenge": {
+            "title": "Name the Entry File",
+            "description": "Write a comment naming the standard entry file a static host looks for by default, as an HTML comment.",
+            "starter_code": "<!-- Name the default entry file -->\n",
+            "validation": {
+              "type": "html",
+              "rules": [
+                {
+                  "type": "text_contains",
+                  "value": "index.html",
+                  "description": "Must mention index.html"
+                }
+              ]
+            },
+            "solution": "<!-- The default entry file is index.html -->",
+            "hints": [
+              "The answer is index.html"
+            ],
+            "points": 10
+          },
+          "quiz": [
+            {
+              "question": "What is the conventional name for a site's default homepage file?",
+              "options": [
+                "home.html",
+                "index.html",
+                "main.html",
+                "default.html"
+              ],
+              "correct_answer": 1,
+              "explanation": "'index.html' is the standard filename that static hosts serve by default at the root URL.",
+              "points": 5
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}
