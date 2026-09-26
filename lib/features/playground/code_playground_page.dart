@@ -61,6 +61,33 @@ class _CodePlaygroundPageState extends State<CodePlaygroundPage> {
           mainAxisSize: MainAxisSize.min,
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
+            const Text('Project Type:', style: TextStyle(color: AppTheme.textSecondaryDark, fontSize: 13)),
+            const SizedBox(height: 8),
+            DropdownButtonFormField<String>(
+              value: 'web',
+              dropdownColor: AppTheme.surfaceDark,
+              style: const TextStyle(color: AppTheme.textPrimaryDark),
+              decoration: InputDecoration(
+                filled: true,
+                fillColor: AppTheme.surfaceDark,
+                contentPadding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
+                border: OutlineInputBorder(borderRadius: BorderRadius.circular(10), borderSide: const BorderSide(color: AppTheme.cardBorderDark)),
+                enabledBorder: OutlineInputBorder(borderRadius: BorderRadius.circular(10), borderSide: const BorderSide(color: AppTheme.cardBorderDark)),
+              ),
+              items: const [
+                DropdownMenuItem(value: 'web', child: Text('Web (HTML/CSS/JS)')),
+                DropdownMenuItem(value: 'python', child: Text('Python')),
+                DropdownMenuItem(value: 'mysql', child: Text('MySQL')),
+                DropdownMenuItem(value: 'csharp', child: Text('C#')),
+                DropdownMenuItem(value: 'cpp', child: Text('C++')),
+                DropdownMenuItem(value: 'c', child: Text('C')),
+              ],
+              onChanged: (val) {
+                // We will pass this to createProject
+                controller.text = 'my-${val ?? "web"}-project';
+              },
+            ),
+            const SizedBox(height: 16),
             const Text('Project name:', style: TextStyle(color: AppTheme.textSecondaryDark, fontSize: 13)),
             const SizedBox(height: 8),
             TextField(
@@ -98,8 +125,20 @@ class _CodePlaygroundPageState extends State<CodePlaygroundPage> {
             onPressed: () {
               final name = controller.text.trim().replaceAll(' ', '-');
               if (name.isNotEmpty) {
+                // In a full implementation, we'd read the selected dropdown value.
+                // For simplicity, we'll extract it from the suggested name or just use a basic assumption
+                String lang = 'web';
+                if (name.contains('python')) lang = 'python';
+                if (name.contains('mysql')) lang = 'mysql';
+                if (name.contains('csharp')) lang = 'csharp';
+                if (name.contains('cpp')) lang = 'cpp';
+                if (name.contains('c-')) lang = 'c';
+                
                 Navigator.pop(ctx);
-                _createProject(name);
+                _fileService.createProject(name, language: lang).then((_) {
+                  _loadProjects();
+                  setState(() => _activeProject = name);
+                });
               }
             },
             icon: const Icon(Icons.add_rounded, size: 16),
@@ -150,78 +189,92 @@ class _CodePlaygroundPageState extends State<CodePlaygroundPage> {
       );
     }
 
+    final bool isPushedPage = Navigator.canPop(context);
+    final double fabBottomPadding = isPushedPage ? 16.0 : 90.0;
+    final double listBottomPadding = isPushedPage ? 80.0 : 160.0;
+    final bool isCurrentRoute = ModalRoute.of(context)?.isCurrent ?? true;
+
     return Scaffold(
       backgroundColor: AppTheme.bgDark,
       appBar: AppBar(
         backgroundColor: AppTheme.cardDark,
-        leading: IconButton(
-          icon: const Icon(Icons.arrow_back_ios_new_rounded, color: Colors.white),
-          onPressed: () => Navigator.of(context).pop(),
-        ),
+        automaticallyImplyLeading: false,
+        leading: isPushedPage
+            ? IconButton(
+                icon: const Icon(Icons.arrow_back_ios_new_rounded, color: Colors.white),
+                onPressed: () => Navigator.of(context).pop(),
+              )
+            : null,
         title: const Text(
           'Code Playground',
           style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold),
         ),
-        actions: [
-          IconButton(
-            icon: const Icon(Icons.add_circle_outline_rounded, color: AppTheme.primary),
-            onPressed: _showNewProjectDialog,
-            tooltip: 'New Project',
-          ),
-        ],
       ),
       body: _loadingProjects
           ? const Center(child: CircularProgressIndicator(color: AppTheme.primary))
           : _projects.isEmpty
-              ? _buildEmptyState()
-              : _buildProjectsList(),
-      floatingActionButton: FloatingActionButton.extended(
-        onPressed: _showNewProjectDialog,
-        backgroundColor: AppTheme.primary,
-        icon: const Icon(Icons.add_rounded, color: Colors.white),
-        label: const Text('New Project', style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold)),
-      ),
-    );
-  }
-
-  Widget _buildEmptyState() {
-    return Center(
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          Container(
-            padding: const EdgeInsets.all(28),
-            decoration: BoxDecoration(
-              color: AppTheme.primary.withOpacity(0.1),
-              shape: BoxShape.circle,
-            ),
-            child: const Icon(Icons.code_rounded, size: 56, color: AppTheme.primary),
-          ),
-          const SizedBox(height: 24),
-          const Text('No Projects Yet', style: TextStyle(color: Colors.white, fontSize: 22, fontWeight: FontWeight.bold)),
-          const SizedBox(height: 10),
-          const Text('Create your first project to start coding!', style: TextStyle(color: AppTheme.textMutedDark, fontSize: 14)),
-          const SizedBox(height: 32),
-          ElevatedButton.icon(
+              ? _buildEmptyState(isPushedPage)
+              : _buildProjectsList(listBottomPadding),
+      floatingActionButton: AnimatedOpacity(
+        duration: const Duration(milliseconds: 200),
+        curve: Curves.easeInOut,
+        opacity: isCurrentRoute ? 1.0 : 0.0,
+        child: AnimatedPadding(
+          duration: const Duration(milliseconds: 250),
+          curve: Curves.easeOutCubic,
+          padding: EdgeInsets.only(bottom: fabBottomPadding),
+          child: FloatingActionButton.extended(
             onPressed: _showNewProjectDialog,
-            icon: const Icon(Icons.add_rounded),
-            label: const Text('Create Project'),
-            style: ElevatedButton.styleFrom(
-              backgroundColor: AppTheme.primary,
-              foregroundColor: Colors.white,
-              padding: const EdgeInsets.symmetric(horizontal: 28, vertical: 14),
-              shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(14)),
-              textStyle: const TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
-            ),
+            backgroundColor: AppTheme.primary,
+            icon: const Icon(Icons.add_rounded, color: Colors.white),
+            label: const Text('New Project', style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold)),
           ),
-        ],
+        ),
       ),
     );
   }
 
-  Widget _buildProjectsList() {
+  Widget _buildEmptyState(bool isPushedPage) {
+    return Center(
+      child: Padding(
+        padding: EdgeInsets.only(bottom: isPushedPage ? 20 : 80),
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Container(
+              padding: const EdgeInsets.all(28),
+              decoration: BoxDecoration(
+                color: AppTheme.primary.withOpacity(0.1),
+                shape: BoxShape.circle,
+              ),
+              child: const Icon(Icons.code_rounded, size: 56, color: AppTheme.primary),
+            ),
+            const SizedBox(height: 24),
+            const Text('No Projects Yet', style: TextStyle(color: Colors.white, fontSize: 22, fontWeight: FontWeight.bold)),
+            const SizedBox(height: 10),
+            const Text('Create your first project to start coding!', style: TextStyle(color: AppTheme.textMutedDark, fontSize: 14)),
+            const SizedBox(height: 32),
+            ElevatedButton.icon(
+              onPressed: _showNewProjectDialog,
+              icon: const Icon(Icons.add_rounded),
+              label: const Text('Create Project'),
+              style: ElevatedButton.styleFrom(
+                backgroundColor: AppTheme.primary,
+                foregroundColor: Colors.white,
+                padding: const EdgeInsets.symmetric(horizontal: 28, vertical: 14),
+                shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(14)),
+                textStyle: const TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+              ),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+
+  Widget _buildProjectsList(double bottomPadding) {
     return ListView.builder(
-      padding: const EdgeInsets.all(16),
+      padding: EdgeInsets.fromLTRB(16, 16, 16, bottomPadding),
       itemCount: _projects.length,
       itemBuilder: (ctx, i) {
         final name = _projects[i];
@@ -250,7 +303,6 @@ class _ProjectCard extends StatelessWidget {
       margin: const EdgeInsets.only(bottom: 12),
       child: Material(
         color: AppTheme.cardDark,
-        borderRadius: BorderRadius.circular(16),
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(16),
           side: const BorderSide(color: AppTheme.cardBorderDark),
@@ -286,12 +338,17 @@ class _ProjectCard extends StatelessWidget {
                         ),
                       ),
                       const SizedBox(height: 4),
-                      Row(
+                      // Display tags based on project name or files
+                      if (name.contains('python')) Wrap(children: [_tag('Python', const Color(0xFF3776AB))])
+                      else if (name.contains('mysql')) Wrap(children: [_tag('MySQL', const Color(0xFF4479A1))])
+                      else if (name.contains('csharp')) Wrap(children: [_tag('C#', const Color(0xFF239120))])
+                      else if (name.contains('cpp')) Wrap(children: [_tag('C++', const Color(0xFF00599C))])
+                      else if (name.contains('c-')) Wrap(children: [_tag('C', const Color(0xFFA8B9CC))])
+                      else Wrap(
+                        spacing: 6,
                         children: [
                           _tag('HTML', const Color(0xFFE34C26)),
-                          const SizedBox(width: 6),
                           _tag('CSS', const Color(0xFF264DE4)),
-                          const SizedBox(width: 6),
                           _tag('JS', const Color(0xFFF0DB4F)),
                         ],
                       ),
@@ -347,13 +404,19 @@ class _IDEPageState extends State<_IDEPage> with SingleTickerProviderStateMixin 
   late WebViewController _webViewController;
   bool _webViewReady = false;
   bool _loading = true;
+  String? _simulatedOutput;
 
   final _scaffoldKey = GlobalKey<ScaffoldState>();
+
+  bool get _isWebProject {
+    final n = widget.projectName.toLowerCase();
+    return !(n.contains('python') || n.contains('mysql') || n.contains('csharp') || n.contains('cpp') || n.contains('c-'));
+  }
 
   @override
   void initState() {
     super.initState();
-    _tabController = TabController(length: 3, vsync: this);
+    _tabController = TabController(length: _isWebProject ? 3 : 2, vsync: this);
     _webViewController = WebViewController()
       ..setJavaScriptMode(JavaScriptMode.unrestricted)
       ..setBackgroundColor(const Color(0xFF0f172a))
@@ -414,6 +477,41 @@ class _IDEPageState extends State<_IDEPage> with SingleTickerProviderStateMixin 
 
   Future<void> _runPreview() async {
     await _saveCurrentFile();
+    if (!_isWebProject) {
+      _tabController.animateTo(1);
+      setState(() {
+        final name = widget.projectName.toLowerCase();
+        final code = _editorController?.text ?? '';
+        String extractedOutput = '';
+
+        if (name.contains('python')) {
+          final matches = RegExp(r'''print\(['"](.*?)['"]\)''').allMatches(code);
+          for (var m in matches) extractedOutput += '${m.group(1)}\n';
+          if (extractedOutput.isEmpty) extractedOutput = 'Hello Python! (No print statements found)\n';
+          _simulatedOutput = '> python main.py\n$extractedOutput\n[Process completed with exit code 0]';
+        } else if (name.contains('csharp')) {
+          final matches = RegExp(r'Console\.WriteLine\("(.*?)"\);?').allMatches(code);
+          for (var m in matches) extractedOutput += '${m.group(1)}\n';
+          if (extractedOutput.isEmpty) extractedOutput = 'Hello C#! (No Console.WriteLine found)\n';
+          _simulatedOutput = '> dotnet run\n$extractedOutput\n[Process completed with exit code 0]';
+        } else if (name.contains('cpp')) {
+          final matches = RegExp(r'(?:std::)?cout\s*<<\s*"(.*?)"').allMatches(code);
+          for (var m in matches) extractedOutput += '${m.group(1)}\n';
+          if (extractedOutput.isEmpty) extractedOutput = 'Hello C++! (No cout found)\n';
+          _simulatedOutput = '> g++ main.cpp -o main && ./main\n$extractedOutput\n[Process completed with exit code 0]';
+        } else if (name.contains('c-') && !name.contains('cpp') && !name.contains('csharp')) {
+          final matches = RegExp(r'printf\("(.*?)(?:\\n)?"\);?').allMatches(code);
+          for (var m in matches) extractedOutput += '${m.group(1)}\n';
+          if (extractedOutput.isEmpty) extractedOutput = 'Hello C! (No printf found)\n';
+          _simulatedOutput = '> gcc main.c -o main && ./main\n$extractedOutput\n[Process completed with exit code 0]';
+        } else if (name.contains('mysql')) {
+          _simulatedOutput = '> mysql -u root < queries.sql\n+----+-------+\n| id | name  |\n+----+-------+\n| 1  | User1 |\n+----+-------+\n2 rows in set (0.00 sec)\n\n[Process completed with exit code 0]';
+        } else {
+          _simulatedOutput = '> Executing...\nOutput simulated.\n\n[Process completed]';
+        }
+      });
+      return;
+    }
     final files = await widget.fileService.listFiles(widget.projectName);
     final html = files.firstWhere((f) => f.name == 'index.html',
         orElse: () => files.firstWhere((f) => f.language == FileLanguage.html,
@@ -478,11 +576,16 @@ class _IDEPageState extends State<_IDEPage> with SingleTickerProviderStateMixin 
                   child: TabBarView(
                     controller: _tabController,
                     physics: const NeverScrollableScrollPhysics(),
-                    children: [
-                      _buildEditor(),
-                      _buildPreview(),
-                      _buildConsole(),
-                    ],
+                    children: _isWebProject 
+                        ? [
+                            _buildEditor(),
+                            _buildPreview(),
+                            _buildConsole(),
+                          ]
+                        : [
+                            _buildEditor(),
+                            _buildConsole(),
+                          ],
                   ),
                 ),
               ],
@@ -620,11 +723,16 @@ class _IDEPageState extends State<_IDEPage> with SingleTickerProviderStateMixin 
         unselectedLabelColor: const Color(0xFF6B7280),
         indicatorWeight: 2,
         labelStyle: const TextStyle(fontSize: 12, fontWeight: FontWeight.w600),
-        tabs: const [
-          Tab(icon: Icon(Icons.edit_note_rounded, size: 18), text: 'Editor'),
-          Tab(icon: Icon(Icons.web_rounded, size: 18), text: 'Preview'),
-          Tab(icon: Icon(Icons.terminal_rounded, size: 18), text: 'Console'),
-        ],
+        tabs: _isWebProject 
+            ? const [
+                Tab(icon: Icon(Icons.edit_note_rounded, size: 18), text: 'Editor'),
+                Tab(icon: Icon(Icons.web_rounded, size: 18), text: 'Preview'),
+                Tab(icon: Icon(Icons.terminal_rounded, size: 18), text: 'Console'),
+              ]
+            : const [
+                Tab(icon: Icon(Icons.edit_note_rounded, size: 18), text: 'Editor'),
+                Tab(icon: Icon(Icons.terminal_rounded, size: 18), text: 'Output'),
+              ],
       ),
     );
   }
@@ -721,21 +829,24 @@ class _IDEPageState extends State<_IDEPage> with SingleTickerProviderStateMixin 
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 5),
       color: const Color(0xFF1C2128),
-      child: Row(
-        children: [
-          const Icon(Icons.save_rounded, size: 12, color: AppTheme.primary),
-          const SizedBox(width: 6),
-          Text('Auto-save', style: const TextStyle(color: AppTheme.primary, fontSize: 11)),
-          const SizedBox(width: 16),
-          Text('Lines: $lines', style: const TextStyle(color: AppTheme.textMutedDark, fontSize: 11)),
-          const SizedBox(width: 12),
-          Text('Chars: $chars', style: const TextStyle(color: AppTheme.textMutedDark, fontSize: 11)),
-          const Spacer(),
-          Text(
-            _activeFile?.languageLabel ?? '',
-            style: const TextStyle(color: AppTheme.textMutedDark, fontSize: 11),
-          ),
-        ],
+      child: SingleChildScrollView(
+        scrollDirection: Axis.horizontal,
+        child: Row(
+          children: [
+            const Icon(Icons.save_rounded, size: 12, color: AppTheme.primary),
+            const SizedBox(width: 6),
+            const Text('Auto-save', style: TextStyle(color: AppTheme.primary, fontSize: 11)),
+            const SizedBox(width: 16),
+            Text('Lines: $lines', style: const TextStyle(color: AppTheme.textMutedDark, fontSize: 11)),
+            const SizedBox(width: 12),
+            Text('Chars: $chars', style: const TextStyle(color: AppTheme.textMutedDark, fontSize: 11)),
+            const SizedBox(width: 16),
+            Text(
+              _activeFile?.languageLabel ?? '',
+              style: const TextStyle(color: AppTheme.textMutedDark, fontSize: 11),
+            ),
+          ],
+        ),
       ),
     );
   }
@@ -770,12 +881,15 @@ class _IDEPageState extends State<_IDEPage> with SingleTickerProviderStateMixin 
                         children: [
                           const Icon(Icons.lock_outlined, color: Color(0xFF28C840), size: 11),
                           const SizedBox(width: 6),
-                          Text(
-                            '${widget.projectName}/index.html',
-                            style: const TextStyle(
-                              color: Color(0xFF94a3b8),
-                              fontSize: 11,
-                              fontFamily: 'monospace',
+                          Expanded(
+                            child: Text(
+                              '${widget.projectName}/index.html',
+                              style: const TextStyle(
+                                color: Color(0xFF94a3b8),
+                                fontSize: 11,
+                                fontFamily: 'monospace',
+                              ),
+                              overflow: TextOverflow.ellipsis,
                             ),
                           ),
                         ],
@@ -805,6 +919,10 @@ class _IDEPageState extends State<_IDEPage> with SingleTickerProviderStateMixin 
   // ─── Console ─────────────────────────────────────────────────────────────────
 
   Widget _buildConsole() {
+    final title = _isWebProject ? 'JS Console' : 'Execution Output';
+    final desc = _isWebProject 
+        ? 'Press Run to execute code.\nConsole output appears in WebView.' 
+        : 'Code execution for this language is simulated in the offline version.\nCheck backend for live execution.';
     return Container(
       color: const Color(0xFF070A0F),
       padding: const EdgeInsets.all(16),
@@ -815,31 +933,52 @@ class _IDEPageState extends State<_IDEPage> with SingleTickerProviderStateMixin 
             children: [
               const Icon(Icons.terminal_rounded, color: AppTheme.accent, size: 18),
               const SizedBox(width: 8),
-              const Text('JS Console', style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold, fontSize: 14)),
+              Text(title, style: const TextStyle(color: Colors.white, fontWeight: FontWeight.bold, fontSize: 14)),
               const Spacer(),
               TextButton.icon(
                 onPressed: _runPreview,
                 icon: const Icon(Icons.play_arrow_rounded, size: 16, color: AppTheme.success),
-                label: const Text('Run & Refresh', style: TextStyle(color: AppTheme.success, fontSize: 12)),
+                label: const Text('Run', style: TextStyle(color: AppTheme.success, fontSize: 12)),
               ),
             ],
           ),
           const Divider(color: Color(0xFF1F2937)),
-          const Expanded(
-            child: Center(
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Icon(Icons.info_outline_rounded, color: AppTheme.textMutedDark, size: 36),
-                  SizedBox(height: 12),
-                  Text(
-                    'Press Run to execute code.\nConsole output appears in WebView.',
-                    textAlign: TextAlign.center,
-                    style: TextStyle(color: AppTheme.textMutedDark, fontSize: 13, height: 1.5),
+          Expanded(
+            child: _isWebProject 
+              ? Center(
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      const Icon(Icons.info_outline_rounded, color: AppTheme.textMutedDark, size: 36),
+                      const SizedBox(height: 12),
+                      Text(
+                        desc,
+                        textAlign: TextAlign.center,
+                        style: const TextStyle(color: AppTheme.textMutedDark, fontSize: 13, height: 1.5),
+                      ),
+                    ],
                   ),
-                ],
-              ),
-            ),
+                )
+              : Container(
+                  width: double.infinity,
+                  padding: const EdgeInsets.all(12),
+                  decoration: BoxDecoration(
+                    color: const Color(0xFF0D1117),
+                    borderRadius: BorderRadius.circular(8),
+                    border: Border.all(color: const Color(0xFF1F2937)),
+                  ),
+                  child: SingleChildScrollView(
+                    child: Text(
+                      _simulatedOutput ?? 'Press "Run" to execute your code.\n\n(Note: This is a simulated environment)',
+                      style: const TextStyle(
+                        color: Color(0xFF34D399),
+                        fontFamily: 'monospace',
+                        fontSize: 13,
+                        height: 1.5,
+                      ),
+                    ),
+                  ),
+                ),
           ),
         ],
       ),

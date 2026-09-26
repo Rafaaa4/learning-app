@@ -495,23 +495,29 @@ class _LessonRendererPageState extends State<LessonRendererPage>
         children: [
           // Top bar of snippet
           Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 10),
+            padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 6),
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                Row(
-                  children: [
-                    Container(width: 10, height: 10, decoration: const BoxDecoration(color: Color(0xFFFF5F56), shape: BoxShape.circle)),
-                    const SizedBox(width: 6),
-                    Container(width: 10, height: 10, decoration: const BoxDecoration(color: Color(0xFFFFBD2E), shape: BoxShape.circle)),
-                    const SizedBox(width: 6),
-                    Container(width: 10, height: 10, decoration: const BoxDecoration(color: Color(0xFF27C93F), shape: BoxShape.circle)),
-                    const SizedBox(width: 12),
-                    Text(
-                      ex.title,
-                      style: const TextStyle(color: AppTheme.textSecondaryDark, fontSize: 12, fontWeight: FontWeight.w600),
-                    ),
-                  ],
+                Expanded(
+                  child: Row(
+                    children: [
+                      Container(width: 10, height: 10, decoration: const BoxDecoration(color: Color(0xFFFF5F56), shape: BoxShape.circle)),
+                      const SizedBox(width: 6),
+                      Container(width: 10, height: 10, decoration: const BoxDecoration(color: Color(0xFFFFBD2E), shape: BoxShape.circle)),
+                      const SizedBox(width: 6),
+                      Container(width: 10, height: 10, decoration: const BoxDecoration(color: Color(0xFF27C93F), shape: BoxShape.circle)),
+                      const SizedBox(width: 12),
+                      Expanded(
+                        child: Text(
+                          ex.title,
+                          overflow: TextOverflow.ellipsis,
+                          maxLines: 1,
+                          style: const TextStyle(color: AppTheme.textSecondaryDark, fontSize: 12, fontWeight: FontWeight.w600),
+                        ),
+                      ),
+                    ],
+                  ),
                 ),
                 IconButton(
                   icon: const Icon(Icons.copy_rounded, color: AppTheme.textMutedDark, size: 16),
@@ -575,14 +581,19 @@ class _LessonRendererPageState extends State<LessonRendererPage>
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    Text(
-                      challenge.title,
-                      style: const TextStyle(
-                        color: AppTheme.textPrimaryDark,
-                        fontSize: 16,
-                        fontWeight: FontWeight.w700,
+                    Expanded(
+                      child: Text(
+                        challenge.title,
+                        overflow: TextOverflow.ellipsis,
+                        maxLines: 2,
+                        style: const TextStyle(
+                          color: AppTheme.textPrimaryDark,
+                          fontSize: 16,
+                          fontWeight: FontWeight.w700,
+                        ),
                       ),
                     ),
+                    const SizedBox(width: 8),
                     Container(
                       padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 4),
                       decoration: BoxDecoration(
@@ -616,7 +627,9 @@ class _LessonRendererPageState extends State<LessonRendererPage>
           const SizedBox(height: 16),
 
           // Code Editor Toolbar
-          Row(
+          Wrap(
+            alignment: WrapAlignment.spaceBetween,
+            crossAxisAlignment: WrapCrossAlignment.center,
             children: [
               const Text(
                 'Code Editor',
@@ -626,51 +639,111 @@ class _LessonRendererPageState extends State<LessonRendererPage>
                   fontWeight: FontWeight.w700,
                 ),
               ),
-              const Spacer(),
-              TextButton.icon(
-                icon: const Icon(Icons.refresh_rounded, size: 16, color: AppTheme.textMutedDark),
-                label: const Text('Reset', style: TextStyle(color: AppTheme.textMutedDark, fontSize: 12)),
-                onPressed: () {
-                  setState(() {
-                    _codeController.text = challenge.starterCode;
-                  });
-                },
-              ),
-              TextButton.icon(
-                icon: const Icon(Icons.lightbulb_outline, size: 16, color: AppTheme.warning),
-                label: const Text('Hint', style: TextStyle(color: AppTheme.warning, fontSize: 12)),
-                onPressed: () => _showHintsDialog(challenge.hints),
-              ),
-              TextButton.icon(
-                icon: const Icon(Icons.visibility_outlined, size: 16, color: AppTheme.accent),
-                label: const Text('Solution', style: TextStyle(color: AppTheme.accent, fontSize: 12)),
-                onPressed: () => _showSolutionDialog(challenge.solution),
+              SingleChildScrollView(
+                scrollDirection: Axis.horizontal,
+                child: Row(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    TextButton.icon(
+                      icon: const Icon(Icons.refresh_rounded, size: 16, color: AppTheme.textMutedDark),
+                      label: const Text('Reset', style: TextStyle(color: AppTheme.textMutedDark, fontSize: 12)),
+                      onPressed: () {
+                        setState(() {
+                          _codeController.text = challenge.starterCode;
+                        });
+                      },
+                    ),
+                    TextButton.icon(
+                      icon: const Icon(Icons.lightbulb_outline, size: 16, color: AppTheme.warning),
+                      label: const Text('Hint', style: TextStyle(color: AppTheme.warning, fontSize: 12)),
+                      onPressed: () => _showHintsDialog(challenge.hints),
+                    ),
+                    TextButton.icon(
+                      icon: const Icon(Icons.visibility_outlined, size: 16, color: AppTheme.accent),
+                      label: const Text('Solution', style: TextStyle(color: AppTheme.accent, fontSize: 12)),
+                      onPressed: () => _showSolutionDialog(challenge.solution),
+                    ),
+                  ],
+                ),
               ),
             ],
           ),
 
-          // Monospace Code Editor
-          Container(
-            decoration: BoxDecoration(
-              color: AppTheme.codeBackground,
-              borderRadius: BorderRadius.circular(16),
-              border: Border.all(color: AppTheme.cardBorderDark),
-            ),
-            child: TextField(
-              controller: _codeController,
-              maxLines: 8,
-              style: const TextStyle(
-                fontFamily: 'monospace',
-                color: AppTheme.codeText,
-                fontSize: 13.5,
-                height: 1.5,
+          // Monospace Code Editor Card with rounded corners
+          ClipRRect(
+            borderRadius: BorderRadius.circular(18),
+            child: Container(
+              decoration: BoxDecoration(
+                color: AppTheme.codeBackground,
+                borderRadius: BorderRadius.circular(18),
+                border: Border.all(color: AppTheme.cardBorderDark, width: 1.5),
+                boxShadow: [
+                  BoxShadow(
+                    color: Colors.black.withOpacity(0.25),
+                    blurRadius: 12,
+                    offset: const Offset(0, 4),
+                  ),
+                ],
               ),
-              decoration: const InputDecoration(
-                contentPadding: EdgeInsets.all(16),
-                border: InputBorder.none,
-                enabledBorder: InputBorder.none,
-                focusedBorder: InputBorder.none,
-                hintText: '// Type code here...',
+              child: Column(
+                children: [
+                  // Editor Window Header Bar
+                  Container(
+                    padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 10),
+                    decoration: const BoxDecoration(
+                      color: Color(0xFF161B22),
+                      border: Border(bottom: BorderSide(color: AppTheme.cardBorderDark)),
+                    ),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Row(
+                          children: [
+                            Container(width: 10, height: 10, decoration: const BoxDecoration(color: Color(0xFFFF5F56), shape: BoxShape.circle)),
+                            const SizedBox(width: 6),
+                            Container(width: 10, height: 10, decoration: const BoxDecoration(color: Color(0xFFFFBD2E), shape: BoxShape.circle)),
+                            const SizedBox(width: 6),
+                            Container(width: 10, height: 10, decoration: const BoxDecoration(color: Color(0xFF27C93F), shape: BoxShape.circle)),
+                            const SizedBox(width: 12),
+                            const Text(
+                              'editor.code',
+                              style: TextStyle(color: AppTheme.textMutedDark, fontSize: 11, fontWeight: FontWeight.w600, fontFamily: 'monospace'),
+                            ),
+                          ],
+                        ),
+                        Container(
+                          padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 2),
+                          decoration: BoxDecoration(
+                            color: AppTheme.primary.withOpacity(0.15),
+                            borderRadius: BorderRadius.circular(6),
+                          ),
+                          child: Text(
+                            challenge.language.toUpperCase(),
+                            style: const TextStyle(color: AppTheme.primary, fontSize: 10, fontWeight: FontWeight.bold),
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                  TextField(
+                    controller: _codeController,
+                    maxLines: 9,
+                    style: const TextStyle(
+                      fontFamily: 'monospace',
+                      color: AppTheme.codeText,
+                      fontSize: 13.5,
+                      height: 1.5,
+                    ),
+                    decoration: const InputDecoration(
+                      contentPadding: EdgeInsets.all(16),
+                      border: InputBorder.none,
+                      enabledBorder: InputBorder.none,
+                      focusedBorder: InputBorder.none,
+                      hintText: '// Write your code solution here...',
+                      hintStyle: TextStyle(color: AppTheme.textMutedDark, fontFamily: 'monospace'),
+                    ),
+                  ),
+                ],
               ),
             ),
           ),

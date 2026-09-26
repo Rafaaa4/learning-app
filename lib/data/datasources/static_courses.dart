@@ -33,7 +33,10 @@ class StaticCoursesDataSource {
           .map((item) => Course.fromJson(item as Map<String, dynamic>))
           .toList();
       return _cachedCourses!;
-    } catch (_) {
+    } catch (e, st) {
+      print('=== ERROR LOADING ASSETS/DATA/COURSES.JSON ===');
+      print(e);
+      print(st);
       // Fallback in-memory definition to guarantee 100% zero-crash operation
       _cachedCourses = _buildDefaultCourses();
       return _cachedCourses!;

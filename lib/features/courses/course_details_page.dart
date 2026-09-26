@@ -34,6 +34,11 @@ class _CourseDetailsPageState extends State<CourseDetailsPage> {
     final totalCount = course.totalLessons;
     final percent = totalCount > 0 ? (completedCount / totalCount) : 0.0;
 
+    final List<Lesson> allLessonsInCourse = [];
+    for (final m in course.modules) {
+      allLessonsInCourse.addAll(m.lessons);
+    }
+
     return Scaffold(
       backgroundColor: AppTheme.bgDark,
       body: CustomScrollView(
@@ -239,7 +244,7 @@ class _CourseDetailsPageState extends State<CourseDetailsPage> {
                   const SizedBox(height: 16),
 
                   // Modules List
-                  ...course.modules.map((module) => _buildModuleCard(module, progress)),
+                  ...course.modules.map((module) => _buildModuleCard(module, progress, allLessonsInCourse)),
 
                   const SizedBox(height: 80),
                 ],
@@ -282,7 +287,7 @@ class _CourseDetailsPageState extends State<CourseDetailsPage> {
     );
   }
 
-  Widget _buildModuleCard(dynamic module, dynamic progress) {
+  Widget _buildModuleCard(dynamic module, dynamic progress, List<Lesson> allLessonsInCourse) {
     return Padding(
       padding: const EdgeInsets.only(bottom: 16),
       child: Material(
@@ -316,8 +321,27 @@ class _CourseDetailsPageState extends State<CourseDetailsPage> {
               const Divider(color: AppTheme.cardBorderDark, height: 1),
               ...module.lessons.map<Widget>((lesson) {
                 final isCompleted = progress.isLessonCompleted(lesson.id);
+                final int lessonIndex = allLessonsInCourse.indexWhere((l) => l.id == lesson.id);
+                final bool isUnlocked = lessonIndex <= 0 || progress.isLessonCompleted(allLessonsInCourse[lessonIndex - 1].id);
+
                 return InkWell(
                   onTap: () async {
+                    if (!isUnlocked) {
+                      ScaffoldMessenger.of(context).showSnackBar(
+                        const SnackBar(
+                          content: Row(
+                            children: [
+                              Icon(Icons.lock_rounded, color: Colors.white, size: 18),
+                              SizedBox(width: 8),
+                              Text('Complete the previous lesson first to unlock this one! 🔒'),
+                            ],
+                          ),
+                          backgroundColor: Color(0xFFC53030),
+                          duration: Duration(seconds: 2),
+                        ),
+                      );
+                      return;
+                    }
                     await Navigator.of(context).push(
                       MaterialPageRoute(
                         builder: (context) => LessonRendererPage(
@@ -338,23 +362,29 @@ class _CourseDetailsPageState extends State<CourseDetailsPage> {
                           decoration: BoxDecoration(
                             color: isCompleted
                                 ? AppTheme.success.withOpacity(0.18)
-                                : AppTheme.surfaceDark,
+                                : (isUnlocked
+                                    ? AppTheme.primary.withOpacity(0.15)
+                                    : AppTheme.surfaceDark),
                             shape: BoxShape.circle,
                             border: Border.all(
-                              color: isCompleted ? AppTheme.success : AppTheme.cardBorderDark,
+                              color: isCompleted
+                                  ? AppTheme.success
+                                  : (isUnlocked ? AppTheme.primary : AppTheme.cardBorderDark),
                             ),
                           ),
                           child: Center(
                             child: isCompleted
                                 ? const Icon(Icons.check_rounded, color: AppTheme.success, size: 18)
-                                : Text(
-                                    '${lesson.order}',
-                                    style: const TextStyle(
-                                      color: AppTheme.textSecondaryDark,
-                                      fontSize: 12,
-                                      fontWeight: FontWeight.bold,
-                                    ),
-                                  ),
+                                : (isUnlocked
+                                    ? Text(
+                                        '${lesson.order}',
+                                        style: const TextStyle(
+                                          color: AppTheme.primary,
+                                          fontSize: 12,
+                                          fontWeight: FontWeight.bold,
+                                        ),
+                                      )
+                                    : const Icon(Icons.lock_rounded, color: AppTheme.textMutedDark, size: 15)),
                           ),
                         ),
                         const SizedBox(width: 12),
@@ -365,9 +395,11 @@ class _CourseDetailsPageState extends State<CourseDetailsPage> {
                               Text(
                                 lesson.title,
                                 style: TextStyle(
-                                  color: isCompleted ? AppTheme.textMutedDark : AppTheme.textPrimaryDark,
+                                  color: isCompleted
+                                      ? AppTheme.textMutedDark
+                                      : (isUnlocked ? AppTheme.textPrimaryDark : AppTheme.textMutedDark.withOpacity(0.7)),
                                   fontSize: 14,
-                                  fontWeight: isCompleted ? FontWeight.normal : FontWeight.w600,
+                                  fontWeight: isCompleted ? FontWeight.normal : (isUnlocked ? FontWeight.w600 : FontWeight.normal),
                                   decoration: isCompleted ? TextDecoration.lineThrough : null,
                                 ),
                               ),
@@ -375,24 +407,38 @@ class _CourseDetailsPageState extends State<CourseDetailsPage> {
                               Row(
                                 children: [
                                   if (lesson.challenge != null) ...[
-                                    const Icon(Icons.code_rounded, size: 12, color: AppTheme.accent),
+                                    Icon(
+                                      Icons.code_rounded,
+                                      size: 12,
+                                      color: isUnlocked ? AppTheme.accent : AppTheme.textMutedDark,
+                                    ),
                                     const SizedBox(width: 4),
                                     Flexible(
                                       child: Text(
                                         'Challenge (+${lesson.challenge!.points} XP)',
-                                        style: const TextStyle(color: AppTheme.accent, fontSize: 11),
+                                        style: TextStyle(
+                                          color: isUnlocked ? AppTheme.accent : AppTheme.textMutedDark,
+                                          fontSize: 11,
+                                        ),
                                         overflow: TextOverflow.ellipsis,
                                       ),
                                     ),
                                     const SizedBox(width: 10),
                                   ],
                                   if (lesson.quiz.isNotEmpty) ...[
-                                    const Icon(Icons.quiz_outlined, size: 12, color: AppTheme.warning),
+                                    Icon(
+                                      Icons.quiz_outlined,
+                                      size: 12,
+                                      color: isUnlocked ? AppTheme.warning : AppTheme.textMutedDark,
+                                    ),
                                     const SizedBox(width: 4),
                                     Flexible(
                                       child: Text(
                                         'Quiz (${lesson.quiz.length} Q)',
-                                        style: const TextStyle(color: AppTheme.warning, fontSize: 11),
+                                        style: TextStyle(
+                                          color: isUnlocked ? AppTheme.warning : AppTheme.textMutedDark,
+                                          fontSize: 11,
+                                        ),
                                         overflow: TextOverflow.ellipsis,
                                       ),
                                     ),
@@ -402,9 +448,9 @@ class _CourseDetailsPageState extends State<CourseDetailsPage> {
                             ],
                           ),
                         ),
-                        const Icon(
-                          Icons.chevron_right_rounded,
-                          color: AppTheme.textMutedDark,
+                        Icon(
+                          isUnlocked ? Icons.chevron_right_rounded : Icons.lock_outline_rounded,
+                          color: isUnlocked ? AppTheme.textMutedDark : AppTheme.textMutedDark.withOpacity(0.4),
                           size: 20,
                         ),
                       ],

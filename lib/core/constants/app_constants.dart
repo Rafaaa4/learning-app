@@ -1,5 +1,5 @@
 class AppConstants {
-  static const String appName = 'AI Course Studio';
+  static const String appName = 'Learnpg';
   static const String appTagline = 'Generate. Code. Validate. Master.';
 
   static const List<String> popularTopics = [

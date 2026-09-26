@@ -14,15 +14,16 @@ class QuizQuestion {
   });
 
   factory QuizQuestion.fromJson(Map<String, dynamic> json) {
+    final rawAnswer = json['correct_answer'] ?? json['correctAnswerIndex'];
     return QuizQuestion(
       question: json['question'] as String? ?? 'Quiz Question',
       options: (json['options'] as List<dynamic>?)
               ?.map((o) => o.toString())
               .toList() ??
           [],
-      correctAnswer: json['correct_answer'] as int? ?? 0,
+      correctAnswer: (rawAnswer as num?)?.toInt() ?? 0,
       explanation: json['explanation'] as String?,
-      points: json['points'] as int? ?? 5,
+      points: (json['points'] as num?)?.toInt() ?? 5,
     );
   }
 

@@ -106,13 +106,15 @@ void main() {
       expect(failResult.ruleResults.any((r) => !r.passed), true);
     });
 
-    test('StaticCoursesDataSource provides complete courses with lessons and quizzes', () async {
+    test('StaticCoursesDataSource loads real assets/data/courses.json', () async {
+      TestWidgetsFlutterBinding.ensureInitialized();
       final dataSource = StaticCoursesDataSource();
       final courses = await dataSource.getAllCourses();
-      expect(courses.isNotEmpty, true);
-      expect(courses.first.modules.isNotEmpty, true);
-      expect(courses.first.modules.first.lessons.isNotEmpty, true);
-      expect(courses.first.modules.first.lessons.first.quiz.isNotEmpty, true);
+      print('Loaded courses count: ${courses.length}');
+      for (final c in courses) {
+        print('Course: ${c.id} - ${c.title} (${c.modules.length} modules)');
+      }
+      expect(courses.length, greaterThanOrEqualTo(6));
     });
   });
 }

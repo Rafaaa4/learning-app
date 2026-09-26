@@ -64,7 +64,7 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
                       ),
                       const SizedBox(width: 10),
                       const Text(
-                        'AI Course Studio',
+                        'Learnpg',
                         style: TextStyle(
                           color: AppTheme.textPrimaryDark,
                           fontWeight: FontWeight.w700,

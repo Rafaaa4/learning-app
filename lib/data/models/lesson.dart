@@ -81,18 +81,31 @@ class Lesson {
   });
 
   factory Lesson.fromJson(Map<String, dynamic> json) {
+    LessonContent parsedContent;
+    final rawContent = json['content'];
+    if (rawContent is Map<String, dynamic>) {
+      parsedContent = LessonContent.fromJson(rawContent);
+    } else if (rawContent is String) {
+      parsedContent = LessonContent(
+        explanation: rawContent,
+        examples: [],
+        keyPoints: [],
+      );
+    } else {
+      parsedContent = LessonContent(explanation: '', examples: []);
+    }
+
     return Lesson(
       id: json['id'] as String? ?? 'lesson-${DateTime.now().millisecondsSinceEpoch}',
       title: json['title'] as String? ?? 'Untitled Lesson',
-      order: json['order'] as int? ?? 1,
-      content: json['content'] != null
-          ? LessonContent.fromJson(json['content'] as Map<String, dynamic>)
-          : LessonContent(explanation: '', examples: []),
-      challenge: json['challenge'] != null
+      order: (json['order'] as num?)?.toInt() ?? 1,
+      content: parsedContent,
+      challenge: json['challenge'] != null && json['challenge'] is Map<String, dynamic>
           ? Challenge.fromJson(json['challenge'] as Map<String, dynamic>)
           : null,
       quiz: (json['quiz'] as List<dynamic>?)
-              ?.map((q) => QuizQuestion.fromJson(q as Map<String, dynamic>))
+              ?.whereType<Map<String, dynamic>>()
+              .map((q) => QuizQuestion.fromJson(q))
               .toList() ??
           [],
     );

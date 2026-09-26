@@ -37,12 +37,25 @@ class PlaygroundFileService {
       ..sort();
   }
 
-  Future<void> createProject(String name) async {
+  Future<void> createProject(String name, {String language = 'web'}) async {
     final dir = await projectDir(name);
-    // Bootstrap with starter files
-    await _writeFile(dir, 'index.html', _starterHtml);
-    await _writeFile(dir, 'style.css', _starterCss);
-    await _writeFile(dir, 'main.js', _starterJs);
+    
+    if (language == 'python') {
+      await _writeFile(dir, 'main.py', 'print("Hello Python!")\n');
+    } else if (language == 'mysql') {
+      await _writeFile(dir, 'queries.sql', 'SELECT * FROM users;\n');
+    } else if (language == 'csharp') {
+      await _writeFile(dir, 'Program.cs', 'using System;\n\nclass Program {\n  static void Main() {\n    Console.WriteLine("Hello C#!");\n  }\n}\n');
+    } else if (language == 'cpp') {
+      await _writeFile(dir, 'main.cpp', '#include <iostream>\n\nint main() {\n  std::cout << "Hello C++!" << std::endl;\n  return 0;\n}\n');
+    } else if (language == 'c') {
+      await _writeFile(dir, 'main.c', '#include <stdio.h>\n\nint main() {\n  printf("Hello C!\\n");\n  return 0;\n}\n');
+    } else {
+      // Bootstrap with starter files for web
+      await _writeFile(dir, 'index.html', _starterHtml);
+      await _writeFile(dir, 'style.css', _starterCss);
+      await _writeFile(dir, 'main.js', _starterJs);
+    }
   }
 
   Future<void> deleteProject(String name) async {

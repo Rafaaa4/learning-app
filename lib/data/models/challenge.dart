@@ -106,16 +106,16 @@ class Challenge {
     return Challenge(
       title: json['title'] as String? ?? 'Coding Challenge',
       description: json['description'] as String? ?? '',
-      starterCode: json['starter_code'] as String? ?? '',
+      starterCode: (json['starter_code'] ?? json['initialCode']) as String? ?? '',
       language: (json['validation'] != null && json['validation']['type'] != null)
           ? json['validation']['type'] as String
           : (json['language'] as String? ?? 'html'),
-      validation: json['validation'] != null
+      validation: json['validation'] != null && json['validation'] is Map<String, dynamic>
           ? ChallengeValidation.fromJson(json['validation'] as Map<String, dynamic>)
           : ChallengeValidation(type: 'html', rules: []),
       solution: json['solution'] as String? ?? '',
       hints: (json['hints'] as List<dynamic>?)?.map((h) => h.toString()).toList() ?? [],
-      points: json['points'] as int? ?? 10,
+      points: (json['points'] as num?)?.toInt() ?? 10,
     );
   }
 

@@ -20,7 +20,7 @@ class _HomePageState extends State<HomePage> {
   bool _isLoading = true;
   String _selectedCategory = 'All';
 
-  final List<String> _categories = ['All', 'Web', 'Python', 'SQL'];
+  final List<String> _categories = ['All', 'Web', 'Python', 'SQL' , 'C++' ,'C#', 'C'];
 
   @override
   void initState() {
@@ -51,38 +51,7 @@ class _HomePageState extends State<HomePage> {
     }).toList();
   }
 
-  void _showResetProgressDialog() {
-    showDialog(
-      context: context,
-      builder: (ctx) => AlertDialog(
-        backgroundColor: AppTheme.cardDark,
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(20),
-          side: const BorderSide(color: AppTheme.cardBorderDark),
-        ),
-        title: const Text('Reset Progress?', style: TextStyle(color: AppTheme.textPrimaryDark)),
-        content: const Text(
-          'This will reset your earned XP and mark all lessons as uncompleted. Are you sure?',
-          style: TextStyle(color: AppTheme.textSecondaryDark, fontSize: 14),
-        ),
-        actions: [
-          TextButton(
-            onPressed: () => Navigator.of(ctx).pop(),
-            child: const Text('Cancel', style: TextStyle(color: AppTheme.textMutedDark)),
-          ),
-          ElevatedButton(
-            style: ElevatedButton.styleFrom(backgroundColor: AppTheme.error),
-            onPressed: () async {
-              Navigator.of(ctx).pop();
-              await _storageService.resetProgress();
-              _loadData();
-            },
-            child: const Text('Reset'),
-          ),
-        ],
-      ),
-    );
-  }
+
 
   @override
   Widget build(BuildContext context) {
@@ -103,47 +72,50 @@ class _HomePageState extends State<HomePage> {
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
-                            Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                Row(
-                                  children: [
-                                    const Text(
-                                      'Tech Academy',
-                                      style: TextStyle(
-                                        color: AppTheme.textPrimaryDark,
-                                        fontSize: 22,
-                                        fontWeight: FontWeight.w800,
-                                        letterSpacing: -0.5,
-                                      ),
-                                    ),
-                                    const SizedBox(width: 8),
-                                    Container(
-                                      padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 2),
-                                      decoration: BoxDecoration(
-                                        color: AppTheme.primary.withOpacity(0.2),
-                                        borderRadius: BorderRadius.circular(10),
-                                      ),
-                                      child: Text(
-                                        'Lvl ${_progress.userLevel}',
-                                        style: const TextStyle(
-                                          color: AppTheme.primary,
-                                          fontSize: 11,
-                                          fontWeight: FontWeight.bold,
+                            Expanded(
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Wrap(
+                                    crossAxisAlignment: WrapCrossAlignment.center,
+                                    children: [
+                                      const Text(
+                                        'Learnpg',
+                                        style: TextStyle(
+                                          color: AppTheme.textPrimaryDark,
+                                          fontSize: 22,
+                                          fontWeight: FontWeight.w800,
+                                          letterSpacing: -0.5,
                                         ),
                                       ),
-                                    ),
-                                  ],
-                                ),
-                                const SizedBox(height: 4),
-                                const Text(
-                                  'Learn by coding with instant tests & quizzes',
-                                  style: TextStyle(
-                                    color: AppTheme.textSecondaryDark,
-                                    fontSize: 13,
+                                      const SizedBox(width: 8),
+                                      Container(
+                                        padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 2),
+                                        decoration: BoxDecoration(
+                                          color: AppTheme.primary.withOpacity(0.2),
+                                          borderRadius: BorderRadius.circular(10),
+                                        ),
+                                        child: Text(
+                                          'Lvl ${_progress.userLevel}',
+                                          style: const TextStyle(
+                                            color: AppTheme.primary,
+                                            fontSize: 11,
+                                            fontWeight: FontWeight.bold,
+                                          ),
+                                        ),
+                                      ),
+                                    ],
                                   ),
-                                ),
-                              ],
+                                  const SizedBox(height: 4),
+                                  const Text(
+                                    'Learn by coding with instant tests & quizzes',
+                                    style: TextStyle(
+                                      color: AppTheme.textSecondaryDark,
+                                      fontSize: 13,
+                                    ),
+                                  ),
+                                ],
+                              ),
                             ),
                             Row(
                               children: [
@@ -193,12 +165,6 @@ class _HomePageState extends State<HomePage> {
                                       ),
                                     ],
                                   ),
-                                ),
-                                const SizedBox(width: 6),
-                                IconButton(
-                                  icon: const Icon(Icons.refresh_rounded, color: AppTheme.textMutedDark, size: 20),
-                                  tooltip: 'Reset Progress',
-                                  onPressed: _showResetProgressDialog,
                                 ),
                               ],
                             ),
@@ -384,30 +350,33 @@ class _HomePageState extends State<HomePage> {
                     SliverToBoxAdapter(
                       child: Padding(
                         padding: const EdgeInsets.symmetric(horizontal: 20),
-                        child: Row(
-                          children: _categories.map((cat) {
-                            final isSelected = _selectedCategory == cat;
-                            return Padding(
-                              padding: const EdgeInsets.only(right: 8),
-                              child: ChoiceChip(
-                                label: Text(cat),
-                                selected: isSelected,
-                                selectedColor: AppTheme.primary,
-                                backgroundColor: AppTheme.cardDark,
-                                labelStyle: TextStyle(
-                                  color: isSelected ? Colors.white : AppTheme.textSecondaryDark,
-                                  fontWeight: isSelected ? FontWeight.bold : FontWeight.normal,
-                                  fontSize: 13,
+                        child: SingleChildScrollView(
+                          scrollDirection: Axis.horizontal,
+                          child: Row(
+                            children: _categories.map((cat) {
+                              final isSelected = _selectedCategory == cat;
+                              return Padding(
+                                padding: const EdgeInsets.only(right: 8),
+                                child: ChoiceChip(
+                                  label: Text(cat),
+                                  selected: isSelected,
+                                  selectedColor: AppTheme.primary,
+                                  backgroundColor: AppTheme.cardDark,
+                                  labelStyle: TextStyle(
+                                    color: isSelected ? Colors.white : AppTheme.textSecondaryDark,
+                                    fontWeight: isSelected ? FontWeight.bold : FontWeight.normal,
+                                    fontSize: 13,
+                                  ),
+                                  side: BorderSide(
+                                    color: isSelected ? AppTheme.primary : AppTheme.cardBorderDark,
+                                  ),
+                                  onSelected: (sel) {
+                                    if (sel) setState(() => _selectedCategory = cat);
+                                  },
                                 ),
-                                side: BorderSide(
-                                  color: isSelected ? AppTheme.primary : AppTheme.cardBorderDark,
-                                ),
-                                onSelected: (sel) {
-                                  if (sel) setState(() => _selectedCategory = cat);
-                                },
-                              ),
-                            );
-                          }).toList(),
+                              );
+                            }).toList(),
+                          ),
                         ),
                       ),
                     ),
@@ -428,7 +397,7 @@ class _HomePageState extends State<HomePage> {
                       ),
                     ),
 
-                    const SliverToBoxAdapter(child: SizedBox(height: 40)),
+                    const SliverToBoxAdapter(child: SizedBox(height: 100)),
                   ],
                 ),
               ),
@@ -542,6 +511,8 @@ class _HomePageState extends State<HomePage> {
                     color: AppTheme.primary,
                   ),
                 ),
+                const SizedBox(height: 12),
+                
               ],
             ),
           ),

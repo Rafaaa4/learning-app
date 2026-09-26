@@ -36,16 +36,35 @@ class ValidationService {
     List<String> consoleOutputs = const [],
   }) {
     final rules = challenge.validation.rules;
+    final cleanCode = code.trim();
+    final cleanSolution = challenge.solution.trim();
+
+    // If user code matches the solution, guarantee pass
+    if (cleanCode.isNotEmpty && cleanSolution.isNotEmpty) {
+      final codeNormalized = cleanCode.replaceAll(RegExp(r'\s+'), '').toLowerCase();
+      final solutionNormalized = cleanSolution.replaceAll(RegExp(r'\s+'), '').toLowerCase();
+      if (codeNormalized == solutionNormalized) {
+        return ValidationResult(
+          isPassed: true,
+          ruleResults: rules
+              .map((r) => RuleCheckResult(rule: r, passed: true, feedback: 'Solution matched perfectly! 🎉'))
+              .toList(),
+          summaryMessage: 'Excellent! All tests passed (+${challenge.points} XP) 🎉',
+        );
+      }
+    }
+
     if (rules.isEmpty) {
       return ValidationResult(
-        isPassed: true,
+        isPassed: cleanCode.isNotEmpty,
         ruleResults: [],
-        summaryMessage: 'Great work! No validation rules specified.',
+        summaryMessage: cleanCode.isNotEmpty
+            ? 'Great work! Solution submitted (+${challenge.points} XP) 🎉'
+            : 'Please write some code before submitting.',
       );
     }
 
     final List<RuleCheckResult> results = [];
-    final cleanCode = code.trim();
 
     for (final rule in rules) {
       final check = _evaluateRule(
@@ -83,7 +102,6 @@ class ValidationService {
         if (tag.isEmpty) {
           return RuleCheckResult(rule: rule, passed: true, feedback: 'Rule skipped.');
         }
-        // Match <tag ...> or <tag>
         final tagRegex = RegExp('<\\s*$tag(\\s+[^>]*)?>', caseSensitive: false);
         final found = tagRegex.hasMatch(code);
         return RuleCheckResult(
@@ -96,18 +114,26 @@ class ValidationService {
 
       case 'text_contains':
         final target = (rule.value ?? '').trim();
-        final found = code.toLowerCase().contains(target.toLowerCase());
+        if (target.isEmpty) {
+          return RuleCheckResult(rule: rule, passed: true, feedback: 'Rule passed.');
+        }
+        final options = target.split(RegExp(r'[|,]')).map((s) => s.trim().toLowerCase()).where((s) => s.isNotEmpty).toList();
+        final codeLower = code.toLowerCase();
+        final found = options.any((opt) => codeLower.contains(opt));
         return RuleCheckResult(
           rule: rule,
           passed: found,
           feedback: found
-              ? 'Code contains "$target".'
+              ? 'Code contains required pattern ("$target").'
               : 'Expected to find "$target" in your code.',
         );
 
       case 'attribute_exists':
         final attr = (rule.attribute ?? rule.value ?? '').trim().toLowerCase();
-        final attrRegex = RegExp('\\b$attr\\s*=', caseSensitive: false);
+        if (attr.isEmpty) {
+          return RuleCheckResult(rule: rule, passed: true, feedback: 'Rule passed.');
+        }
+        final attrRegex = RegExp('\\b$attr(\\s*=|\\s|>|/)', caseSensitive: false);
         final found = attrRegex.hasMatch(code);
         return RuleCheckResult(
           rule: rule,
@@ -117,14 +143,18 @@ class ValidationService {
               : 'Missing attribute "$attr".',
         );
 
+      case 'regex':
       case 'regex_match':
         final pattern = rule.value ?? '';
+        if (pattern.isEmpty) {
+          return RuleCheckResult(rule: rule, passed: true, feedback: 'Rule passed.');
+        }
         bool found = false;
         try {
           final regex = RegExp(pattern, caseSensitive: false, multiLine: true);
           found = regex.hasMatch(code);
         } catch (_) {
-          found = code.contains(pattern);
+          found = code.toLowerCase().contains(pattern.toLowerCase());
         }
         return RuleCheckResult(
           rule: rule,
@@ -136,6 +166,9 @@ class ValidationService {
 
       case 'output_contains':
         final expected = (rule.value ?? '').trim().toLowerCase();
+        if (expected.isEmpty) {
+          return RuleCheckResult(rule: rule, passed: true, feedback: 'Rule passed.');
+        }
         final allLogs = consoleOutputs.join('\n').toLowerCase();
         final found = allLogs.contains(expected);
         return RuleCheckResult(
@@ -143,13 +176,12 @@ class ValidationService {
           passed: found,
           feedback: found
               ? 'Console output contains "$expected".'
-              : 'Expected console output to contain "$expected". Found: "${consoleOutputs.join(', ')}"',
+              : 'Expected console output to contain "$expected".',
         );
 
       default:
-        // Generic fallback check
-        final target = rule.value ?? rule.element ?? '';
-        final passed = target.isEmpty || code.contains(target);
+        final target = (rule.value ?? rule.element ?? '').trim().toLowerCase();
+        final passed = target.isEmpty || code.toLowerCase().contains(target);
         return RuleCheckResult(
           rule: rule,
           passed: passed,
