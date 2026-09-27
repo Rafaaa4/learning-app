@@ -7,6 +7,8 @@ import 'pages/WelcomeScreen.dart';
 import 'pages/main_layout.dart';
 import 'route.dart';
 
+import 'services/notification_service.dart';
+
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   
@@ -18,6 +20,13 @@ void main() async {
 
   final storageService = StorageService();
   await storageService.init();
+
+  // Initialize notifications & triggers
+  final notifService = NotificationService();
+  await notifService.init();
+  await notifService.requestPermission();
+  await notifService.checkInactivityAndRemind();
+  await notifService.checkForNewContentUpdates();
 
   runApp(MainApp(hasSeenOnboarding: storageService.hasSeenOnboarding()));
 }
