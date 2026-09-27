@@ -566,18 +566,19 @@ class _IDEPageState extends State<_IDEPage> with SingleTickerProviderStateMixin 
 </script>
 ''';
 
-    if (htmlContent.contains('<head>')) {
-      htmlContent = htmlContent.replaceFirst('<head>', '<head>\n$consoleInterceptor');
+    // Always append JS code and consoleInterceptor securely
+    if (htmlContent.contains('</head>')) {
+      htmlContent = htmlContent.replaceFirst('</head>', '<style>$css</style>\n$consoleInterceptor\n</head>');
     } else {
-      htmlContent = '$consoleInterceptor\n$htmlContent';
+      htmlContent = '<style>$css</style>\n$consoleInterceptor\n$htmlContent';
     }
 
-    // Inline CSS and JS into the HTML for self-contained preview
-    if (!htmlContent.contains('<style>') && css.isNotEmpty) {
-      htmlContent = htmlContent.replaceFirst('</head>', '<style>$css</style>\n</head>');
-    }
-    if (!htmlContent.contains('<script>') && js.isNotEmpty) {
-      htmlContent = htmlContent.replaceFirst('</body>', '<script>$js</script>\n</body>');
+    if (js.isNotEmpty) {
+      if (htmlContent.contains('</body>')) {
+        htmlContent = htmlContent.replaceFirst('</body>', '<script>\ntry {\n$js\n} catch(e) { console.error(e.message || e); }\n</script>\n</body>');
+      } else {
+        htmlContent += '\n<script>\ntry {\n$js\n} catch(e) { console.error(e.message || e); }\n</script>';
+      }
     }
 
     setState(() => _webViewReady = false);
