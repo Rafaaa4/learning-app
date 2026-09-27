@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:supabase_flutter/supabase_flutter.dart';
 import 'core/theme/app_theme.dart';
+import 'core/constants/supabase_constants.dart';
 import 'services/storage_service.dart';
 import 'pages/WelcomeScreen.dart';
 import 'pages/main_layout.dart';
@@ -7,6 +9,13 @@ import 'route.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
+  
+  // Initialize Supabase Client
+  await Supabase.initialize(
+    url: SupabaseConstants.supabaseUrl,
+    anonKey: SupabaseConstants.supabaseAnonKey,
+  );
+
   final storageService = StorageService();
   await storageService.init();
 

@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:supabase_flutter/supabase_flutter.dart';
 import '../core/theme/app_theme.dart';
+import '../services/auth_service.dart';
+import '../services/supabase_sync_service.dart';
 import 'SignUpPage.dart';
-import 'Home.dart';
+import 'main_layout.dart';
 
 class LoginPage extends StatefulWidget {
   const LoginPage({super.key});
@@ -13,7 +16,11 @@ class LoginPage extends StatefulWidget {
 class _LoginPageState extends State<LoginPage> {
   final TextEditingController _emailController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
+  final AuthService _authService = AuthService();
+  final SupabaseSyncService _syncService = SupabaseSyncService();
+
   bool _obscurePassword = true;
+  bool _isLoading = false;
 
   @override
   void dispose() {
@@ -22,11 +29,106 @@ class _LoginPageState extends State<LoginPage> {
     super.dispose();
   }
 
-  void _login() {
-    // Proceed to home
+  Future<void> _login() async {
+    final email = _emailController.text.trim();
+    final password = _passwordController.text;
+
+    if (email.isEmpty || password.isEmpty) {
+      _showSnackBar('Please fill in both email and password.', isError: true);
+      return;
+    }
+
+    setState(() => _isLoading = true);
+
+    try {
+      await _authService.signInWithEmail(email: email, password: password);
+      
+      // Sync cloud data to local storage after successful login
+      await _syncService.syncCloudToLocal();
+
+      if (!mounted) return;
+      _showSnackBar('Successfully logged in!', isError: false);
+
+      Navigator.of(context).pushAndRemoveUntil(
+        MaterialPageRoute(builder: (context) => const MainLayout()),
+        (route) => false,
+      );
+    } on AuthException catch (e) {
+      _showSnackBar(e.message, isError: true);
+    } catch (e) {
+      _showSnackBar('Login failed. Please check your credentials.', isError: true);
+    } finally {
+      if (mounted) setState(() => _isLoading = false);
+    }
+  }
+
+  void _continueAsGuest() {
     Navigator.of(context).pushAndRemoveUntil(
-      MaterialPageRoute(builder: (context) => const HomePage()),
+      MaterialPageRoute(builder: (context) => const MainLayout()),
       (route) => false,
+    );
+  }
+
+  Future<void> _showForgotPasswordDialog() async {
+    final resetController = TextEditingController(text: _emailController.text);
+    showDialog(
+      context: context,
+      builder: (context) => AlertDialog(
+        backgroundColor: AppTheme.cardDark,
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
+        title: const Text('Reset Password', style: TextStyle(color: AppTheme.textPrimaryDark)),
+        content: Column(
+          mainAxisSize: MainAxisSize.min,
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            const Text(
+              'Enter your email address to receive a password reset link.',
+              style: TextStyle(color: AppTheme.textSecondaryDark, fontSize: 13),
+            ),
+            const SizedBox(height: 16),
+            TextField(
+              controller: resetController,
+              style: const TextStyle(color: AppTheme.textPrimaryDark),
+              decoration: const InputDecoration(
+                hintText: 'alex@example.com',
+                prefixIcon: Icon(Icons.email_outlined, color: AppTheme.textMutedDark),
+              ),
+            ),
+          ],
+        ),
+        actions: [
+          TextButton(
+            onPressed: () => Navigator.of(context).pop(),
+            child: const Text('Cancel', style: TextStyle(color: AppTheme.textMutedDark)),
+          ),
+          ElevatedButton(
+            onPressed: () async {
+              final targetEmail = resetController.text.trim();
+              if (targetEmail.isEmpty) return;
+              Navigator.of(context).pop();
+              try {
+                await _authService.resetPassword(targetEmail);
+                _showSnackBar('Password reset link sent to $targetEmail', isError: false);
+              } catch (e) {
+                _showSnackBar('Failed to send reset email.', isError: true);
+              }
+            },
+            child: const Text('Send Link'),
+          ),
+        ],
+      ),
+    );
+  }
+
+  void _showSnackBar(String message, {required bool isError}) {
+    if (!mounted) return;
+    ScaffoldMessenger.of(context).showSnackBar(
+      SnackBar(
+        content: Text(message),
+        backgroundColor: isError ? Colors.redAccent : AppTheme.primary,
+        behavior: SnackBarBehavior.floating,
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
+      ),
     );
   }
 
@@ -97,6 +199,7 @@ class _LoginPageState extends State<LoginPage> {
               const SizedBox(height: 8),
               TextField(
                 controller: _emailController,
+                keyboardType: TextInputType.emailAddress,
                 style: const TextStyle(color: AppTheme.textPrimaryDark),
                 decoration: const InputDecoration(
                   hintText: 'alex@example.com',
@@ -107,13 +210,29 @@ class _LoginPageState extends State<LoginPage> {
               const SizedBox(height: 20),
 
               // Password field
-              const Text(
-                'Password',
-                style: TextStyle(
-                  color: AppTheme.textPrimaryDark,
-                  fontSize: 13,
-                  fontWeight: FontWeight.w600,
-                ),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  const Text(
+                    'Password',
+                    style: TextStyle(
+                      color: AppTheme.textPrimaryDark,
+                      fontSize: 13,
+                      fontWeight: FontWeight.w600,
+                    ),
+                  ),
+                  GestureDetector(
+                    onTap: _showForgotPasswordDialog,
+                    child: const Text(
+                      'Forgot Password?',
+                      style: TextStyle(
+                        color: AppTheme.primary,
+                        fontSize: 12,
+                        fontWeight: FontWeight.w600,
+                      ),
+                    ),
+                  ),
+                ],
               ),
               const SizedBox(height: 8),
               TextField(
@@ -144,8 +263,14 @@ class _LoginPageState extends State<LoginPage> {
                 width: double.infinity,
                 height: 52,
                 child: ElevatedButton(
-                  onPressed: _login,
-                  child: const Text('Sign In'),
+                  onPressed: _isLoading ? null : _login,
+                  child: _isLoading
+                      ? const SizedBox(
+                          width: 24,
+                          height: 24,
+                          child: CircularProgressIndicator(color: Colors.white, strokeWidth: 2.5),
+                        )
+                      : const Text('Sign In'),
                 ),
               ),
 
@@ -156,7 +281,7 @@ class _LoginPageState extends State<LoginPage> {
                 width: double.infinity,
                 height: 50,
                 child: OutlinedButton(
-                  onPressed: _login,
+                  onPressed: _continueAsGuest,
                   style: OutlinedButton.styleFrom(
                     side: const BorderSide(color: AppTheme.cardBorderDark),
                     shape: RoundedRectangleBorder(

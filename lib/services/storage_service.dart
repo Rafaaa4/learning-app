@@ -3,6 +3,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 import '../data/models/course.dart';
 import '../data/models/progress.dart';
 import '../data/datasources/static_courses.dart';
+import 'supabase_sync_service.dart';
 
 class StorageService {
   static final StorageService _instance = StorageService._internal();
@@ -63,7 +64,8 @@ class StorageService {
   }) async {
     final current = getProgress();
     final updatedLessonIds = Set<String>.from(current.completedLessonIds)..add(lessonId);
-    final newXp = current.totalXp + (xpEarned ?? 0);
+    final earned = xpEarned ?? 10;
+    final newXp = current.totalXp + earned;
 
     final updated = current.copyWith(
       completedLessonIds: updatedLessonIds,
@@ -71,6 +73,9 @@ class StorageService {
       lastActiveDate: DateTime.now(),
     );
     await saveProgress(updated);
+    
+    // Sync to Supabase in real time
+    SupabaseSyncService().recordLessonCompletion(lessonId, earned);
     return updated;
   }
 
@@ -92,6 +97,9 @@ class StorageService {
       lastActiveDate: DateTime.now(),
     );
     await saveProgress(updated);
+
+    // Sync to Supabase in real time
+    SupabaseSyncService().syncLocalToCloud();
     return updated;
   }
 
@@ -109,6 +117,9 @@ class StorageService {
       lastActiveDate: DateTime.now(),
     );
     await saveProgress(updated);
+
+    // Sync to Supabase in real time
+    SupabaseSyncService().syncLocalToCloud();
     return updated;
   }
 
@@ -116,3 +127,4 @@ class StorageService {
     await _prefs?.remove(_keyProgress);
   }
 }
+

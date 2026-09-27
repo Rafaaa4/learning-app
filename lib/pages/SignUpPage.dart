@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:supabase_flutter/supabase_flutter.dart';
 import '../core/theme/app_theme.dart';
-import 'Home.dart';
+import '../services/auth_service.dart';
+import '../services/supabase_sync_service.dart';
+import 'main_layout.dart';
 
 class SignUpPage extends StatefulWidget {
   const SignUpPage({super.key});
@@ -13,7 +16,11 @@ class _SignUpPageState extends State<SignUpPage> {
   final TextEditingController _nameController = TextEditingController();
   final TextEditingController _emailController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
+  final AuthService _authService = AuthService();
+  final SupabaseSyncService _syncService = SupabaseSyncService();
+
   bool _obscurePassword = true;
+  bool _isLoading = false;
 
   @override
   void dispose() {
@@ -23,10 +30,60 @@ class _SignUpPageState extends State<SignUpPage> {
     super.dispose();
   }
 
-  void _signUp() {
-    Navigator.of(context).pushAndRemoveUntil(
-      MaterialPageRoute(builder: (context) => const HomePage()),
-      (route) => false,
+  Future<void> _signUp() async {
+    final name = _nameController.text.trim();
+    final email = _emailController.text.trim();
+    final password = _passwordController.text;
+
+    if (name.isEmpty || email.isEmpty || password.isEmpty) {
+      _showSnackBar('Please fill in all fields.', isError: true);
+      return;
+    }
+
+    if (password.length < 6) {
+      _showSnackBar('Password must be at least 6 characters long.', isError: true);
+      return;
+    }
+
+    setState(() => _isLoading = true);
+
+    try {
+      final res = await _authService.signUpWithEmail(
+        email: email,
+        password: password,
+        fullName: name,
+      );
+
+      // Initial sync of existing local progress up to Supabase cloud
+      if (res.user != null) {
+        await _syncService.syncLocalToCloud();
+      }
+
+      if (!mounted) return;
+      _showSnackBar('Account created successfully!', isError: false);
+
+      Navigator.of(context).pushAndRemoveUntil(
+        MaterialPageRoute(builder: (context) => const MainLayout()),
+        (route) => false,
+      );
+    } on AuthException catch (e) {
+      _showSnackBar(e.message, isError: true);
+    } catch (e) {
+      _showSnackBar('Sign up failed. Please try again.', isError: true);
+    } finally {
+      if (mounted) setState(() => _isLoading = false);
+    }
+  }
+
+  void _showSnackBar(String message, {required bool isError}) {
+    if (!mounted) return;
+    ScaffoldMessenger.of(context).showSnackBar(
+      SnackBar(
+        content: Text(message),
+        backgroundColor: isError ? Colors.redAccent : AppTheme.primary,
+        behavior: SnackBarBehavior.floating,
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
+      ),
     );
   }
 
@@ -74,7 +131,7 @@ class _SignUpPageState extends State<SignUpPage> {
               const SizedBox(height: 8),
 
               const Text(
-                'Start generating personalized coding courses powered by AI.',
+                'Start interactive coding courses with cloud sync & real-time progress.',
                 style: TextStyle(
                   color: AppTheme.textSecondaryDark,
                   fontSize: 14,
@@ -117,6 +174,7 @@ class _SignUpPageState extends State<SignUpPage> {
               const SizedBox(height: 8),
               TextField(
                 controller: _emailController,
+                keyboardType: TextInputType.emailAddress,
                 style: const TextStyle(color: AppTheme.textPrimaryDark),
                 decoration: const InputDecoration(
                   hintText: 'alex@example.com',
@@ -141,7 +199,7 @@ class _SignUpPageState extends State<SignUpPage> {
                 obscureText: _obscurePassword,
                 style: const TextStyle(color: AppTheme.textPrimaryDark),
                 decoration: InputDecoration(
-                  hintText: 'At least 8 characters',
+                  hintText: 'At least 6 characters',
                   prefixIcon: const Icon(Icons.lock_outline, color: AppTheme.textMutedDark),
                   suffixIcon: IconButton(
                     icon: Icon(
@@ -163,8 +221,14 @@ class _SignUpPageState extends State<SignUpPage> {
                 width: double.infinity,
                 height: 52,
                 child: ElevatedButton(
-                  onPressed: _signUp,
-                  child: const Text('Create Account'),
+                  onPressed: _isLoading ? null : _signUp,
+                  child: _isLoading
+                      ? const SizedBox(
+                          width: 24,
+                          height: 24,
+                          child: CircularProgressIndicator(color: Colors.white, strokeWidth: 2.5),
+                        )
+                      : const Text('Create Account'),
                 ),
               ),
 
