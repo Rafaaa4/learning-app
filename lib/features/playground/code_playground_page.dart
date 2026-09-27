@@ -454,6 +454,9 @@ class _IDEPageState extends State<_IDEPage> with SingleTickerProviderStateMixin 
         _selectFile(files.first);
       }
     });
+    if (_isWebProject) {
+      _runPreview();
+    }
   }
 
   void _selectFile(PlaygroundFile file) {
