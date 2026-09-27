@@ -1,16 +1,56 @@
 import 'package:flutter/material.dart';
 import '../core/theme/app_theme.dart';
+import '../data/datasources/supabase_courses_datasource.dart';
 
-class ToolsPage extends StatelessWidget {
+class ToolsPage extends StatefulWidget {
   const ToolsPage({super.key});
+
+  @override
+  State<ToolsPage> createState() => _ToolsPageState();
+}
+
+class _ToolsPageState extends State<ToolsPage> {
+  final SupabaseCoursesDataSource _coursesDataSource = SupabaseCoursesDataSource();
+  bool _isSeeding = false;
+
+  Future<void> _seedCourses() async {
+    setState(() => _isSeeding = true);
+    try {
+      final count = await _coursesDataSource.seedLocalCoursesToSupabase();
+      if (!mounted) return;
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: Text('Successfully seeded $count courses (310 lessons) to Supabase DB!'),
+          backgroundColor: AppTheme.success,
+        ),
+      );
+    } catch (e) {
+      if (!mounted) return;
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: Text('Failed to seed courses to Supabase: $e'),
+          backgroundColor: AppTheme.error,
+        ),
+      );
+    } finally {
+      if (mounted) setState(() => _isSeeding = false);
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: AppTheme.bgDark,
+      appBar: AppBar(
+        backgroundColor: Colors.transparent,
+        leading: IconButton(
+          icon: const Icon(Icons.arrow_back_ios_new_rounded, color: AppTheme.textPrimaryDark),
+          onPressed: () => Navigator.of(context).pop(),
+        ),
+      ),
       body: SafeArea(
         child: ListView(
-          padding: const EdgeInsets.fromLTRB(20, 30, 20, 100),
+          padding: const EdgeInsets.fromLTRB(20, 10, 20, 100),
           children: [
             const Text(
               'Developer Tools',
@@ -22,11 +62,22 @@ class ToolsPage extends StatelessWidget {
             ),
             const SizedBox(height: 8),
             const Text(
-              'Everything you need to level up your coding skills.',
+              'Manage database seeding, resources, and utilities.',
               style: TextStyle(color: AppTheme.textSecondaryDark, fontSize: 14),
             ),
             const SizedBox(height: 30),
             
+            _buildSectionTitle('Database Management'),
+            const SizedBox(height: 16),
+            _buildToolCard(
+              title: _isSeeding ? 'Seeding Courses...' : 'Push All Courses to Supabase DB',
+              description: 'Migrate all 6 course tracks (310 lessons) into Supabase table courses_db.',
+              icon: _isSeeding ? Icons.hourglass_top_rounded : Icons.cloud_upload_rounded,
+              color: AppTheme.primary,
+              onTap: _isSeeding ? () {} : _seedCourses,
+            ),
+
+            const SizedBox(height: 24),
             _buildSectionTitle('Daily Challenges'),
             const SizedBox(height: 16),
             _buildToolCard(
@@ -102,7 +153,7 @@ class ToolsPage extends StatelessWidget {
             Container(
               padding: const EdgeInsets.all(14),
               decoration: BoxDecoration(
-                color: color.withOpacity(0.15),
+                color: color.withValues(alpha: 0.15),
                 borderRadius: BorderRadius.circular(14),
               ),
               child: Icon(icon, color: color, size: 28),

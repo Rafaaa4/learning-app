@@ -2,7 +2,7 @@ import 'dart:convert';
 import 'package:shared_preferences/shared_preferences.dart';
 import '../data/models/course.dart';
 import '../data/models/progress.dart';
-import '../data/datasources/static_courses.dart';
+import '../data/datasources/supabase_courses_datasource.dart';
 import 'supabase_sync_service.dart';
 
 class StorageService {
@@ -14,12 +14,12 @@ class StorageService {
   static const String _keyOnboarded = 'has_seen_onboarding_v2';
 
   SharedPreferences? _prefs;
-  final StaticCoursesDataSource _staticDataSource = StaticCoursesDataSource();
+  final SupabaseCoursesDataSource _coursesDataSource = SupabaseCoursesDataSource();
 
   Future<void> init() async {
     _prefs ??= await SharedPreferences.getInstance();
     // Preload courses into memory
-    await _staticDataSource.getAllCourses();
+    await _coursesDataSource.getCourses();
   }
 
   // --- Onboarding status ---
@@ -31,13 +31,13 @@ class StorageService {
     await _prefs?.setBool(_keyOnboarded, seen);
   }
 
-  // --- Static Courses Management ---
+  // --- Courses Management ---
   Future<List<Course>> getCourses() async {
-    return await _staticDataSource.getAllCourses();
+    return await _coursesDataSource.getCourses();
   }
 
   Course? getCourseById(String id) {
-    return _staticDataSource.getCourseById(id);
+    return _coursesDataSource.getCourseById(id);
   }
 
   // --- User Progress Management ---
