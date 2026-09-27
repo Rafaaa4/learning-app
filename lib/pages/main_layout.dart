@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import '../core/theme/app_theme.dart';
 import 'Home.dart';
 import 'profile_page.dart';
-import 'tools_page.dart';
+import 'video_courses_page.dart';
 import '../features/playground/code_playground_page.dart';
 
 class MainLayout extends StatefulWidget {
@@ -19,7 +19,7 @@ class _MainLayoutState extends State<MainLayout> {
   final List<Widget> _pages = [
     const HomePage(),
     const CodePlaygroundPage(),
-    const ToolsPage(),
+    const VideoCoursesPage(),
     const ProfilePage(),
   ];
 
@@ -67,7 +67,7 @@ class _MainLayoutState extends State<MainLayout> {
                     children: [
                       _buildNavItem(0, Icons.home_rounded, 'Home'),
                       _buildNavItem(1, Icons.terminal_rounded, 'Code'),
-                      _buildNavItem(2, Icons.grid_view_rounded, 'Tools'),
+                      _buildNavItem(2, Icons.play_circle_rounded, 'Videos'),
                       _buildNavItem(3, Icons.person_rounded, 'Profile'),
                     ],
                   ),

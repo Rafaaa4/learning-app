@@ -1,123 +1,222 @@
-import 'dart:io';
-import 'package:path_provider/path_provider.dart';
+import 'dart:convert';
+import 'package:flutter/foundation.dart';
 import '../models/playground_file.dart';
+import '../../../core/constants/supabase_constants.dart';
 
 class PlaygroundFileService {
   static final PlaygroundFileService _instance = PlaygroundFileService._internal();
   factory PlaygroundFileService() => _instance;
   PlaygroundFileService._internal();
 
-  static const String _projectsFolder = 'playground_projects';
-
-  // ─── Paths ──────────────────────────────────────────────────────────────────
-
-  Future<Directory> get _baseDir async {
-    final appDir = await getApplicationDocumentsDirectory();
-    final dir = Directory('${appDir.path}/$_projectsFolder');
-    if (!await dir.exists()) await dir.create(recursive: true);
-    return dir;
-  }
-
-  Future<Directory> projectDir(String projectName) async {
-    final base = await _baseDir;
-    final dir = Directory('${base.path}/$projectName');
-    if (!await dir.exists()) await dir.create(recursive: true);
-    return dir;
+  String get _userId {
+    final u = supabase.auth.currentUser;
+    if (u == null) throw Exception('Network error: You must be logged in to manage projects.');
+    return u.id;
   }
 
   // ─── Projects ───────────────────────────────────────────────────────────────
 
   Future<List<String>> listProjects() async {
-    final base = await _baseDir;
-    final entries = base.listSync();
-    return entries
-        .whereType<Directory>()
-        .map((d) => d.path.split('/').last)
-        .toList()
-      ..sort();
+    try {
+      final res = await supabase
+          .from('playground_projects')
+          .select('name')
+          .eq('user_id', _userId)
+          .order('name', ascending: true);
+      
+      return (res as List).map((row) => row['name'].toString()).toList();
+    } catch (e) {
+      debugPrint('Network error listing projects: $e');
+      throw Exception('Network error: Could not load projects.');
+    }
   }
 
   Future<void> createProject(String name, {String language = 'web'}) async {
-    final dir = await projectDir(name);
-    
-    if (language == 'python') {
-      await _writeFile(dir, 'main.py', 'print("Hello Python!")\n');
-    } else if (language == 'mysql') {
-      await _writeFile(dir, 'queries.sql', 'SELECT * FROM users;\n');
-    } else if (language == 'csharp') {
-      await _writeFile(dir, 'Program.cs', 'using System;\n\nclass Program {\n  static void Main() {\n    Console.WriteLine("Hello C#!");\n  }\n}\n');
-    } else if (language == 'cpp') {
-      await _writeFile(dir, 'main.cpp', '#include <iostream>\n\nint main() {\n  std::cout << "Hello C++!" << std::endl;\n  return 0;\n}\n');
-    } else if (language == 'c') {
-      await _writeFile(dir, 'main.c', '#include <stdio.h>\n\nint main() {\n  printf("Hello C!\\n");\n  return 0;\n}\n');
-    } else {
-      // Bootstrap with starter files for web
-      await _writeFile(dir, 'index.html', _starterHtml);
-      await _writeFile(dir, 'style.css', _starterCss);
-      await _writeFile(dir, 'main.js', _starterJs);
+    try {
+      // Check if exists
+      final existing = await supabase
+          .from('playground_projects')
+          .select('id')
+          .eq('user_id', _userId)
+          .eq('name', name)
+          .maybeSingle();
+
+      if (existing != null) {
+        throw Exception('Project already exists');
+      }
+
+      List<Map<String, String>> initialFiles = [];
+
+      if (language == 'python') {
+        initialFiles.add({'name': 'main.py', 'content': 'print("Hello Python!")\n'});
+      } else if (language == 'mysql') {
+        initialFiles.add({'name': 'queries.sql', 'content': 'SELECT * FROM users;\n'});
+      } else if (language == 'csharp') {
+        initialFiles.add({'name': 'Program.cs', 'content': 'using System;\n\nclass Program {\n  static void Main() {\n    Console.WriteLine("Hello C#!");\n  }\n}\n'});
+      } else if (language == 'cpp') {
+        initialFiles.add({'name': 'main.cpp', 'content': '#include <iostream>\n\nint main() {\n  std::cout << "Hello C++!" << std::endl;\n  return 0;\n}\n'});
+      } else if (language == 'c') {
+        initialFiles.add({'name': 'main.c', 'content': '#include <stdio.h>\n\nint main() {\n  printf("Hello C!\\n");\n  return 0;\n}\n'});
+      } else {
+        initialFiles.add({'name': 'index.html', 'content': _starterHtml});
+        initialFiles.add({'name': 'style.css', 'content': _starterCss});
+        initialFiles.add({'name': 'main.js', 'content': _starterJs});
+      }
+
+      await supabase.from('playground_projects').insert({
+        'user_id': _userId,
+        'name': name,
+        'language': language,
+        'files': initialFiles,
+      });
+    } catch (e) {
+      debugPrint('Network error creating project: $e');
+      throw Exception('Network error: Could not create project.');
     }
   }
 
   Future<void> deleteProject(String name) async {
-    final base = await _baseDir;
-    final dir = Directory('${base.path}/$name');
-    if (await dir.exists()) await dir.delete(recursive: true);
+    try {
+      await supabase
+          .from('playground_projects')
+          .delete()
+          .eq('user_id', _userId)
+          .eq('name', name);
+    } catch (e) {
+      throw Exception('Network error: Could not delete project.');
+    }
   }
 
   Future<bool> projectExists(String name) async {
-    final base = await _baseDir;
-    return Directory('${base.path}/$name').existsSync();
+    try {
+      final res = await supabase
+          .from('playground_projects')
+          .select('id')
+          .eq('user_id', _userId)
+          .eq('name', name)
+          .maybeSingle();
+      return res != null;
+    } catch (e) {
+      return false;
+    }
   }
 
   // ─── Files ───────────────────────────────────────────────────────────────────
 
+  Future<Map<String, dynamic>> _getProject(String projectName) async {
+    final res = await supabase
+        .from('playground_projects')
+        .select()
+        .eq('user_id', _userId)
+        .eq('name', projectName)
+        .maybeSingle();
+    
+    if (res == null) throw Exception('Project not found');
+    return res;
+  }
+
   Future<List<PlaygroundFile>> listFiles(String projectName) async {
-    final dir = await projectDir(projectName);
-    final entries = dir.listSync();
-    final files = entries
-        .whereType<File>()
-        .map(PlaygroundFile.fromFile)
-        .toList();
-    files.sort((a, b) => _fileOrder(a.name).compareTo(_fileOrder(b.name)));
-    return files;
+    try {
+      final project = await _getProject(projectName);
+      final List filesData = project['files'] ?? [];
+      
+      final files = filesData.map((f) => PlaygroundFile(
+        name: f['name'],
+        content: f['content'],
+      )).toList();
+
+      files.sort((a, b) => _fileOrder(a.name).compareTo(_fileOrder(b.name)));
+      return files;
+    } catch (e) {
+      throw Exception('Network error: Could not load files.');
+    }
   }
 
   Future<PlaygroundFile> readFile(String projectName, String fileName) async {
-    final dir = await projectDir(projectName);
-    final file = File('${dir.path}/$fileName');
-    return PlaygroundFile.fromFile(file);
+    final files = await listFiles(projectName);
+    try {
+      return files.firstWhere((f) => f.name == fileName);
+    } catch (_) {
+      throw Exception('File not found');
+    }
   }
 
   Future<void> saveFile(String projectName, PlaygroundFile pf) async {
-    final dir = await projectDir(projectName);
-    await _writeFile(dir, pf.name, pf.content);
+    try {
+      final project = await _getProject(projectName);
+      List filesData = List.from(project['files'] ?? []);
+      
+      final fileIndex = filesData.indexWhere((f) => f['name'] == pf.name);
+      if (fileIndex >= 0) {
+        filesData[fileIndex]['content'] = pf.content;
+      } else {
+        filesData.add({'name': pf.name, 'content': pf.content});
+      }
+
+      await supabase.from('playground_projects').update({
+        'files': filesData,
+        'updated_at': DateTime.now().toIso8601String(),
+      }).eq('id', project['id']);
+    } catch (e) {
+      throw Exception('Network error: Could not save file.');
+    }
   }
 
   Future<void> renameFile(String projectName, String oldName, String newName) async {
-    final dir = await projectDir(projectName);
-    final oldFile = File('${dir.path}/$oldName');
-    if (await oldFile.exists()) {
-      await oldFile.rename('${dir.path}/$newName');
+    try {
+      final project = await _getProject(projectName);
+      List filesData = List.from(project['files'] ?? []);
+      
+      final fileIndex = filesData.indexWhere((f) => f['name'] == oldName);
+      if (fileIndex >= 0) {
+        filesData[fileIndex]['name'] = newName;
+        await supabase.from('playground_projects').update({
+          'files': filesData,
+          'updated_at': DateTime.now().toIso8601String(),
+        }).eq('id', project['id']);
+      }
+    } catch (e) {
+      throw Exception('Network error: Could not rename file.');
     }
   }
 
   Future<void> deleteFile(String projectName, String fileName) async {
-    final dir = await projectDir(projectName);
-    final file = File('${dir.path}/$fileName');
-    if (await file.exists()) await file.delete();
+    try {
+      final project = await _getProject(projectName);
+      List filesData = List.from(project['files'] ?? []);
+      
+      filesData.removeWhere((f) => f['name'] == fileName);
+      
+      await supabase.from('playground_projects').update({
+        'files': filesData,
+        'updated_at': DateTime.now().toIso8601String(),
+      }).eq('id', project['id']);
+    } catch (e) {
+      throw Exception('Network error: Could not delete file.');
+    }
   }
 
   Future<void> createFile(String projectName, String fileName) async {
-    final dir = await projectDir(projectName);
-    await _writeFile(dir, fileName, _defaultContentFor(fileName));
+    try {
+      final project = await _getProject(projectName);
+      List filesData = List.from(project['files'] ?? []);
+      
+      if (filesData.any((f) => f['name'] == fileName)) {
+        throw Exception('File already exists');
+      }
+      
+      filesData.add({'name': fileName, 'content': _defaultContentFor(fileName)});
+      
+      await supabase.from('playground_projects').update({
+        'files': filesData,
+        'updated_at': DateTime.now().toIso8601String(),
+      }).eq('id', project['id']);
+    } catch (e) {
+      throw Exception('Network error: Could not create file.');
+    }
   }
 
   // ─── Helpers ─────────────────────────────────────────────────────────────────
-
-  Future<void> _writeFile(Directory dir, String name, String content) async {
-    final file = File('${dir.path}/$name');
-    await file.writeAsString(content);
-  }
 
   int _fileOrder(String name) {
     if (name == 'index.html') return 0;

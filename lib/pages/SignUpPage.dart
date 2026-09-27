@@ -3,6 +3,7 @@ import 'package:supabase_flutter/supabase_flutter.dart';
 import '../core/theme/app_theme.dart';
 import '../services/auth_service.dart';
 import '../services/supabase_sync_service.dart';
+import 'otp_verification_page.dart';
 import 'main_layout.dart';
 
 class SignUpPage extends StatefulWidget {
@@ -62,6 +63,7 @@ class _SignUpPageState extends State<SignUpPage> {
       if (!mounted) return;
       _showSnackBar('Account created successfully!', isError: false);
 
+      // We bypass the OTP page for now since you disabled Email Confirmations in Supabase
       Navigator.of(context).pushAndRemoveUntil(
         MaterialPageRoute(builder: (context) => const MainLayout()),
         (route) => false,

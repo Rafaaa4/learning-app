@@ -1,16 +1,8 @@
 import 'package:supabase_flutter/supabase_flutter.dart';
 
 class SupabaseConstants {
-  // Replace these credentials with your Supabase Project URL and Anon Key
-  static const String supabaseUrl = String.fromEnvironment(
-    'SUPABASE_URL',
-    defaultValue: 'https://xyzcompany.supabase.co',
-  );
-
-  static const String supabaseAnonKey = String.fromEnvironment(
-    'SUPABASE_ANON_KEY',
-    defaultValue: 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.dummy_anon_key',
-  );
+  static const String supabaseUrl = 'https://bcyhuhnnokmssvcjibwd.supabase.co';
+  static const String supabaseAnonKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImJjeWh1aG5ub2ttc3N2Y2ppYndkIiwicm9sZSI6ImFub24iLCJpYXQiOjE3OTA0OTY3MDcsImV4cCI6MjEwNjA3MjcwN30.WNFJQSjy1TjA_7rkY_OL0AZCQ0K4RptDIia4AkYdS_Y';
 
   // Table names
   static const String tableProfiles = 'profiles';

@@ -57,6 +57,43 @@ class AuthService {
     }
   }
 
+  /// Verify OTP code sent to user email after signup
+  Future<AuthResponse> verifyOtp({
+    required String email,
+    required String otp,
+  }) async {
+    try {
+      final response = await supabase.auth.verifyOTP(
+        email: email.trim(),
+        token: otp.trim(),
+        type: OtpType.email,
+      );
+      return response;
+    } on AuthException catch (e) {
+      debugPrint('Supabase VerifyOTP AuthException: ${e.message}');
+      rethrow;
+    } catch (e) {
+      debugPrint('Unexpected VerifyOTP error: $e');
+      throw Exception('OTP verification failed: ${e.toString()}');
+    }
+  }
+
+  /// Resend OTP email verification code
+  Future<void> resendOtp(String email) async {
+    try {
+      await supabase.auth.resend(
+        type: OtpType.email,
+        email: email.trim(),
+      );
+    } on AuthException catch (e) {
+      debugPrint('Supabase Resend OTP AuthException: ${e.message}');
+      rethrow;
+    } catch (e) {
+      debugPrint('Unexpected Resend OTP error: $e');
+      throw Exception('Resend OTP failed: ${e.toString()}');
+    }
+  }
+
   /// Send password reset link to user's email
   Future<void> resetPassword(String email) async {
     try {
@@ -79,3 +116,4 @@ class AuthService {
     }
   }
 }
+

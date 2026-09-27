@@ -11,7 +11,7 @@ class SupabaseCoursesDataSource {
   final StaticCoursesDataSource _staticDataSource = StaticCoursesDataSource();
   List<Course>? _cache;
 
-  /// Fetch courses from Supabase DB `courses_db` with seamless offline asset fallback
+  /// Fetch courses from Supabase DB `courses_db` (Network Only)
   Future<List<Course>> getCourses() async {
     if (_cache != null && _cache!.isNotEmpty) {
       return _cache!;
@@ -29,14 +29,13 @@ class SupabaseCoursesDataSource {
             .toList();
         debugPrint('Successfully loaded ${_cache!.length} courses from Supabase DB!');
         return _cache!;
+      } else {
+        throw Exception('No courses found in database.');
       }
     } catch (e) {
-      debugPrint('Supabase courses fetch failed or table empty, falling back to local asset JSON: $e');
+      debugPrint('Supabase courses fetch failed: $e');
+      throw Exception('Network error: Could not fetch courses from Supabase. Please check your internet connection.');
     }
-
-    // Fallback to local asset JSON
-    _cache = await _staticDataSource.getAllCourses();
-    return _cache!;
   }
 
   Course? getCourseById(String id) {

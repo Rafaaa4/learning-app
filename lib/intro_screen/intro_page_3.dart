@@ -92,7 +92,7 @@ class IntroPage3 extends StatelessWidget {
 
           // Description
           const Text(
-            'Never wait for manual grading. Our automated validation engine tests element presence, syntax, and output instantly with actionable tips and hints.',
+            'No more manual grading. Get instant validation, actionable tips, and hints .',
             textAlign: TextAlign.center,
             style: TextStyle(
               fontSize: 15,

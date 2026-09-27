@@ -44,7 +44,16 @@ Whether you are mastering web fundamentals with HTML/CSS/JS, diving deep into lo
 * **Code Validation Engine**: Built-in AST-like regex evaluation engine that checks output formatting, syntax structure, and challenge assertions.
 * **Multi-Language Support**: Dedicated execution modes for `HTML`, `CSS`, `JavaScript`, `Python`, `SQL (MySQL)`, `C#`, `C++`, and `C`.
 
-### 🎮 3. Gamification & XP System
+### 🎬 3. Embedded Video Courses Hub
+* **Curated Playlists**: Integrated YouTube player for English programming courses across **HTML, CSS, JavaScript, Python, C, C++, C#, and MySQL**.
+* **Categorized Browsing**: Filter by technology, view durations, author channel info, and view counts.
+* **In-App Streaming**: Instant video playback modal with zero external app switching.
+
+### ☁️ 4. Supabase Backend Sync & Cloud Database
+* **Authentication**: Email/Password authentication with OTP verification.
+* **Cloud Syncing**: Seamless sync between local `SharedPreferences` and remote Supabase database for user progress, XP, and streaks.
+
+### 🎮 5. Gamification & XP System
 * **XP & Level Progression**: Earn XP points for every passed quiz, code snippet submission, and completed lesson.
 * **Daily Streaks**: Encourages continuous daily learning habits with streak counters and milestone rewards.
 * **Badges & Achievement Badges**: Unlock achievements for completing entire modules or maintaining streaks.
