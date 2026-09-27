@@ -197,7 +197,7 @@ class _CodePlaygroundPageState extends State<CodePlaygroundPage> {
     return Scaffold(
       backgroundColor: AppTheme.bgDark,
       appBar: AppBar(
-        backgroundColor: AppTheme.cardDark,
+        
         automaticallyImplyLeading: false,
         leading: isPushedPage
             ? IconButton(
@@ -405,6 +405,7 @@ class _IDEPageState extends State<_IDEPage> with SingleTickerProviderStateMixin 
   bool _webViewReady = false;
   bool _loading = true;
   String? _simulatedOutput;
+  final List<String> _consoleLogs = [];
 
   final _scaffoldKey = GlobalKey<ScaffoldState>();
 
@@ -420,6 +421,16 @@ class _IDEPageState extends State<_IDEPage> with SingleTickerProviderStateMixin 
     _webViewController = WebViewController()
       ..setJavaScriptMode(JavaScriptMode.unrestricted)
       ..setBackgroundColor(const Color(0xFF0f172a))
+      ..addJavaScriptChannel(
+        'ConsoleChannel',
+        onMessageReceived: (JavaScriptMessage message) {
+          if (mounted) {
+            setState(() {
+              _consoleLogs.add(message.message);
+            });
+          }
+        },
+      )
       ..setNavigationDelegate(NavigationDelegate(
         onPageFinished: (_) => setState(() => _webViewReady = true),
       ));
@@ -520,6 +531,44 @@ class _IDEPageState extends State<_IDEPage> with SingleTickerProviderStateMixin 
     final js = files.where((f) => f.language == FileLanguage.javascript).map((f) => f.content).join('\n');
 
     String htmlContent = html.content;
+    _consoleLogs.clear();
+
+    const consoleInterceptor = '''
+<script>
+(function() {
+  function sendToFlutter(type, args) {
+    try {
+      var msg = '[' + type.toUpperCase() + '] ' + Array.from(args).map(function(a) {
+        return typeof a === 'object' ? JSON.stringify(a) : String(a);
+      }).join(' ');
+      if (window.ConsoleChannel) {
+        window.ConsoleChannel.postMessage(msg);
+      }
+    } catch(e) {}
+  }
+  var origLog = console.log;
+  var origWarn = console.warn;
+  var origError = console.error;
+  var origInfo = console.info;
+
+  console.log = function() { sendToFlutter('log', arguments); origLog.apply(console, arguments); };
+  console.warn = function() { sendToFlutter('warn', arguments); origWarn.apply(console, arguments); };
+  console.error = function() { sendToFlutter('error', arguments); origError.apply(console, arguments); };
+  console.info = function() { sendToFlutter('info', arguments); origInfo.apply(console, arguments); };
+
+  window.onerror = function(msg, url, line) {
+    sendToFlutter('error', ['Uncaught Error: ' + msg + ' at line ' + line]);
+  };
+})();
+</script>
+''';
+
+    if (htmlContent.contains('<head>')) {
+      htmlContent = htmlContent.replaceFirst('<head>', '<head>\n$consoleInterceptor');
+    } else {
+      htmlContent = '$consoleInterceptor\n$htmlContent';
+    }
+
     // Inline CSS and JS into the HTML for self-contained preview
     if (!htmlContent.contains('<style>') && css.isNotEmpty) {
       htmlContent = htmlContent.replaceFirst('</head>', '<style>$css</style>\n</head>');
@@ -945,19 +994,41 @@ class _IDEPageState extends State<_IDEPage> with SingleTickerProviderStateMixin 
           const Divider(color: Color(0xFF1F2937)),
           Expanded(
             child: _isWebProject 
-              ? Center(
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      const Icon(Icons.info_outline_rounded, color: AppTheme.textMutedDark, size: 36),
-                      const SizedBox(height: 12),
-                      Text(
-                        desc,
-                        textAlign: TextAlign.center,
-                        style: const TextStyle(color: AppTheme.textMutedDark, fontSize: 13, height: 1.5),
-                      ),
-                    ],
+              ? Container(
+                  width: double.infinity,
+                  padding: const EdgeInsets.all(12),
+                  decoration: BoxDecoration(
+                    color: const Color(0xFF0D1117),
+                    borderRadius: BorderRadius.circular(8),
+                    border: Border.all(color: const Color(0xFF1F2937)),
                   ),
+                  child: _consoleLogs.isEmpty
+                      ? const Center(
+                          child: Text(
+                            'No console logs yet.\nPress "Run" or execute console.log() in your code.',
+                            textAlign: TextAlign.center,
+                            style: TextStyle(color: AppTheme.textMutedDark, fontSize: 13, height: 1.5),
+                          ),
+                        )
+                      : ListView.separated(
+                          itemCount: _consoleLogs.length,
+                          separatorBuilder: (_, __) => const Divider(color: Color(0xFF161B22), height: 10),
+                          itemBuilder: (context, index) {
+                            final log = _consoleLogs[index];
+                            final isError = log.contains('[ERROR]');
+                            final isWarn = log.contains('[WARN]');
+                            return SelectableText(
+                              log,
+                              style: TextStyle(
+                                fontFamily: 'monospace',
+                                fontSize: 12.5,
+                                color: isError
+                                    ? Colors.redAccent
+                                    : (isWarn ? Colors.amberAccent : const Color(0xFF34D399)),
+                              ),
+                            );
+                          },
+                        ),
                 )
               : Container(
                   width: double.infinity,
