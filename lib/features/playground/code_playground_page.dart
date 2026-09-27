@@ -579,7 +579,6 @@ class _IDEPageState extends State<_IDEPage> with SingleTickerProviderStateMixin 
 
     setState(() => _webViewReady = false);
     _webViewController.loadHtmlString(htmlContent);
-    _tabController.animateTo(1);
   }
 
   Future<void> _createFile(String name) async {
