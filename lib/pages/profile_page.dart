@@ -2,11 +2,9 @@ import 'package:flutter/material.dart';
 import '../core/theme/app_theme.dart';
 import '../services/storage_service.dart';
 import '../services/auth_service.dart';
-import '../services/supabase_sync_service.dart';
 import '../services/notification_service.dart';
 import '../data/models/progress.dart';
 import 'LoginPage.dart';
-import 'tools_page.dart';
 
 class ProfilePage extends StatefulWidget {
   const ProfilePage({super.key});
@@ -18,12 +16,10 @@ class ProfilePage extends StatefulWidget {
 class _ProfilePageState extends State<ProfilePage> {
   final StorageService _storageService = StorageService();
   final AuthService _authService = AuthService();
-  final SupabaseSyncService _syncService = SupabaseSyncService();
   final NotificationService _notificationService = NotificationService();
   
   UserProgress _progress = UserProgress();
   bool _isLoading = true;
-  bool _isSyncing = false;
 
   @override
   void initState() {
@@ -39,46 +35,6 @@ class _ProfilePageState extends State<ProfilePage> {
         _progress = progress;
         _isLoading = false;
       });
-    }
-  }
-
-  Future<void> _handleSync() async {
-    if (!_authService.isAuthenticated) {
-      _showInfoDialog(
-        'Guest Mode',
-        'Please sign in to sync your course progress and achievements to the cloud.',
-        actionText: 'Sign In',
-        onAction: () {
-          Navigator.of(context).push(MaterialPageRoute(builder: (context) => const LoginPage()));
-        },
-      );
-      return;
-    }
-
-    setState(() => _isSyncing = true);
-    try {
-      await _syncService.syncLocalToCloud();
-      final updated = await _syncService.syncCloudToLocal();
-      if (mounted) {
-        setState(() => _progress = updated);
-        ScaffoldMessenger.of(context).showSnackBar(
-          const SnackBar(
-            content: Text('Successfully synced progress with Supabase cloud!'),
-            backgroundColor: AppTheme.primary,
-          ),
-        );
-      }
-    } catch (e) {
-      if (mounted) {
-        ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(
-            content: Text('Sync failed: $e'),
-            backgroundColor: AppTheme.error,
-          ),
-        );
-      }
-    } finally {
-      if (mounted) setState(() => _isSyncing = false);
     }
   }
 
@@ -127,25 +83,13 @@ class _ProfilePageState extends State<ProfilePage> {
           : ListView(
               padding: const EdgeInsets.fromLTRB(20, 30, 20, 100),
               children: [
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    const Text(
-                      'My Profile',
-                      style: TextStyle(
-                        color: AppTheme.textPrimaryDark,
-                        fontSize: 28,
-                        fontWeight: FontWeight.w800,
-                      ),
-                    ),
-                    IconButton(
-                      icon: _isSyncing 
-                        ? const SizedBox(width: 20, height: 20, child: CircularProgressIndicator(strokeWidth: 2, color: AppTheme.primary))
-                        : const Icon(Icons.sync_rounded, color: AppTheme.primary),
-                      onPressed: _isSyncing ? null : _handleSync,
-                      tooltip: 'Sync Cloud Progress',
-                    ),
-                  ],
+                const Text(
+                  'My Profile',
+                  style: TextStyle(
+                    color: AppTheme.textPrimaryDark,
+                    fontSize: 28,
+                    fontWeight: FontWeight.w800,
+                  ),
                 ),
                 const SizedBox(height: 30),
                 Center(
@@ -227,13 +171,7 @@ class _ProfilePageState extends State<ProfilePage> {
                   ],
                 ),
                 const SizedBox(height: 30),
-                _buildSettingsTile(Icons.cloud_sync_rounded, 'Sync with Supabase Cloud', onTap: _handleSync),
-                const SizedBox(height: 12),
                 _buildSettingsTile(Icons.notifications_rounded, 'Notifications', onTap: _testNotification),
-                const SizedBox(height: 12),
-                _buildSettingsTile(Icons.build_rounded, 'Developer Tools', onTap: () {
-                  Navigator.push(context, MaterialPageRoute(builder: (context) => const ToolsPage()));
-                }),
                 const SizedBox(height: 12),
                 _buildSettingsTile(
                   Icons.logout_rounded, 
