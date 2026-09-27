@@ -361,4 +361,3 @@ final List<Map<String, dynamic>> defaultVideoCourses = [
     'views': '1.3M',
   },
 ];
-}
